@@ -11,7 +11,7 @@ from setuptools import setup, find_packages
 here = path.abspath(path.dirname(__file__))
 
 # *************** Dependencies *********
-INSTALL_REQUIRES = ['funcsigs;python_version<"3.3"']
+INSTALL_REQUIRES = ['makefun', 'funcsigs;python_version<"3.3"']
 DEPENDENCY_LINKS = []
 SETUP_REQUIRES = ['pytest-runner', 'setuptools_scm', 'pypandoc', 'pandoc']
 TESTS_REQUIRE = ['pytest', 'pytest-logging', 'pytest-cov']
@@ -27,8 +27,7 @@ except Exception as e:
 
 # ************** ID card *****************
 DISTNAME = 'decopatch'
-DESCRIPTION = 'Store data created during your pytest tests execution, and retrieve it at the end of the session, ' \
-              'e.g. for applicative benchmarking purposes.'
+DESCRIPTION = 'Create decorators easily in python.'
 MAINTAINER = 'Sylvain MARIE'
 MAINTAINER_EMAIL = 'sylvain.marie@schneider-electric.com'
 URL = 'https://github.com/smarie/python-decopatch'
