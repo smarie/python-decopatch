@@ -265,7 +265,7 @@ def test_doc_advanced_workaround_explicit_disambiguator():
     def foo():
         pass
 
-    @decorator(first_arg_disambiguator=lambda g: g in {foo})
+    @decorator(callable_or_cls_firstarg_disambiguator=lambda g: g in {foo})
     def replace_with(g, f=DECORATED):
         """This dummy decorator will replace the decorated function with its argument"""
         return g
