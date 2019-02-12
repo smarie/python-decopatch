@@ -1,7 +1,8 @@
 import pytest
 
-from pytest_cases import cases_data, THIS_MODULE
-from decopatch import decorator, DECORATED, FirstArgDisambiguation, AmbiguousFirstArgumentTypeError
+from pytest_cases import cases_data, THIS_MODULE, cases_generator
+from decopatch import decorator, DECORATED, FirstArgDisambiguation, AmbiguousFirstArgumentTypeError, \
+    InvalidMandatoryArgError
 
 try:  # python 3.3+
     from inspect import signature
@@ -43,20 +44,42 @@ def is_foo_or_goo(arg):
 DEFAULT_DUMMY_VALUE = 12
 
 
-def case_0_mandatory_0_optional():
-    """ This decorator has no arguments and can therefore be used with and without parenthesis """
+@cases_generator("case_allfine_0_args_kwonly={kwonly}", kwonly=[False, True])
+def case_allfine_0_args(kwonly):
+    """
+    This decorator has no arguments and can therefore be used with and without parenthesis
+    """
 
-    # we will decorate it later, otherwise the get_args_info will not be accurate in this particular case
-    # @decorator
-    def replace_by_foo(f=DECORATED):
-        return foo
+    # Note: we will decorate it later, otherwise the get_args_info will not be accurate in this particular case
+
+    if kwonly:
+        # @decorator
+        def replace_by_foo(*, f=DECORATED):
+            return foo
+    else:
+        # @decorator
+        def replace_by_foo(f=DECORATED):
+            return foo
 
     return decorator(replace_by_foo), get_args_info(replace_by_foo), True
 
 
-def case_1_mandatory_0_optional_noncallable():
-    """This decorator has 1 mandatory argument. It has therefore a possible ambiguity when called without parenthesis"""
+def case_1_mandatory_0_optional_noncallable_not_protected():
+    """
+    This decorator has 1 mandatory argument. It has therefore a possible ambiguity when called without parenthesis
+    """
     @decorator
+    def replace_by_foo(dummy, f=DECORATED):
+        return foo
+
+    return replace_by_foo, get_args_info(replace_by_foo), False
+
+
+def case_1_mandatory_0_optional_noncallable_protected():
+    """
+    This decorator has 1 mandatory argument. It has therefore a possible ambiguity when called without parenthesis
+    """
+    @decorator(can_first_arg_be_ambiguous=False)
     def replace_by_foo(dummy, f=DECORATED):
         return foo
 
@@ -177,7 +200,10 @@ def test_no_parenthesis(case_data):
             expected_err_type = TypeError
         else:
             # our stack
-            expected_err_type = AmbiguousFirstArgumentTypeError
+            if not is_first_arg_protected:
+                expected_err_type = AmbiguousFirstArgumentTypeError
+            else:
+                expected_err_type = InvalidMandatoryArgError
 
         print("this is supposed to raise a '%s' because '%s'" % (expected_err_type, expected_failure_msg))
 
@@ -188,7 +214,7 @@ def test_no_parenthesis(case_data):
 
 
 @cases_data(module=THIS_MODULE)
-def test_parenthesis_no_arg(case_data):
+def test_empty_parenthesis(case_data):
     """ Tests the decorator in a with-empty-parenthesis way @my_decorator() """
 
     replace_by_foo, args_info, is_first_arg_protected = case_data.get()
@@ -223,7 +249,7 @@ def test_parenthesis_no_arg(case_data):
 
 
 @cases_data(module=THIS_MODULE)
-def test_parenthesis_one_arg_positional(case_data):
+def test_one_arg_positional(case_data):
     """ Tests the decorator with one positional argument @my_decorator(goo) """
 
     replace_by_foo, args_info, is_first_arg_protected = case_data.get()
@@ -273,7 +299,7 @@ def test_parenthesis_one_arg_positional(case_data):
 
 
 @cases_data(module=THIS_MODULE)
-def test_parenthesis_replacement_arg_kw(case_data):
+def test_replacement_arg_kw(case_data):
     """ Tests the decorator in a with-empty-parenthesis way @my_decorator() """
 
     replace_by_foo, args_info, is_first_arg_protected = case_data.get()
@@ -319,7 +345,7 @@ def test_parenthesis_replacement_arg_kw(case_data):
 
 
 @cases_data(module=THIS_MODULE)
-def test_parenthesis_dummy_arg_kw(case_data):
+def test_dummy_arg_kw(case_data):
     """ Tests the decorator in a with-empty-parenthesis way @my_decorator() """
 
     replace_by_foo, args_info, is_first_arg_protected = case_data.get()
@@ -367,7 +393,7 @@ def test_parenthesis_dummy_arg_kw(case_data):
 
 @cases_data(module=THIS_MODULE)
 @pytest.mark.parametrize('new_val_for_dummy', ['hello', DEFAULT_DUMMY_VALUE])
-def test_parenthesis_two_args_kw_both_orders(case_data, new_val_for_dummy):
+def test_two_args_kw_both_orders(case_data, new_val_for_dummy):
     """ Tests the decorator in a with-empty-parenthesis way @my_decorator() """
 
     replace_by_foo, args_info, is_first_arg_protected = case_data.get()
