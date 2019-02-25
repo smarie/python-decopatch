@@ -19,7 +19,7 @@ def goo():
 
 def is_foo_or_goo(arg):
     if arg in {foo, goo}:
-        return FirstArgDisambiguation.is_positional_arg
+        return FirstArgDisambiguation.is_normal_arg
     else:
         return FirstArgDisambiguation.is_decorated_target
 

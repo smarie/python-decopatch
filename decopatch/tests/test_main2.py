@@ -3,7 +3,8 @@ from enum import Enum
 import pytest
 
 from pytest_cases import cases_data, THIS_MODULE, cases_generator, case_name
-from decopatch import decorator, DECORATED, AmbiguousFirstArgumentTypeError, InvalidMandatoryArgError
+from decopatch import decorator, DECORATED, AmbiguousFirstArgumentTypeError, InvalidMandatoryArgError, \
+    AmbiguousDecoratorDefinitionError
 from decopatch.tests.test_main2_parametrizers import case_no_parenthesis, case_empty_parenthesis, foo, \
     case_one_arg_positional_callable, case_one_arg_positional_noncallable, case_one_arg_positional_noncallable_default, \
     case_one_kwarg_callable, case_one_kwarg_noncallable, \
@@ -67,20 +68,51 @@ def case_easy_0_args_kwonly(parametrizer):
     return decorator(replace_by_foo), expected_err.get(parametrizer.f, default_value)
 
 
-@cases_generator("{protection}_1m_arg(dummy, f=DECORATED)", protection=['unprotected', 'protected'])
+def case_hard_varpositional(parametrizer):
+
+    @decorator(can_first_arg_be_ambiguous=True, enable_stack_introspection=False)
+    def replace_by_foo(*args, f=DECORATED):
+        # tolerant to any order of arguments: 'goo' will be returned if found
+        for a in args:
+            if a is goo:
+                return a
+        return foo
+
+    # common expected errors
+    expected_err = {
+        # not protected: by default
+        case_no_parenthesis: (AmbiguousFirstArgumentTypeError, "using the decorator without parenthesis mimics "
+                                                               "usage with a single arg."),
+        case_one_arg_positional_callable: (AmbiguousFirstArgumentTypeError, "calling a non-protected decorator "
+                                                                            "with a callable leads to an error"),
+        case_one_kwarg_callable: (SKIP, "decorator impl does not accept keyword args"),
+        case_one_kwarg_noncallable: (SKIP, "decorator impl does not accept keyword args"),
+        case_one_kwarg_noncallable_default: (SKIP, "decorator impl does not accept keyword args"),
+    }
+
+    # if parametrizer.f in {case_no_parenthesis, case_one_arg_positional_callable}:
+    #     print()
+
+    default_value = SUCCESS
+
+    return replace_by_foo, expected_err.get(parametrizer.f, default_value)
+
+
+@cases_generator("{protection}_1m_arg(dummy, f=DECORATED)", protection=['unprotected(explicit)', 'protected(default)'])
 def case_hard_1_m_0_opt_noncallable(parametrizer, protection):
     """
     This decorator has 1 mandatory argument. It has therefore a possible ambiguity when called without parenthesis
     """
-    protected = (protection == 'protected')
+    protected = (protection == 'protected(default)')
 
     if not protected:
-        @decorator
+        # we unprotect it explicitly
+        @decorator(can_first_arg_be_ambiguous=True, enable_stack_introspection=False)
         def replace_by_foo(dummy, f=DECORATED):
             return foo
     else:
-        # we protect it by saying that first arg can not be a function/class
-        @decorator(can_first_arg_be_ambiguous=False)
+        # default: we protect it by saying that first arg can not be a function/class
+        @decorator(enable_stack_introspection=False)
         def replace_by_foo(dummy, f=DECORATED):
             return foo
 
@@ -121,21 +153,23 @@ def case_hard_1_m_0_opt_noncallable(parametrizer, protection):
     return replace_by_foo, expected_err.get(parametrizer.f, default_value)
 
 
-@cases_generator("{protection}_1m_arg(replacement, f=DECORATED)", protection=['unprotected', 'protected'])
-def case_hard_1_m_0_opt_callable(parametrizer, protection):
+@cases_generator("{protection}_1m_arg(replacement, f=DECORATED)_kwonly={kw_only}", protection=['protected(default)',
+                                                                              'protected(explicit)'],
+                 kw_only=[False, True])
+def case_hard_1_m_0_opt_callable(parametrizer, protection, kw_only):
     """This decorator has 1 mandatory argument. It has therefore a possible ambiguity when called without parenthesis"""
 
-    protected = (protection == 'protected')
+    protected_explicit = (protection == 'protected(explicit)')
 
-    if not protected:
-        @decorator
+    if not protected_explicit:
+        @decorator(enable_stack_introspection=False)  # (can_first_arg_be_ambiguous=True)
         def replace_by_foo(replacement, f=DECORATED):
             return replacement
     else:
         # we protect it by saying that
         # - first argument should be one of {foo, goo},
         # - and that otherwise it is sure that it is a no-parenthesis call
-        @decorator(callable_or_cls_firstarg_disambiguator=is_foo_or_goo)
+        @decorator(callable_or_cls_firstarg_disambiguator=is_foo_or_goo, enable_stack_introspection=False)
         def replace_by_foo(replacement, f=DECORATED):
             return replacement
 
@@ -153,16 +187,17 @@ def case_hard_1_m_0_opt_callable(parametrizer, protection):
     }
 
     # errors that protection changes
-    if not protected:
+    if not protected_explicit:
+        # note : when can_first_arg_be_ambiguous=True the errors would be 'AmbiguousFirstArgumentTypeError'
         expected_err.update({
-            case_no_parenthesis: (AmbiguousFirstArgumentTypeError, "using the decorator without parenthesis mimics "
+            case_no_parenthesis: (InvalidMandatoryArgError, "using the decorator without parenthesis mimics "
                                                                    "usage with a single arg."),
-            case_one_arg_positional_callable: (AmbiguousFirstArgumentTypeError, "calling a non-protected decorator with "
-                                                          "a callable as first and only non-default argument leads "
-                                                          "to an error"),
-            case_one_kwarg_callable: (AmbiguousFirstArgumentTypeError, "calling a non-protected decorator with "
-                                                          "a callable as first and only non-default argument leads "
-                                                          "to an error"),
+            case_one_arg_positional_callable: (InvalidMandatoryArgError, "calling a decorator with a callable as first "
+                                                                         "and only non-default argument leads by "
+                                                                         "default to an error"),
+            case_one_kwarg_callable: (InvalidMandatoryArgError, "calling a decorator with a callable as first "
+                                                                         "and only non-default argument leads by "
+                                                                         "default to an error"),
         })
     else:
         expected_err.update({
@@ -235,13 +270,19 @@ def case_easy_2_m_0_opt_no_callable(parametrizer):
 
 
 @cases_generator("{protection}_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None, f=DECORATED)",
-                 protection=['unprotected', 'protected'])
+                 protection=['unprotected(explicit)', 'protected(explicit)'])
 def case_hard_0_m_2_opt_callable_last(parametrizer, protection):
 
-    protected = (protection == 'protected')
+    protected = (protection == 'protected(explicit)')
 
     if not protected:
-        @decorator
+        # check that by default there is an error so the unprotected case can not happen anymore
+        with pytest.raises(AmbiguousDecoratorDefinitionError):
+            @decorator(enable_stack_introspection=False)
+            def replace_by_foo(dummy=DEFAULT_DUMMY_VALUE, replacement=None, f=DECORATED):
+                return replacement if replacement is not None else foo
+
+        @decorator(can_first_arg_be_ambiguous=True, enable_stack_introspection=False)
         def replace_by_foo(dummy=DEFAULT_DUMMY_VALUE, replacement=None, f=DECORATED):
             return replacement if replacement is not None else foo
     else:
@@ -254,7 +295,8 @@ def case_hard_0_m_2_opt_callable_last(parametrizer, protection):
     expected_err = {
         case_one_arg_positional_callable: (SKIP, "the first positional arg is supposed not to be the callable here"),
         case_two_args_positional_callable_first: (SKIP, "the order of positional args in the test does not match"),
-        case_two_args_positional_callable_first_dummy_default: (SKIP, "the order of positional args in the test does not match"),
+        case_two_args_positional_callable_first_dummy_default: (SKIP, "the order of positional args in the test does "
+                                                                      "not match"),
     }
 
     # errors that protection changes
@@ -264,19 +306,29 @@ def case_hard_0_m_2_opt_callable_last(parametrizer, protection):
                                                                    "usage with a single arg."),
         })
 
+    # if protected and parametrizer.f is case_no_parenthesis:
+    #     print()
+
     default_value = SUCCESS
 
     return replace_by_foo, expected_err.get(parametrizer.f, default_value)
 
 
 @cases_generator("{protection}_2opt(replacement=None, dummy=DEFAULT_DUMMY_VALUE, f=DECORATED)",
-                 protection=['unprotected', 'protected'])
+                 protection=['unprotected(explicit)', 'protected(explicit)'])
 def case_hard_0_m_2_opt_callable_first(parametrizer, protection):
 
-    protected = (protection == 'protected')
+    protected = (protection == 'protected(explicit)')
 
     if not protected:
-        @decorator
+        # check that by default there is an error so the unprotected case can not happen anymore
+        with pytest.raises(AmbiguousDecoratorDefinitionError):
+            @decorator(enable_stack_introspection=False)
+            def replace_by_foo(replacement=None, dummy=DEFAULT_DUMMY_VALUE, f=DECORATED):
+                return replacement if replacement is not None else foo
+
+        # unprotected explicitly
+        @decorator(can_first_arg_be_ambiguous=True, enable_stack_introspection=False)
         def replace_by_foo(replacement=None, dummy=DEFAULT_DUMMY_VALUE, f=DECORATED):
             return replacement if replacement is not None else foo
     else:
@@ -296,6 +348,7 @@ def case_hard_0_m_2_opt_callable_first(parametrizer, protection):
     # errors that protection changes
     if not protected:
         expected_err.update({
+            # this is with the ambiguous protection "on"
             case_no_parenthesis: (AmbiguousFirstArgumentTypeError, "using the decorator without parenthesis mimics "
                                                                    "usage with a single arg."),
             case_one_arg_positional_callable: (AmbiguousFirstArgumentTypeError, "calling a non-protected decorator "
@@ -307,6 +360,9 @@ def case_hard_0_m_2_opt_callable_first(parametrizer, protection):
                                                                     "non-protected decorator with a callable as first "
                                                                     "and only non-default argument leads to an error"),
         })
+
+    # if parametrizer.f is case_no_parenthesis:
+    #     print()
 
     default_value = SUCCESS
 
@@ -352,52 +408,30 @@ def test_all(case_data, parametrizer):
                 pass
 
 
-def test_var_positional():
-    # put your breakpoints here :)
-    print()
 
-    def foo():
-        pass
-
-    @decorator()
-    def replace_by_foo(*args, f=DECORATED):
-        return foo
-
-    with pytest.raises(AmbiguousFirstArgumentTypeError):
-        @replace_by_foo
-        def bar():
-            pass
-
-    @replace_by_foo()
-    def bar():
-        pass
-
-    assert bar is foo
-
-
-def get_args_info(function):
-    """
-    Returns the nb of arguments of each type in the function's signature.
-    Skips any arg with default value of DECORATED automatically
-
-    :param function:
-    :return:
-    """
-    s = signature(function)
-
-    params_to_check = [p for p in s.parameters.values() if p.default is not DECORATED]
-
-    nb_args = len(params_to_check)
-    nb_m_args = len([p for p in params_to_check if p.default is p.empty])
-
-    # nb optional args
-    nb_opt_args = nb_args - nb_m_args
-
-    first_arg_name = params_to_check[0].name if len(params_to_check) > 0 else None
-
-    has_dummy_kwarg = len([p for p in params_to_check if p.name == 'dummy']) > 0
-    has_replacement_kwarg = len([p for p in params_to_check if p.name == 'replacement']) > 0
-
-    return ArgsDetails(nb_m_args=nb_m_args, nb_opt_args=nb_opt_args,
-                       first_arg_name=first_arg_name, has_dummy_kwarg=has_dummy_kwarg,
-                       has_replacement_kwarg=has_replacement_kwarg)
+# def get_args_info(function):
+#     """
+#     Returns the nb of arguments of each type in the function's signature.
+#     Skips any arg with default value of DECORATED automatically
+#
+#     :param function:
+#     :return:
+#     """
+#     s = signature(function)
+#
+#     params_to_check = [p for p in s.parameters.values() if p.default is not DECORATED]
+#
+#     nb_args = len(params_to_check)
+#     nb_m_args = len([p for p in params_to_check if p.default is p.empty])
+#
+#     # nb optional args
+#     nb_opt_args = nb_args - nb_m_args
+#
+#     first_arg_name = params_to_check[0].name if len(params_to_check) > 0 else None
+#
+#     has_dummy_kwarg = len([p for p in params_to_check if p.name == 'dummy']) > 0
+#     has_replacement_kwarg = len([p for p in params_to_check if p.name == 'replacement']) > 0
+#
+#     return ArgsDetails(nb_m_args=nb_m_args, nb_opt_args=nb_opt_args,
+#                        first_arg_name=first_arg_name, has_dummy_kwarg=has_dummy_kwarg,
+#                        has_replacement_kwarg=has_replacement_kwarg)
