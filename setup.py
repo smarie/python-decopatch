@@ -160,7 +160,4 @@ setup(
     #         'sample=sample:main',
     #     ],
     # },
-
-    # the following makes a plugin available to pytest
-    entry_points={"pytest11": ["harvest = decopatch.plugin"]},
 )

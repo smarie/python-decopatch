@@ -37,7 +37,7 @@ install:
 script:
 #  - coverage run tests.py
   - pip install .
-  - python -c "import os; os.chdir('..'); import decopatch; import decopatch.plugin"
+  - python -c "import os; os.chdir('..'); import decopatch"
 # ***tests***
 #  - coverage run tests.py
 #  - pytest --junitxml=reports/junit/junit.xml --html=reports/junit/report.html --cov-report term-missing --cov=./decopatch -v decopatch/tests/
