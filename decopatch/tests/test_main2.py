@@ -1,3 +1,6 @@
+from __future__ import print_function
+import sys
+from copy import copy
 from enum import Enum
 
 import pytest
@@ -48,16 +51,20 @@ def case_easy_0_args(parametrizer):
     return decorator(replace_by_foo), expected_err.get(parametrizer.f, default_value)
 
 
+@pytest.mark.skipif(sys.version_info < (3, 0), reason="requires python3 or higher")
 @case_name("easy_0_args(*, f=DECORATED)")
 def case_easy_0_args_kwonly(parametrizer):
     """
     This decorator has no arguments and can therefore be used with and without parenthesis
     """
-
-    # Note: we will decorate it later, otherwise the get_args_info will not be accurate in this particular case
-    # @decorator
-    def replace_by_foo(*, f=DECORATED):
-        return foo
+    # only do it if we are in the appropriate python version
+    evaldict = copy(globals())
+    evaldict.update(locals())
+    exec("""
+def replace_by_foo(*, f=DECORATED):
+    return foo
+""", evaldict)
+    replace_by_foo = evaldict['replace_by_foo']
 
     # get_args_info(replace_by_foo),
     expected_err = {case_no_parenthesis: SUCCESS,
@@ -68,15 +75,22 @@ def case_easy_0_args_kwonly(parametrizer):
     return decorator(replace_by_foo), expected_err.get(parametrizer.f, default_value)
 
 
+@pytest.mark.skipif(sys.version_info < (3, 0), reason="requires python3 or higher")
 def case_hard_varpositional(parametrizer):
 
-    @decorator(can_first_arg_be_ambiguous=True, enable_stack_introspection=False)
-    def replace_by_foo(*args, f=DECORATED):
-        # tolerant to any order of arguments: 'goo' will be returned if found
-        for a in args:
-            if a is goo:
-                return a
-        return foo
+    # only do it if we are in the appropriate python version
+    evaldict = copy(globals())
+    evaldict.update(locals())
+    exec("""
+@decorator(can_first_arg_be_ambiguous=True, enable_stack_introspection=False)
+def replace_by_foo(*args, f=DECORATED):
+    # tolerant to any order of arguments: 'goo' will be returned if found
+    for a in args:
+        if a is goo:
+            return a
+    return foo
+""", evaldict)
+    replace_by_foo = evaldict['replace_by_foo']
 
     # common expected errors
     expected_err = {

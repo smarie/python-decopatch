@@ -1,3 +1,6 @@
+from __future__ import print_function
+import sys
+
 import pytest
 
 from decopatch import function_decorator, DECORATED, \
@@ -272,13 +275,18 @@ def test_doc_usage_first_tag_mandatory():
 
 # ----------- more complex / other tests derived from the above for the advanced section
 
+@pytest.mark.parametrize('with_star', [True], ids="kwonly={}".format)
 @pytest.mark.parametrize('uses_introspection', [True, False], ids="uses_introspection={}".format)
-def test_doc_impl_first_tag_mandatory_protected(uses_introspection):
+def test_doc_impl_first_tag_mandatory_protected(with_star, uses_introspection):
 
-    @function_decorator(enable_stack_introspection=uses_introspection)
-    def add_tag(*, tag, f=DECORATED):
-        setattr(f, 'my_tag', tag)
-        return f
+    if with_star:
+        if sys.version_info < (3, 0):
+            pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
+        else:
+            from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_mandatory_protected_with_star
+            add_tag = create_test_doc_impl_first_tag_mandatory_protected_with_star(uses_introspection)
+    else:
+        raise NotImplementedError()
 
     @add_tag(tag='hello')
     def foo():
@@ -299,22 +307,29 @@ def test_doc_impl_first_tag_mandatory_protected(uses_introspection):
     assert foo.my_tag == print
 
 
-def test_doc_impl_first_tag_optional_nonprotected():
+@pytest.mark.parametrize('with_star', [False, True], ids="kwonly={}".format)
+def test_doc_impl_first_tag_optional_nonprotected(with_star):
     """Tests that an error is raised when nonprotected code is created """
-
     with pytest.raises(AmbiguousDecoratorDefinitionError):
-        @function_decorator(enable_stack_introspection=False)
-        def add_tag(*, tag='tag!', f=DECORATED):
-            """
-            This decorator adds the 'my_tag' tag on the decorated function,
-            with the value provided as argument
+        if with_star:
+            if sys.version_info < (3, 0):
+                pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
+            else:
+                from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_optional_nonprotected_star
+                add_tag = create_test_doc_impl_first_tag_optional_nonprotected_star()
+        else:
+            @function_decorator(enable_stack_introspection=False)
+            def add_tag(tag='tag!', f=DECORATED):
+                """
+                This decorator adds the 'my_tag' tag on the decorated function,
+                with the value provided as argument
 
-            :param tag: the tag value to set
-            :param f: represents the decorated item. Automatically injected.
-            :return:
-            """
-            setattr(f, 'my_tag', tag)
-            return f
+                :param tag: the tag value to set
+                :param f: represents the decorated item. Automatically injected.
+                :return:
+                """
+                setattr(f, 'my_tag', tag)
+                return f
 
     # @add_tag(tag='hello')
     # def foo():
@@ -328,21 +343,6 @@ def test_doc_impl_first_tag_optional_nonprotected():
     #
     # assert foo.my_tag == 'tag!'
 
-    # without star is the same
-    with pytest.raises(AmbiguousDecoratorDefinitionError):
-        @function_decorator(enable_stack_introspection=False)
-        def add_tag(tag='tag!', f=DECORATED):
-            """
-            This decorator adds the 'my_tag' tag on the decorated function,
-            with the value provided as argument
-
-            :param tag: the tag value to set
-            :param f: represents the decorated item. Automatically injected.
-            :return:
-            """
-            setattr(f, 'my_tag', tag)
-            return f
-
 
 @pytest.mark.parametrize('with_star', [False, True], ids="kwonly={}".format)
 @pytest.mark.parametrize('uses_introspection', [True, False], ids="introspection={}".format)
@@ -350,20 +350,11 @@ def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
     """ The second implementation-first example in the doc """
 
     if with_star:
-        # protect it explicitly if introspection is disabled
-        @function_decorator(can_first_arg_be_ambiguous=None if uses_introspection else False,
-                            enable_stack_introspection=uses_introspection)
-        def add_tag(*, tag='tag!', f=DECORATED):
-            """
-            This decorator adds the 'my_tag' tag on the decorated function,
-            with the value provided as argument
-
-            :param tag: the tag value to set
-            :param f: represents the decorated item. Automatically injected.
-            :return:
-            """
-            setattr(f, 'my_tag', tag)
-            return f
+        if sys.version_info < (3, 0):
+            pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
+        else:
+            from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_optional_protected
+            add_tag = create_test_doc_impl_first_tag_optional_protected(uses_introspection)
     else:
         # protect it explicitly if introspection is disabled
         @function_decorator(can_first_arg_be_ambiguous=None if uses_introspection else False,
