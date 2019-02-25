@@ -691,15 +691,24 @@ def disambiguate_using_introspection(decorator_function,  # type: Callable
     :return:
     """
     try:
-        # based on inspect, can maybe be optimized...
+        # TODO inspect.stack and inspect.currentframe are extremely slow
+        # https://gist.github.com/JettJones/c236494013f22723c1822126df944b12
+        # --
         # curframe = currentframe()
         # calframe = getouterframes(curframe, 4)
+        # --or
         calframe = stack(3)
+        # ----
+        filename = calframe[5][1]
 
-        # print(calframe[5].code_context)
-        # print(calframe[5].filename)
+        # frame = sys._getframe(5)
+        # filename = frame.f_code.co_filename
+        # frame_info = traceback.extract_stack(f=frame, limit=6)[0]
+        # filename =frame_info.filename
 
-        if not calframe[5].filename.startswith('<'):
+        # print(filename)
+
+        if not filename.startswith('<'):
             # normal case
             context_idx = 0 if isclass(first_arg_received) else 1
         else:
@@ -707,16 +716,18 @@ def disambiguate_using_introspection(decorator_function,  # type: Callable
             # warning('disambiguating input within ipython... special care: this might be incorrect')
             # # TODO strangely the behaviour of stack() is reversed in this case and the deeper the target the more
             #  context we need.... quite difficult to handle in a generic simple way
-            # calframe = stack(4)
-            # print(calframe[5].code_context)
-            # context_idx = 0
             raise Exception("Decorator disambiguation using stack introspection is not available in Jupyter/iPython."
                             " Please use the decorator in a non-ambiguous way. For example use explicit parenthesis"
                             " @%s() for no-arg usage, or use 2 non-default arguments, or use explicit keywords. "
                             "Ambiguous argument received: %s, first argument name is '%s'"
                             "" % (decorator_function.__name__, first_arg_received, name_first_arg))
 
-        cal_line_str = calframe[5].code_context[context_idx].lstrip()
+        # --with inspect..
+        code_context = calframe[5][4]
+        cal_line_str = code_context[context_idx].lstrip()
+        # --with
+        # cal_line_str = frame_info.line
+
         # print(cal_line_str)
 
         if cal_line_str.startswith('@'):
@@ -779,7 +790,7 @@ def with_parenthesis_usage(decorator_function, is_impl_first_mode, injected_arg_
                 if type(err) is TypeError and err.args:
                     try:
                         idx = err.args[0].index('takes 0 positional arguments but 1 positional argument (')
-                        err.args = (err.args[0][0:(idx+55)] + 'were given.', *err.args[1:])
+                        err.args = (err.args[0][0:(idx+55)] + 'were given.',) + err.args[1:]
                     except:
                         pass
                 raise
