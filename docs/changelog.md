@@ -1,5 +1,5 @@
 # Changelog
 
-### 0.1.0 in progress - First version
+### 0.5.0 - First version
 
-TODO
+Fully functional with 100+ tests.
