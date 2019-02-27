@@ -20,4 +20,10 @@ trap "cleanup" INT TERM EXIT
 
 # First the raw for coverage
 echo -e "\n\n****** Running tests ******\n\n"
-python -m pytest --junitxml=reports/junit/junit.xml --html=reports/junit/report.html --cov-report term-missing --cov=./decopatch -v decopatch/tests/
+if [ "${TRAVIS_PYTHON_VERSION}" = "3.5" ]; then
+   # full
+   python -m pytest --junitxml=reports/junit/junit.xml --html=reports/junit/report.html --cov-report term-missing --cov=./decopatch -v decopatch/tests/
+else
+   # faster - skip coverage and html report
+   python -m pytest --junitxml=reports/junit/junit.xml -v decopatch/tests/
+fi
