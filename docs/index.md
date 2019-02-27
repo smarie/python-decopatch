@@ -6,12 +6,11 @@
 
 [![Documentation](https://img.shields.io/badge/doc-latest-blue.svg)](https://smarie.github.io/python-decopatch/) [![PyPI](https://img.shields.io/pypi/v/decopatch.svg)](https://pypi.python.org/pypi/decopatch/) [![Downloads](https://pepy.tech/badge/decopatch)](https://pepy.tech/project/decopatch) [![Downloads per week](https://pepy.tech/badge/decopatch/week)](https://pepy.tech/project/decopatch) [![GitHub stars](https://img.shields.io/github/stars/smarie/python-decopatch.svg)](https://github.com/smarie/python-decopatch/stargazers)
 
+Because of a tiny oddity in the python language, writing decorators without help can be a pain. `decopatch` provides a simple way to solve this issue.
 
 ## Motivation
 
-### Problem
-
-Because of a tiny language oddity, writing decorators in python without help can be a pain.
+### a- Problem
 
 In python, a decorator used without arguments such as 
 
@@ -29,7 +28,7 @@ def foo(a, b):
     pass
 ```
 
-Indeed (1) requires `say_hello` to return a replacement for the decorated object directly (in that case function `foo`), while (2) requires `say_hello` to return a function that returns a replacement for the decorated object ! This is one more level of nesting. If you wish to handle both situations in a robust way, **you end-up having to design some ridiculously complex code**, relying on some well-known "tricks" based either on checking the type or existence of first argument provided. For example:
+Indeed (1) requires `say_hello` to directly return a replacement for the decorated object (in that case function `foo`), while (2) requires `say_hello` to return a **function** that returns a replacement for the decorated object ! This is one more level of nesting. If you wish to handle both situations in a robust way, **you end-up having to design some ridiculously complex code**, relying on some well-known "tricks" based either on checking the type or existence of first argument provided. For example:
 
 ```python
 def say_hello(f=None):
@@ -49,15 +48,39 @@ def say_hello(f=None):
         return decorate
 ```
 
-Besides, the 'trick' to use will be different for almost every type of decorator signature (var-args, keyword-only, all-optional, ...). So if you change your mind about your API during development time (it always happen, at least to me :)), you end up having to change this code several times!
+Unfortunately, the 'trick' to use is different for almost every type of decorator signature (var-args, keyword-only, all-optional, ...). So if you change your mind about your API during development time (this often happens, at least to me :)), you end up having to change this useless piece of code several times!
 
-### Solution
+### b- Solution
 
-`decopatch` provides a simple way to solve this issue. It always uses the best "trick", so that you do not have to care. 
+`decopatch` provides a simple way to solve this issue. It always uses the best "trick", so that you do not have to care, you just implement one case:
 
-Besides, it supports **two ways of thinking** for developers: *nested* and *flat*. In both cases, generated decorators have a proper help and signature so that users only see what they need to see.
+```python
+from decopatch import function_decorator
 
-### Why something new ?
+@function_decorator
+def say_hello():
+    def _decorate_f(f):
+        def new_f(...):
+            ...
+        return new_f
+    return _decorate_f
+```
+
+To ease things even more, `decopatch` also supports a *flat* mode:
+
+```python
+from decopatch import function_decorator, DECORATED
+
+@function_decorator
+def say_hello(f=DECORATED):
+    def new_f(...):
+        ...
+    return new_f
+```
+
+In both cases, generated decorators have a proper `help` and `signature`, so users do not see the difference.
+
+### c- Why something new ?
 
 As opposed to the great [`decorator`](https://github.com/micheles/decorator) and [`wrapt`](https://wrapt.readthedocs.io/) libraries, `decopatch` does not try **at the same time** to help you create decorators and function wrappers. In my opinion creating function wrappers is a completely independent topic, you can wish to do it in with a decorator OR without. 
 
@@ -263,7 +286,7 @@ In *nested* mode you write your decorator's signature thinking about what the **
 
 In other words, *nested* mode is equivalent to how you write python decorators with arguments today, except that you do not have to write anything special to handle the case where your decorator is used without parenthesis. It is silently redirected to the case where it is used with parenthesis. 
 
-To write decorators in this mode, you only have to decorate them with `@function_decorator`, `@class_decorator` or `@decorator`. Make sure that `wraps` is not set, and that none of your arguments has the `DECORATED` default value.
+To write decorators in this mode, you only have to decorate them with `@function_decorator`, `@class_decorator` or `@decorator`.
 
 #### *1- Simple with mandatory arg*
 
