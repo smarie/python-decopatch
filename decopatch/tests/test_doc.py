@@ -1,10 +1,10 @@
 from __future__ import print_function
-import sys
+
 
 import pytest
+from makefun import with_signature
 
-from decopatch import function_decorator, DECORATED, \
-    InvalidMandatoryArgError, AmbiguousDecoratorDefinitionError, class_decorator
+from decopatch import function_decorator, DECORATED, WRAPPED, F_ARGS, F_KWARGS, decorator
 
 try:  # python 3.3+
     from inspect import signature
@@ -12,171 +12,173 @@ except ImportError:
     from funcsigs import signature
 
 
-@pytest.mark.parametrize('usage_first', [True, False], ids="usage_first={}".format)
-@pytest.mark.parametrize('uses_introspection', [True, False], ids="uses_introspection={}".format)
-def test_doc_impl_first_tag_mandatory(uses_introspection, usage_first):
-    """ The first implementation-first example in the doc """
+@pytest.mark.parametrize('flat_mode', [False, True])
+def test_doc_add_tag_function(flat_mode):
+    """ Tests that the @add_tag example from doc (functions only) works """
 
-    if usage_first:
-        @function_decorator(enable_stack_introspection=uses_introspection)
-        def add_tag(tag):
+    if not flat_mode:
+        @function_decorator
+        def add_tag(tag='hi!'):
             """
-            This decorator adds the 'my_tag' tag on the decorated function,
-            with the value provided as argument
+            This is the @add_tag decorator. Its signature and docstring are the ones
+            that users will see.
+            ---
+            Example decorator to add a 'tag' attribute to a function. It can be used
+            with and without parenthesis, with and without arguments.
 
-            :param tag: the tag value to set
-            :param f: represents the decorated item. Automatically injected.
-            :return:
+            :param tag: the 'tag' value to set on the decorated function (default 'hi!).
             """
 
-            def replace_f(f):
-                setattr(f, 'my_tag', tag)
+            def apply_decorator(f):
+                """
+                This is the method that will be called when your decorator is used on a
+                function `f`. It should return the replacement for this function (it can
+                be the same object, or another one, not even a function!)
+                """
+                setattr(f, 'tag', tag)
                 return f
 
-            return replace_f
-    else:
-        @function_decorator(enable_stack_introspection=uses_introspection)
-        def add_tag(tag, f=DECORATED):
-            """
-            This decorator adds the 'my_tag' tag on the decorated function,
-            with the value provided as argument
+            return apply_decorator
 
-            :param tag: the tag value to set
-            :param f: represents the decorated item. Automatically injected.
-            :return:
+    else:
+        @function_decorator
+        def add_tag(tag='hi!', f=DECORATED):
             """
-            setattr(f, 'my_tag', tag)
+            This is the @add_tag decorator. Its signature (except `f`) and docstring are
+            the ones that users will see.
+
+            This method will be called when your decorator is used on a function `f`, with
+            or without parenthesis or parameters. It should return the replacement for
+            this function (it can be the same object or another one, not even a function!)
+            ---
+            Example decorator to add a 'tag' attribute to a function. It can be used
+            with and without parenthesis, with and without arguments.
+
+            :param tag: the 'tag' value to set on the decorated function (default 'hi!).
+            """
+            setattr(f, 'tag', tag)
             return f
+
+    @add_tag
+    def foo():
+        pass
+
+    assert foo.tag == 'hi!'
+
+    @add_tag()
+    def foo():
+        pass
+
+    assert foo.tag == 'hi!'
 
     @add_tag('hello')
     def foo():
-        return
+        pass
 
-    assert foo.my_tag == 'hello'
+    assert foo.tag == 'hello'
 
-    err_type = TypeError if uses_introspection else InvalidMandatoryArgError
-    with pytest.raises(err_type):
-        # add_tag() missing 1 required positional argument: 'tag'
-        @add_tag
+    # manual mode
+    add_tag()(foo)
+    assert foo.tag == 'hi!'
+
+    print(help(add_tag))
+
+    assert str(signature(add_tag)) == "(tag='hi!')"
+
+
+@pytest.mark.parametrize('mode', ['nested', 'flat', 'double-flat'])
+def test_doc_say_hello(capsys, mode):
+    """ Tests that the @say_hello example from doc works """
+
+    with capsys.disabled():
+        if mode == 'nested':
+            @function_decorator
+            def say_hello(person="world", f=DECORATED):
+                """
+                This decorator wraps the decorated function so that a nice hello
+                message is printed before each call.
+
+                :param person: the person name in the print message. Default = "world"
+                """
+
+                # create a wrapper of f that will do the print before call
+                # we rely on `makefun.with_signature` to preserve signature
+                @with_signature(f)
+                def new_f(*args, **kwargs):
+                    print("hello, %s !" % person)  # say hello
+                    return f(*args, **kwargs)  # call f
+
+                # return the new function
+                return new_f
+        elif mode == 'flat':
+            @function_decorator
+            def say_hello(person="world", f=DECORATED):
+                """
+                This decorator wraps the decorated function so that a nice hello
+                message is printed before each call.
+
+                :param person: the person name in the print message. Default = "world"
+                """
+
+                # create a wrapper of f that will do the print before call
+                # we rely on `makefun.with_signature` to preserve signature
+                @with_signature(f)
+                def new_f(*args, **kwargs):
+                    print("hello, %s !" % person)  # say hello
+                    return f(*args, **kwargs)  # call f
+
+                # return the new function
+                return new_f
+
+        elif mode == 'double-flat':
+            @function_decorator
+            def say_hello(person="world", f=WRAPPED, f_args=F_ARGS, f_kwargs=F_KWARGS):
+                """
+                This decorator wraps the decorated function so that a nice hello
+                message is printed before each call.
+
+                :param person: the person name in the print message. Default = "world"
+                """
+                print("hello, %s !" % person)  # say hello
+                return f(*f_args, **f_kwargs)  # call f
+
+        else:
+            raise ValueError("unsupported mode : %s" % mode)
+
+    # for debug..
+    with capsys.disabled():
+        @say_hello  # no parenthesis
         def foo():
-            if True:
-                return
+            print("<executing foo>")
 
-    if not uses_introspection:
-        with pytest.raises(InvalidMandatoryArgError):
-            # first argument is a callable > problem
-            @add_tag(print)
-            def foo():
-                return
-    else:
-        # no problem
-        @add_tag(print)
-        def foo():
-            return
+    # for debug..
+    with capsys.disabled():
+        foo()
 
-        assert foo.my_tag == print
+    foo()
 
+    @say_hello()  # empty parenthesis
+    def bar():
+        print("<executing bar>")
 
-def test_doc_impl_first_tag_optional():
-    """ The second implementation-first example in the doc """
+    bar()
 
-    @function_decorator
-    def add_tag(tag='tag!', f=DECORATED):
-        """
-        This decorator adds the 'my_tag' tag on the decorated function,
-        with the value provided as argument
+    @say_hello("you")  # arg
+    def custom():
+        print("<executing custom>")
 
-        :param tag: the tag value to set
-        :param f: represents the decorated item. Automatically injected.
-        :return:
-        """
-        setattr(f, 'my_tag', tag)
-        return f
+    custom()
 
-    @add_tag('hello')  # normal arg
-    def foo():
-        return
+    # manual decoration
+    def custom2():
+        print("<executing custom2>")
 
-    assert foo.my_tag == 'hello'
-
-    @add_tag(tag='hello')  # normal kwarg
-    def foo():
-        return
-
-    assert foo.my_tag == 'hello'
-
-    @add_tag  # no parenthesis
-    def foo():
-        return
-
-    assert foo.my_tag == 'tag!'
-
-    @add_tag()  # empty parenthesis
-    def foo():
-        return
-
-    assert foo.my_tag == 'tag!'
-
-    @add_tag(print)  # callable as first arg
-    def foo():
-        return
-
-    assert foo.my_tag == print
-
-    @add_tag(tag=print)  # callable as first kwarg
-    def foo():
-        return
-
-    assert foo.my_tag == print
-
-
-def test_doc_impl_first_say_hello(capsys):
-    """The second implementation-first example in the doc"""
-
-    @function_decorator
-    def say_hello(person='world', f=DECORATED):
-        """
-        This decorator modifies the decorated function so that a nice hello
-        message is printed before the call.
-
-        :param person: the person name in the print message. Default = "world"
-        :param f: represents the decorated item. Automatically injected.
-        :return: a modified version of `f` that will print a hello message before executing
-        """
-
-        # create a wrapper of f that will do the print before call
-        # we rely on `makefun.with_signature` to preserve signature
-        def new_f(*args, **kwargs):
-            # nonlocal person
-            person = new_f.person
-            print("hello, %s !" % person)  # say hello
-            return f(*args, **kwargs)  # call f
-
-        # we use the trick at https://stackoverflow.com/a/16032631/7262247
-        # to access the nonlocal 'person' variable in python 2 and 3
-        # for python 3 only you can use 'nonlocal' https://www.python.org/dev/peps/pep-3104/
-        new_f.person = person
-
-        # return the wrapper
-        return new_f
-
-    @say_hello
-    def foo(a, b):
-        return a + b
-
-    @say_hello()
-    def bar(a, b):
-        return a + b
-
-    @say_hello("you")
-    def custom(a, b):
-        return a + b
-
-    assert foo(1, 3) == 4
-    assert bar(1, 3) == 4
-    assert custom(1, 3) == 4
+    custom2 = say_hello()(custom2)
+    custom2()
 
     help(say_hello)
+
+    assert str(signature(say_hello)) == "(person='world')"
 
     print("Signature: %s" % signature(say_hello))
 
@@ -185,17 +187,20 @@ def test_doc_impl_first_say_hello(capsys):
         print(captured.out)
 
     assert captured.out == """hello, world !
+<executing foo>
 hello, world !
+<executing bar>
 hello, you !
+<executing custom>
+hello, world !
+<executing custom2>
 Help on function say_hello in module decopatch.tests.test_doc:
 
 say_hello(person='world')
-    This decorator modifies the decorated function so that a nice hello
-    message is printed before the call.
+    This decorator wraps the decorated function so that a nice hello
+    message is printed before each call.
     
     :param person: the person name in the print message. Default = "world"
-    :param f: represents the decorated item. Automatically injected.
-    :return: a modified version of `f` that will print a hello message before executing
 
 Signature: (person='world')
 """
@@ -203,213 +208,90 @@ Signature: (person='world')
     assert captured.err == ""
 
 
-@pytest.mark.parametrize('uses_introspection', [True, False])
-def test_doc_impl_first_class_tag_mandatory(uses_introspection):
-    """ The first implementation-first example in the doc """
+@pytest.mark.parametrize('flat_mode', [False, True], ids="flat_mode={}".format)
+def test_doc_add_tag_class_and_function(flat_mode):
+    """ Tests that the @add_tag example from doc (function + class) works """
 
-    @class_decorator(enable_stack_introspection=uses_introspection)
-    def add_tag(tag, c=DECORATED):
-        """
-        This decorator adds the 'my_tag' tag on the decorated function,
-        with the value provided as argument
-
-        :param tag: the tag value to set
-        :param c: represents the decorated item. Automatically injected.
-        :return:
-        """
-        setattr(c, 'my_tag', tag)
-        return c
-
-    @add_tag('hello')
-    class Foo(object):
-        pass
-
-    assert Foo.my_tag == 'hello'
-
-    err_type = TypeError if uses_introspection else InvalidMandatoryArgError
-    with pytest.raises(err_type):
-        # add_tag() missing 1 required positional argument: 'tag'
-        @add_tag
-        class Foo(object):
-            def __init__(self):
-                if True:
-                    pass
-
-            def blah(self):
-                pass
-
-    if not uses_introspection:
-        with pytest.raises(InvalidMandatoryArgError):
-            # first argument is a class > problem
-            @add_tag(object)
-            class Foo(object):
-                pass
-    else:
-        # no problem
-        @add_tag(object)
-        class Foo(object):
-            pass
-
-        assert Foo.my_tag == object
-
-
-def test_doc_usage_first_tag_mandatory():
-
-    @function_decorator
-    def add_tag(tag):
-        """
-        This decorator adds the 'my_tag' tag on the decorated function,
-        with the value provided as argument
-
-        :param tag: the tag value to set
-        :param f: represents the decorated item. Automatically injected.
-        :return:
-        """
-
-        def replace_f(f):
-            setattr(f, 'my_tag', tag)
-            return f
-
-        return replace_f
-
-
-# ----------- more complex / other tests derived from the above for the advanced section
-
-@pytest.mark.parametrize('with_star', [True], ids="kwonly={}".format)
-@pytest.mark.parametrize('uses_introspection', [True, False], ids="uses_introspection={}".format)
-def test_doc_impl_first_tag_mandatory_protected(with_star, uses_introspection):
-
-    if with_star:
-        if sys.version_info < (3, 0):
-            pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
-        else:
-            from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_mandatory_protected_with_star
-            add_tag = create_test_doc_impl_first_tag_mandatory_protected_with_star(uses_introspection)
-    else:
-        raise NotImplementedError()
-
-    @add_tag(tag='hello')
-    def foo():
-        return
-
-    assert foo.my_tag == 'hello'
-
-    with pytest.raises(TypeError):
-        # add_tag() missing 1 required positional argument: 'tag'
-        @add_tag
-        def foo():
-            return
-
-    @add_tag(tag=print)
-    def foo():
-        return
-
-    assert foo.my_tag == print
-
-
-@pytest.mark.parametrize('with_star', [False, True], ids="kwonly={}".format)
-def test_doc_impl_first_tag_optional_nonprotected(with_star):
-    """Tests that an error is raised when nonprotected code is created """
-    with pytest.raises(AmbiguousDecoratorDefinitionError):
-        if with_star:
-            if sys.version_info < (3, 0):
-                pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
-            else:
-                from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_optional_nonprotected_star
-                add_tag = create_test_doc_impl_first_tag_optional_nonprotected_star()
-        else:
-            @function_decorator(enable_stack_introspection=False)
-            def add_tag(tag='tag!', f=DECORATED):
-                """
-                This decorator adds the 'my_tag' tag on the decorated function,
-                with the value provided as argument
-
-                :param tag: the tag value to set
-                :param f: represents the decorated item. Automatically injected.
-                :return:
-                """
-                setattr(f, 'my_tag', tag)
-                return f
-
-    # @add_tag(tag='hello')
-    # def foo():
-    #     return
-    #
-    # assert foo.my_tag == 'hello'
-    #
-    # @add_tag
-    # def foo():
-    #     return
-    #
-    # assert foo.my_tag == 'tag!'
-
-
-@pytest.mark.parametrize('with_star', [False, True], ids="kwonly={}".format)
-@pytest.mark.parametrize('uses_introspection', [True, False], ids="introspection={}".format)
-def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
-    """ The second implementation-first example in the doc """
-
-    if with_star:
-        if sys.version_info < (3, 0):
-            pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
-        else:
-            from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_optional_protected
-            add_tag = create_test_doc_impl_first_tag_optional_protected(uses_introspection)
-    else:
-        # protect it explicitly if introspection is disabled
-        @function_decorator(can_first_arg_be_ambiguous=None if uses_introspection else False,
-                            enable_stack_introspection=uses_introspection)
-        def add_tag(tag='tag!', f=DECORATED):
+    if not flat_mode:
+        @decorator
+        def add_tag(tag='hi!'):
             """
-            This decorator adds the 'my_tag' tag on the decorated function,
-            with the value provided as argument
+            Example decorator to add a 'tag' attribute to a function or class. It can be
+            used with and without parenthesis, with and without arguments.
 
-            :param tag: the tag value to set
-            :param f: represents the decorated item. Automatically injected.
-            :return:
+            :param tag: the 'tag' value to set on the decorated item (default 'hi!).
             """
-            setattr(f, 'my_tag', tag)
-            return f
 
-    @add_tag(tag='hello')
-    def foo():
-        return
+            def _apply_decorator(o):
+                """
+                This is the method that will be called when your decorator is used on an
+                object `i`. It should return the replacement for this object (it can
+                be the same object, or another one, not even the same type!)
+                """
+                setattr(o, 'tag', tag)
+                return o
 
-    assert foo.my_tag == 'hello'
+            return _apply_decorator
+
+    else:
+        @decorator
+        def add_tag(tag='hi!', o=DECORATED):
+            """
+            Example decorator to add a 'tag' attribute to a function or class. It can be
+            used with and without parenthesis, with and without arguments.
+
+            :param tag: the 'tag' value to set on the decorated item (default 'hi!).
+            """
+            setattr(o, 'tag', tag)
+            return o
 
     @add_tag
     def foo():
-        return
+        pass
 
-    assert foo.my_tag == 'tag!'
+    assert foo.tag == 'hi!'
 
-    if with_star or uses_introspection:
-        # when we add the star, disambiguation always works (even without introspection
-        @add_tag(tag=print)
-        def foo():
-            return
+    @add_tag()
+    def foo():
+        pass
 
-        assert foo.my_tag == print
-    else:
-        # when we do not add the star and "poor man's disambiguation" (no introspection) is used, theres a problem
-        with pytest.raises(AttributeError):
-            @add_tag(tag=print)
-            def foo():
-                return
+    assert foo.tag == 'hi!'
 
-    if not uses_introspection:
-        with pytest.raises(AttributeError):
-            @add_tag(print)
-            def foo():
-                return
-    elif with_star:
-        with pytest.raises(TypeError):
-            @add_tag(print)
-            def foo():
-                return
-    else:
-        @add_tag(print)
-        def foo():
-            return
+    @add_tag('hello')
+    def foo():
+        pass
 
-        assert foo.my_tag == print
+    assert foo.tag == 'hello'
+
+    # manual mode
+    add_tag()(foo)
+    assert foo.tag == 'hi!'
+
+    # classes
+
+    @add_tag
+    class Foo():
+        pass
+
+    assert Foo.tag == 'hi!'
+
+    @add_tag()
+    class Foo():
+        pass
+
+    assert Foo.tag == 'hi!'
+
+    @add_tag('hello')
+    class Foo():
+        pass
+
+    assert Foo.tag == 'hello'
+
+    # manual mode
+    add_tag()(Foo)
+    assert Foo.tag == 'hi!'
+
+    print(help(add_tag))
+
+    assert str(signature(add_tag)) == "(tag='hi!')"
+

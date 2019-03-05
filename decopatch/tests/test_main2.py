@@ -292,7 +292,7 @@ def case_hard_0_m_2_opt_callable_last(parametrizer, protection):
     if not protected:
         # check that by default there is an error so the unprotected case can not happen anymore
         with pytest.raises(AmbiguousDecoratorDefinitionError):
-            @decorator(enable_stack_introspection=False)
+            @decorator(enable_stack_introspection=False, can_first_arg_be_ambiguous=None)
             def replace_by_foo(dummy=DEFAULT_DUMMY_VALUE, replacement=None, f=DECORATED):
                 return replacement if replacement is not None else foo
 
@@ -337,7 +337,7 @@ def case_hard_0_m_2_opt_callable_first(parametrizer, protection):
     if not protected:
         # check that by default there is an error so the unprotected case can not happen anymore
         with pytest.raises(AmbiguousDecoratorDefinitionError):
-            @decorator(enable_stack_introspection=False)
+            @decorator(enable_stack_introspection=False, can_first_arg_be_ambiguous=None)
             def replace_by_foo(replacement=None, dummy=DEFAULT_DUMMY_VALUE, f=DECORATED):
                 return replacement if replacement is not None else foo
 

@@ -16,7 +16,7 @@ def create_test_doc_impl_first_tag_mandatory_protected_with_star(uses_introspect
 def create_test_doc_impl_first_tag_optional_nonprotected_star():
     """Tests that an error is raised when nonprotected code is created """
 
-    @function_decorator(enable_stack_introspection=False)
+    @function_decorator(enable_stack_introspection=False, can_first_arg_be_ambiguous=None)
     def add_tag(*, tag='tag!', f=DECORATED):
         """
         This decorator adds the 'my_tag' tag on the decorated function,
