@@ -2,7 +2,7 @@ from enum import Enum
 from inspect import isclass, stack
 
 from makefun import with_signature, remove_signature_parameters, add_signature_parameters
-from decopatch.utils_signatures import get_decorated_parameter, get_first_parameter
+from decopatch.utils_signatures import extract_mode_info, get_first_parameter, DECORATED, WRAPPED
 
 try:  # python 3.3+
     from inspect import signature, Parameter, Signature
@@ -27,7 +27,7 @@ class FirstArgDisambiguation(Enum):
 def function_decorator(enable_stack_introspection=True,              # type: bool
                        can_first_arg_be_ambiguous=None,              # type: Optional[bool]
                        callable_or_cls_firstarg_disambiguator=None,  # type: Callable[[Any], FirstArgDisambiguation]
-                       decorated=None,                                   # type: Optional[str]
+                       decorated=None,                               # type: Optional[str]
                        ):
     """
     A decorator to create function decorators.
@@ -58,7 +58,7 @@ def function_decorator(enable_stack_introspection=True,              # type: boo
 def class_decorator(enable_stack_introspection=True,              # type: bool
                     can_first_arg_be_ambiguous=None,              # type: Optional[bool]
                     callable_or_cls_firstarg_disambiguator=None,  # type: Callable[[Any], FirstArgDisambiguation]
-                    decorated=None,                                   # type: Optional[str]
+                    decorated=None,                               # type: Optional[str]
                     ):
     """
     A decorator to create class decorators
@@ -96,9 +96,9 @@ def decorator(is_function_decorator=True,                   # type: bool
     """
     A decorator to create decorators.
 
-    It support two modes: "implementation-first", and "usage-first".
+    It support two main modes: "nested", and "flat".
 
-    In "implementation-first" mode your implementation is flat:
+    In "flat" mode your implementation is flat:
 
     ```python
     def my_decorator(a, b, f=DECORATED):
@@ -106,11 +106,11 @@ def decorator(is_function_decorator=True,                   # type: bool
         return <replacement for f>
     ```
 
-    For "implementation-first" mode to be automatically detected, your implementation has to have an argument with
-    default value DECORATED. This argument will be injected with the decorated target when you rdecorator is used.
-    Alternately you can explicitly provide the injected argument name by specifying a non-None `decorated` argument.
+    For this mode to be automatically detected, your implementation has to have an argument with default value
+    `DECORATED`, or a non-None `decorated` argument name should be provided. This argument will be injected with the
+    decorated target when your decorator is used.
 
-    In any other case the "usage-first" mode is activated. In this mode your implementation is nested:
+    In any other case the "nested" mode is activated. In this mode your implementation is nested:
 
     ```python
     def my_decorator(a, b):
@@ -121,13 +121,19 @@ def decorator(is_function_decorator=True,                   # type: bool
     ```
 
     In both modes, because python language does not redirect no-parenthesis usages (@my_decorator) to no-args usages
-    (@my_decorator()), there is a need for disambiguation in some cases.
+    (@my_decorator()), `decopatch` tries to disambiguate automatically the type of call.
 
-    The default behaviour is the following:
-     - if your function has 0 arguments, everything works as expected. Your decorator can be used with and without
-     parenthesis, this will lead to the same call to your implementation function.
+    Here is the logic is follows:
+    TODO
 
-     TODO continue
+
+    Finally you can use this function to directly create a "function wrapper" decorator. For this, use
+    the `WRAPPED` default value instead of `DECORATED`, and include two arguments with default values `F_ARGS` and
+    `F_KWARGS`:
+
+    ```python
+
+    ```
 
     :param is_function_decorator:
     :param is_class_decorator:
@@ -187,36 +193,66 @@ def create_decorator(decorator_function,
     # extract the implementation's signature
     implementors_signature = signature(decorator_function)
 
-    # determine the mode (impl-first or not)
-    if decorated is not None:
-        # validate that the 'decorated' parameter is a string representing a real parameter of the function
-        if not isinstance(decorated, str):
-            raise TypeError("'decorated' argument should be a string with the argument name where the wrapped object "
-                            "should be injected")
-        if decorated not in implementors_signature.parameters:
-            return ValueError("Function '%s' does not have an argument named '%s'"
-                              "" % (decorator_function.__name__, decorated))
-    else:
-        # let's check the signature
-        decorated, decorated_p = get_decorated_parameter(implementors_signature)
+    # determine the mode (nested, flat, double-flat) and check signature
+    mode, injected_name, injected_arg, f_args_name, f_kwargs_name = extract_mode_info(implementors_signature, decorated)
 
-    # if there is a parameter with default=DECORATED or an explicit 'decorated' argument, that's an impl-first mode
-    is_impl_first_mode = decorated is not None
-    injected_arg_name = decorated
-
-    # create the signature of the decorator function to create
-    if is_impl_first_mode:
-        # --impl-first: the same signature but we remove the injected arg.
-        generated_signature = remove_signature_parameters(implementors_signature, injected_arg_name)
-    else:
-        # --usage-first: keep the signature 'as is'
+    # create the signature of the decorator function to create, according to mode
+    decorator_function_for_sig = None
+    if mode is None:
+        # *nested: keep the signature 'as is'
         generated_signature = implementors_signature
+        is_flat_mode = False
+    elif mode is DECORATED:
+        # *flat: the same signature but we remove the injected args.
+        generated_signature = remove_signature_parameters(implementors_signature, injected_name)
+        is_flat_mode = True
+    elif mode is WRAPPED:
+        # *double-flat: the same signature but we remove the injected args.
+        args_to_remove = (injected_name, ) + ((f_args_name, ) if f_args_name is not None else ()) \
+                         + ((f_kwargs_name, ) if f_kwargs_name is not None else ())
+        generated_signature = remove_signature_parameters(implementors_signature, *args_to_remove)
+
+        # In this double-flat mode, we are in charge to fill the decorator body for the user
+        # Let's create a nested-mode decorator
+        user_provided_wrapper = decorator_function
+
+        def _decorator(*args, **kwargs):
+            """ The decorator. Its signature will be overriden by `generated_signature` """
+
+            def _apply_decorator(f):
+                """ This is called when the decorator is applied to an object `f` """
+
+                # the injected function is f. Add it to the other decorator parameters, under name requested by user.
+                kwargs[injected_name] = f
+
+                # create a signature-preserving wrapper using `makefun.with_signature`
+                @with_signature(f)
+                def wrapper(*f_args, **f_kwargs):
+                    # if the user wishes us to inject the actual args and kwargs, let's inject them
+                    if f_args_name is not None:
+                        kwargs[f_args_name] = f_args
+                    if f_kwargs_name is not None:
+                        kwargs[f_kwargs_name] = f_kwargs
+
+                    # finally call the user-provided implementation
+                    return user_provided_wrapper(*args, **kwargs)
+
+                return wrapper
+            return _apply_decorator
+
+        # declare that we want to use the original function for the help/module generation, but this new impl for exec.
+        decorator_function_for_sig = decorator_function
+        decorator_function = _decorator
+        is_flat_mode = False
+    else:
+        raise ValueError("Unknown mode: %s" % mode)
 
     # (2) --- Generate according to the situation--------
     # check if the resulting function has any parameter at all
     if len(generated_signature.parameters) == 0:
         # (A) no argument at all. Special handling.
-        return create_no_args_decorator(decorator_function, is_impl_first_mode, injected_arg_name=injected_arg_name)
+        return create_no_args_decorator(decorator_function, is_flat_mode, injected_arg_name=injected_name,
+                                        decorator_function_for_sig=decorator_function_for_sig)
 
     else:
         # (B) general case: at least one argument - we have to get information about the first one, to handle properly
@@ -253,28 +289,32 @@ def create_decorator(decorator_function,
             # in this case the decorator *can* be used without arguments but *cannot* with one positional argument,
             # which will happen in the no-parenthesis case. We have to modify the signature to allow no-parenthesis
             return create_kwonly_decorator(generated_signature, decorator_function, disambiguator,
-                                           is_impl_first_mode=is_impl_first_mode,
+                                           is_impl_first_mode=is_flat_mode,
                                            is_first_arg_mandatory=is_first_arg_mandatory,
-                                           injected_arg_name=injected_arg_name)
+                                           injected_arg_name=injected_name,
+                                           decorator_function_for_sig=decorator_function_for_sig)
         elif is_first_arg_varpositional:
             # in this case the varpositional argument can be used to detect no-args and multi-args calls
             return create_varpositional_decorator(generated_signature, decorator_function, disambiguator,
-                                                  is_impl_first_mode=is_impl_first_mode,
+                                                  is_impl_first_mode=is_flat_mode,
                                                   is_first_arg_mandatory=is_first_arg_mandatory,
                                                   first_arg_name=first_arg_name,
-                                                  injected_arg_name=injected_arg_name)
+                                                  injected_arg_name=injected_name,
+                                                  decorator_function_for_sig=decorator_function_for_sig)
         else:
             # general case
             return create_general_case_decorator(generated_signature, decorator_function, disambiguator,
-                                                 is_impl_first_mode=is_impl_first_mode,
+                                                 is_impl_first_mode=is_flat_mode,
                                                  is_first_arg_mandatory=is_first_arg_mandatory,
                                                  first_arg_name=first_arg_name,
-                                                 injected_arg_name=injected_arg_name)
+                                                 injected_arg_name=injected_name,
+                                                 decorator_function_for_sig=decorator_function_for_sig)
 
 
 def create_no_args_decorator(decorator_function,
-                             is_impl_first_mode,     # type: bool
-                             injected_arg_name=None  # type: str
+                             is_impl_first_mode,      # type: bool
+                             injected_arg_name=None,  # type: str
+                             decorator_function_for_sig=None,
                              ):
     """
     Utility method to create a decorator that has no arguments at all and is implemented by `decorator_function`, in
@@ -289,15 +329,20 @@ def create_no_args_decorator(decorator_function,
     :param decorator_function:
     :param is_impl_first_mode:
     :param injected_arg_name: should be None in usage-first mode
+    :param decorator_function_for_sig: an alternate function to use for the documentation and module metadata of the
+        generated function
     :return:
     """
     if (injected_arg_name is not None) != is_impl_first_mode:
         raise ValueError("`injected_arg_name` should only be non-None when `is_impl_first_mode` is True")
 
+    if decorator_function_for_sig is None:
+        decorator_function_for_sig = decorator_function
+
     @with_signature(None,
-                    func_name=decorator_function.__name__,
-                    doc=decorator_function.__doc__,
-                    modulename=decorator_function.__module__)
+                    func_name=decorator_function_for_sig.__name__,
+                    doc=decorator_function_for_sig.__doc__,
+                    modulename=decorator_function_for_sig.__module__)
     def new_decorator(*no_args):
         if len(no_args) == 0:
             # called with no args BUT parenthesis: @foo_decorator().
@@ -322,7 +367,8 @@ def create_kwonly_decorator(generated_signature,
                             disambiguator,
                             is_impl_first_mode,      # type: bool
                             is_first_arg_mandatory,  # type: bool
-                            injected_arg_name=None   # type: str
+                            injected_arg_name=None,  # type: str
+                            decorator_function_for_sig=None,
                             ):
     """
     Utility method to create a decorator that has only keyword arguments and is implemented by `decorator_function`, in
@@ -348,16 +394,21 @@ def create_kwonly_decorator(generated_signature,
     :param is_impl_first_mode:
     :param is_first_arg_mandatory:
     :param injected_arg_name:
+    :param decorator_function_for_sig: an alternate function to use for the documentation and module metadata of the
+        generated function
     :return:
     """
+    if decorator_function_for_sig is None:
+        decorator_function_for_sig = decorator_function
+
     if is_first_arg_mandatory:
         # The first argument is mandatory AND keyword. So we do not need to change the signature to be fully protected
         # indeed python will automatically raise a `TypeError` when users will use this decorator without parenthesis
         # or with positional arguments.
         @with_signature(generated_signature,
-                        func_name=decorator_function.__name__,
-                        doc=decorator_function.__doc__,
-                        modulename=decorator_function.__module__)
+                        func_name=decorator_function_for_sig.__name__,
+                        doc=decorator_function_for_sig.__doc__,
+                        modulename=decorator_function_for_sig.__module__)
         def new_decorator(*no_args, **kwargs):
             # this is a parenthesis call, because otherwise a `TypeError` would already have been raised by python.
             return with_parenthesis_usage(decorator_function, is_impl_first_mode, injected_arg_name, *no_args, **kwargs)
@@ -373,7 +424,8 @@ def create_kwonly_decorator(generated_signature,
                                               is_impl_first_mode=is_impl_first_mode,
                                               is_first_arg_mandatory=is_first_arg_mandatory,
                                               first_arg_name=_GENERATED_VARPOS_NAME,
-                                              injected_arg_name=injected_arg_name)
+                                              injected_arg_name=injected_arg_name,
+                                              decorator_function_for_sig=decorator_function_for_sig)
 
 
 def create_varpositional_decorator(generated_signature,
@@ -382,7 +434,8 @@ def create_varpositional_decorator(generated_signature,
                                    is_impl_first_mode,  # type: bool
                                    is_first_arg_mandatory,  # type: bool
                                    first_arg_name,  # type: str
-                                   injected_arg_name=None  # type: str
+                                   injected_arg_name=None,  # type: str
+                                   decorator_function_for_sig=None,
                                    ):
     """
 
@@ -392,12 +445,17 @@ def create_varpositional_decorator(generated_signature,
     :param is_first_arg_mandatory:
     :param first_arg_name:
     :param injected_arg_name:
+    :param decorator_function_for_sig: an alternate function to use for the documentation and module metadata of the
+        generated function
     :return:
     """
+    if decorator_function_for_sig is None:
+        decorator_function_for_sig = decorator_function
+
     @with_signature(generated_signature,
-                    func_name=decorator_function.__name__,
-                    doc=decorator_function.__doc__,
-                    modulename=decorator_function.__module__)
+                    func_name=decorator_function_for_sig.__name__,
+                    doc=decorator_function_for_sig.__doc__,
+                    modulename=decorator_function_for_sig.__module__)
     def new_decorator(*args, **kwargs):
         # Note: since we expose a decorator with a preserved signature and not (*args, **kwargs)
         # we lose the information about the number of arguments *actually* provided.
@@ -437,7 +495,8 @@ def create_general_case_decorator(generated_signature,
                                   is_impl_first_mode,      # type: bool
                                   is_first_arg_mandatory,  # type: bool
                                   first_arg_name,          # type: str
-                                  injected_arg_name=None   # type: str
+                                  injected_arg_name=None,   # type: str
+                                  decorator_function_for_sig=None,
                                   ):
     """
 
@@ -447,13 +506,18 @@ def create_general_case_decorator(generated_signature,
     :param is_first_arg_mandatory:
     :param first_arg_name:
     :param injected_arg_name:
+    :param decorator_function_for_sig: an alternate function to use for the documentation and module metadata of the
+        generated function
     :return:
     """
 
+    if decorator_function_for_sig is None:
+        decorator_function_for_sig = decorator_function
+
     @with_signature(generated_signature,
-                    func_name=decorator_function.__name__,
-                    doc=decorator_function.__doc__,
-                    modulename=decorator_function.__module__)
+                    func_name=decorator_function_for_sig.__name__,
+                    doc=decorator_function_for_sig.__doc__,
+                    modulename=decorator_function_for_sig.__module__)
     def new_decorator(*args, **kwargs):
         # Note: since we expose a decorator with a preserved signature and not (*args, **kwargs)
         # we lose the information about the number of arguments *actually* provided.
