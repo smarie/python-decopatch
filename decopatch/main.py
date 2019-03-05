@@ -27,7 +27,7 @@ class FirstArgDisambiguation(Enum):
 def function_decorator(enable_stack_introspection=True,              # type: bool
                        can_first_arg_be_ambiguous=None,              # type: Optional[bool]
                        callable_or_cls_firstarg_disambiguator=None,  # type: Callable[[Any], FirstArgDisambiguation]
-                       wraps=None,                                   # type: Optional[str]
+                       decorated=None,                                   # type: Optional[str]
                        ):
     """
     A decorator to create function decorators.
@@ -38,7 +38,7 @@ def function_decorator(enable_stack_introspection=True,              # type: boo
     :param enable_stack_introspection:
     :param can_first_arg_be_ambiguous:
     :param callable_or_cls_firstarg_disambiguator:
-    :param wraps:
+    :param decorated:
     :return:
     """
     if callable(enable_stack_introspection):
@@ -52,13 +52,13 @@ def function_decorator(enable_stack_introspection=True,              # type: boo
                          enable_stack_introspection=enable_stack_introspection,
                          can_first_arg_be_ambiguous=can_first_arg_be_ambiguous,
                          callable_or_cls_firstarg_disambiguator=callable_or_cls_firstarg_disambiguator,
-                         wraps=wraps)
+                         decorated=decorated)
 
 
 def class_decorator(enable_stack_introspection=True,              # type: bool
                     can_first_arg_be_ambiguous=None,              # type: Optional[bool]
                     callable_or_cls_firstarg_disambiguator=None,  # type: Callable[[Any], FirstArgDisambiguation]
-                    wraps=None,                                   # type: Optional[str]
+                    decorated=None,                                   # type: Optional[str]
                     ):
     """
     A decorator to create class decorators
@@ -69,7 +69,7 @@ def class_decorator(enable_stack_introspection=True,              # type: bool
     :param enable_stack_introspection:
     :param can_first_arg_be_ambiguous:
     :param callable_or_cls_firstarg_disambiguator:
-    :param wraps:
+    :param decorated:
     :return:
     """
     if callable(enable_stack_introspection):
@@ -83,7 +83,7 @@ def class_decorator(enable_stack_introspection=True,              # type: bool
                          enable_stack_introspection=enable_stack_introspection,
                          can_first_arg_be_ambiguous=can_first_arg_be_ambiguous,
                          callable_or_cls_firstarg_disambiguator=callable_or_cls_firstarg_disambiguator,
-                         wraps=wraps)
+                         decorated=decorated)
 
 
 def decorator(is_function_decorator=True,                   # type: bool
@@ -91,7 +91,7 @@ def decorator(is_function_decorator=True,                   # type: bool
               enable_stack_introspection=True,              # type: bool
               can_first_arg_be_ambiguous=None,              # type: Optional[bool]
               callable_or_cls_firstarg_disambiguator=None,  # type: Callable[[Any], FirstArgDisambiguation]
-              wraps=None,                                   # type: str
+              decorated=None,                                   # type: str
               ):
     """
     A decorator to create decorators.
@@ -108,7 +108,7 @@ def decorator(is_function_decorator=True,                   # type: bool
 
     For "implementation-first" mode to be automatically detected, your implementation has to have an argument with
     default value DECORATED. This argument will be injected with the decorated target when you rdecorator is used.
-    Alternately you can explicitly provide the injected argument name by specifying a non-None `wraps` argument.
+    Alternately you can explicitly provide the injected argument name by specifying a non-None `decorated` argument.
 
     In any other case the "usage-first" mode is activated. In this mode your implementation is nested:
 
@@ -134,7 +134,7 @@ def decorator(is_function_decorator=True,                   # type: bool
     :param enable_stack_introspection:
     :param can_first_arg_be_ambiguous:
     :param callable_or_cls_firstarg_disambiguator:
-    :param wraps:
+    :param decorated:
     :return:
     """
 
@@ -151,7 +151,7 @@ def decorator(is_function_decorator=True,                   # type: bool
                                     enable_stack_introspection=enable_stack_introspection,
                                     can_first_arg_be_ambiguous=can_first_arg_be_ambiguous,
                                     callable_or_cls_firstarg_disambiguator=callable_or_cls_firstarg_disambiguator,
-                                    wraps=wraps)
+                                    decorated=decorated)
         return deco
 
 
@@ -165,7 +165,7 @@ def create_decorator(decorator_function,
                      enable_stack_introspection=True,              # type: bool
                      can_first_arg_be_ambiguous=None,              # type: Optional[bool]
                      callable_or_cls_firstarg_disambiguator=None,  # type: Callable[[Any], FirstArgDisambiguation]
-                     wraps=None,                                   # type: Optional[str]
+                     decorated=None,                                   # type: Optional[str]
                      ):
     """
     Main function to create a decorator implemented with the `decorator_function` implementation.
@@ -176,7 +176,7 @@ def create_decorator(decorator_function,
     :param enable_stack_introspection:
     :param can_first_arg_be_ambiguous:
     :param callable_or_cls_firstarg_disambiguator:
-    :param wraps:
+    :param decorated:
     :return:
     """
     # input checks
@@ -188,21 +188,21 @@ def create_decorator(decorator_function,
     implementors_signature = signature(decorator_function)
 
     # determine the mode (impl-first or not)
-    if wraps is not None:
-        # validate that the 'wraps' parameter is a string representing a real parameter of the function
-        if not isinstance(wraps, str):
-            raise TypeError("'wraps' argument should be a string with the argument name where the wrapped object "
+    if decorated is not None:
+        # validate that the 'decorated' parameter is a string representing a real parameter of the function
+        if not isinstance(decorated, str):
+            raise TypeError("'decorated' argument should be a string with the argument name where the wrapped object "
                             "should be injected")
-        if wraps not in implementors_signature.parameters:
+        if decorated not in implementors_signature.parameters:
             return ValueError("Function '%s' does not have an argument named '%s'"
-                              "" % (decorator_function.__name__, wraps))
+                              "" % (decorator_function.__name__, decorated))
     else:
         # let's check the signature
-        wraps, wraps_p = get_decorated_parameter(implementors_signature)
+        decorated, decorated_p = get_decorated_parameter(implementors_signature)
 
-    # if there is a parameter with default=DECORATED or an explicit 'wraps' argument, that's an impl-first mode
-    is_impl_first_mode = wraps is not None
-    injected_arg_name = wraps
+    # if there is a parameter with default=DECORATED or an explicit 'decorated' argument, that's an impl-first mode
+    is_impl_first_mode = decorated is not None
+    injected_arg_name = decorated
 
     # create the signature of the decorator function to create
     if is_impl_first_mode:
