@@ -81,7 +81,7 @@ def disambiguate_call(dk,  # type: DecoratorUsageInfo
             # no parenthesis: @foo_decorator -OR- with 1 positional argument: @foo_decorator(a, **kwargs).
             # reminder: we can not count the kwargs because they always contain all the arguments
             dk._first_arg_value=dk.args[0]
-            # TODO if another param has non-default value this is with-parenthesis
+
     else:
         # first arg can be keyword. So it will be in kwargs (even if it was provided as positional).
         if nb_posonly_received > 0:
