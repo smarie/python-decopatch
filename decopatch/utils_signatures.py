@@ -1,3 +1,9 @@
+try:  # python 3.3+
+    from inspect import signature, Parameter
+except ImportError:
+    from funcsigs import signature, Parameter
+
+
 class DECORATED:
     """A symbol used in your flat-mode signatures to declare where the decorated object should be injected"""
     pass
@@ -70,6 +76,46 @@ def extract_mode_info(ds,  # type: Signature
 
     return mode, (injected.name if injected is not None else None), injected, \
            (f_args.name if f_args is not None else None), (f_kwargs.name if f_kwargs is not None else None)
+
+
+class SignatureInfo(object):
+    """
+    Represents the knowledge we have on the decorator signature.
+    Provides handy properties to separate the code requirements from the implementation (and possibly cache).
+    """
+    __slots__ = 'exposed_signature', 'first_arg_def'
+
+    def __init__(self, decorator_signature):
+        self.exposed_signature = decorator_signature
+        _, self.first_arg_def = get_first_parameter(decorator_signature)
+
+    @property
+    def first_arg_name(self):
+        return self.first_arg_def.name  # if self.first_arg_def is not None else None
+
+    @property
+    def first_arg_name_with_possible_star(self):
+        return ('*' if self.is_first_arg_varpositional else '') + self.first_arg_name
+
+    @property
+    def first_arg_kind(self):
+        return self.first_arg_def.kind  # if self.first_arg_def is not None else None
+
+    @property
+    def is_first_arg_keyword_only(self):
+        return self.first_arg_kind in {Parameter.KEYWORD_ONLY, Parameter.VAR_KEYWORD}
+
+    @property
+    def is_first_arg_varpositional(self):
+        return self.first_arg_kind is Parameter.VAR_POSITIONAL
+
+    @property
+    def is_first_arg_positional_only(self):
+        return self.first_arg_kind is Parameter.POSITIONAL_ONLY
+
+    @property
+    def is_first_arg_mandatory(self):
+        return self.first_arg_def.default is Parameter.empty and not self.is_first_arg_varpositional
 
 
 def get_first_parameter(ds  # type: Signature

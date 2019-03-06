@@ -1,7 +1,7 @@
 from enum import Enum
 from inspect import isclass, stack
 
-from decopatch.utils_calls import no_parenthesis_usage, with_parenthesis_usage
+from decopatch.utils_signatures import SignatureInfo
 
 
 class FirstArgDisambiguation(Enum):
@@ -11,6 +11,10 @@ class FirstArgDisambiguation(Enum):
     is_normal_arg = 0
     is_decorated_target = 1
     is_ambiguous = 2
+
+
+_WITH_PARENTHESIS = FirstArgDisambiguation.is_normal_arg
+_NO_PARENTHESIS = FirstArgDisambiguation.is_decorated_target
 
 
 def can_arg_be_a_decorator_target(arg):
@@ -26,133 +30,113 @@ def can_arg_be_a_decorator_target(arg):
     return callable(arg) or isclass(arg)
 
 
-def is_no_parenthesis_call_possible_from_args_values(new_ds, bound, name_first_arg):
+class DecoratorUsageInfo(object):
     """
-    Returns False if we are absolutely certain that this is a with-parenthesis call. this can be
-    - if >=2 arguments have values different from their default values are present,
-    - if 0 arguments are different from their default values.
-    - if 1 argument has a different value from its default value, but it is not the first one.
+    Represent the knowledge that we have when the decorator is being used.
+    Note: arguments binding is computed in a lazy mode (only if needed)
+    """
+    __slots__ = 'sig_info', '_first_arg_value', '_bound', 'args', 'kwargs'
 
-    Indeed when there is a non-parenthesis call,
-    - only one argument is provided, not more
-    - and this argument has a value that is necessarily different from the default, because it is something that did
-    not exist when the decorator implementer was created.
+    def __init__(self,
+                 sig_info,  # type: SignatureInfo
+                 args, kwargs):
+        self.sig_info = sig_info
+        self.args = args
+        self.kwargs = kwargs
+        self._first_arg_value = DecoratorUsageInfo  # this is our way to say 'uninitialized'
+        self._bound = None
 
-    So, in other words, the only case where True is returned is when **ONLY the first argument has a non-default value**
+    @property
+    def first_arg_value(self):
+        if self._first_arg_value is DecoratorUsageInfo:  # not yet initialized
+            self._first_arg_value = self.bound.arguments[self.sig_info.first_arg_name]
+        return self._first_arg_value
 
-    :param new_ds:
-    :param bound: obtained from signature.bind(*args, **kwargs)
-    :param name_first_arg: the name of the first positional argument
+    @property
+    def bound(self):
+        if self._bound is None:
+            self._bound = self.sig_info.exposed_signature.bind(*self.args, **self.kwargs)
+        return self._bound
+
+
+def disambiguate_call(dk,  # type: DecoratorUsageInfo
+                      disambiguator):
+    """
+
     :return:
     """
-    # if the first positional argument has NOT been set, we are sure that's not a no-parenthesis call
-    if bound.arguments[name_first_arg] is new_ds.parameters[name_first_arg].default:
-        return False
+    # because we expose a "true" signature, the only arguments that remain in *args are the ones that CANNOT become kw
+    nb_posonly_received = len(dk.args)
 
+    # (1) use the number of pos-only args to eliminate a few cases
+    if dk.sig_info.is_first_arg_varpositional or dk.sig_info.is_first_arg_positional_only:
+        if nb_posonly_received == 0:
+            # with parenthesis: @foo_decorator(**kwargs)
+            return _WITH_PARENTHESIS
+        elif nb_posonly_received >= 2:
+            # with parenthesis: @foo_decorator(a, b, **kwargs)
+            return _WITH_PARENTHESIS
+        else:
+            # AMBIGUOUS:
+            # no parenthesis: @foo_decorator -OR- with 1 positional argument: @foo_decorator(a, **kwargs).
+            # reminder: we can not count the kwargs because they always contain all the arguments
+            dk._first_arg_value=dk.args[0]
+            # TODO if another param has non-default value this is with-parenthesis
     else:
-        # check if there are 0, 1 or >=2 arguments that are different from their default values
-        different_than_default = 0
-        for p_name, p_def in new_ds.parameters.items():
-            if bound.arguments[p_name] is not p_def.default:
-                different_than_default += 1
-            if different_than_default >= 2:
-                break
+        # first arg can be keyword. So it will be in kwargs (even if it was provided as positional).
+        if nb_posonly_received > 0:
+            raise Exception("Internal error - this should not happen, please file an issue on the github page")
 
-        # if all are default then it is not possible that the decorated object is in here
-        # if more than 1 is default then 2 explicit arguments have necessarily be provided
-        return different_than_default == 1
+    # (2) Now work on the values themselves
+    if not can_arg_be_a_decorator_target(dk.first_arg_value):
+        # the first argument can NOT be decorated: we are sure that this was a WITH-parenthesis call
+        return _WITH_PARENTHESIS
+    elif dk.first_arg_value is dk.sig_info.first_arg_def.default:
+        # the first argument has NOT been set, we are sure that's WITH-parenthesis call
+        return _WITH_PARENTHESIS
+    else:
+        # check if there is another argument that is different from its default value
+        # skip first entry
+        params = iter(dk.sig_info.exposed_signature.parameters.items())
+        next(params)
+        for p_name, p_def in params:
+            if dk.bound.arguments[p_name] is not p_def.default:
+                return _WITH_PARENTHESIS
 
-
-class AmbiguousFirstArgumentTypeError(TypeError):
-    pass
-
-
-class InvalidMandatoryArgError(TypeError):
-    pass
-
-
-def call_in_appropriate_mode(decorator_function,
-                             disambiguator,
-                             is_first_arg_mandatory,
-                             # first arg
-                             name_first_arg_for_msg,
-                             first_arg_value,
-                             # args
-                             args, kwargs
-                             ):
-    """
-
-
-    :param decorator_function:
-    :param disambiguator:
-    :param is_first_arg_mandatory:
-    :param name_first_arg_for_msg:
-    :param first_arg_value:
-    :param args:
-    :param kwargs:
-    :return:
-    """
+    # (3) still-ambiguous case, the first parameter is the single non-default one and is a callable or class
+    # at this point a no-parenthesis call is still possible.
     # call disambiguator (it combines our rules with the ones optionally provided by the user)
-    res = disambiguator(first_arg_value)
-
-    if res is FirstArgDisambiguation.is_decorated_target:
-        # (1) NO-parenthesis usage: @foo_decorator
-        if is_first_arg_mandatory:
-            # that's not possible
-            raise InvalidMandatoryArgError("function '%s' requires a mandatory argument '%s'. Provided value '%s' does "
-                                           "not pass its validation criteria" % (decorator_function.__name__,
-                                                                                 name_first_arg_for_msg,
-                                                                                 first_arg_value))
-        else:
-            # ok: do it
-            return no_parenthesis_usage(decorator_function, first_arg_value)
-
-    elif res is FirstArgDisambiguation.is_normal_arg:
-        # (2) WITH-parenthesis usage: @foo_decorator(*args, **kwargs).
-        return with_parenthesis_usage(decorator_function, *args, **kwargs)
-
-    elif res is FirstArgDisambiguation.is_ambiguous:
-        # (3) STILL AMBIGUOUS
-        # By default we are very conservative: we do not allow the first argument to be a callable or class if user did
-        # not provide a way to disambiguate it
-        if is_first_arg_mandatory:
-            raise AmbiguousFirstArgumentTypeError(
-                "function '%s' requires a mandatory argument '%s'. It cannot be a class nor a callable."
-                " If you think that it should, then ask your decorator provider to protect his decorator (see "
-                "decopath documentation)" % (decorator_function.__name__, name_first_arg_for_msg))
-        else:
-            raise AmbiguousFirstArgumentTypeError(
-                "Argument '%s' of generated decorator function '%s' is the *first* argument in the signature. "
-                "When the decorator is called (1) with only this argument as non-default value and (2) if this "
-                "argument is a callable or class, then it is not possible to determine if that call was a "
-                "no-parenthesis decorator usage or a with-args decorator usage. If you think that this particular "
-                "usage should be allowed, then ask your decorator provider to protect his decorator (see decopath "
-                "documentation)" % (name_first_arg_for_msg, decorator_function.__name__))
-
-    else:
-        raise ValueError("single-argument disambiguation did not return properly: received %s" % res)
+    return disambiguator(dk.first_arg_value)
 
 
-def create_single_arg_callable_or_class_disambiguator(decorator_function,
+def create_single_arg_callable_or_class_disambiguator(impl_function,
                                                       is_function_decorator,
                                                       is_class_decorator,
                                                       can_first_arg_be_ambiguous,
                                                       callable_or_cls_firstarg_disambiguator,
                                                       enable_stack_introspection,
-                                                      name_first_arg,
-                                                      is_first_arg_mandatory,
+                                                      signature_knowledge,  # type: SignatureInfo
                                                       ):
     """
-    Returns the function that should be used as disambiguator
+    Returns the function that should be used as disambiguator in "last resort" (when the first argument is the single
+    non-default argument and it is a callable/class).
 
     :param first_arg_received:
     :return:
     """
 
     def disambiguate_call(first_arg_received):
+        """
+        The first argument received is the single non-default argument and it is a callable/class.
+        We should try to disambiguate now.
+
+        :param first_arg_received:
+        :return:
+        """
+
         # introspection-based
         if enable_stack_introspection:
-            res = disambiguate_using_introspection(decorator_function, name_first_arg, first_arg_received)
+            res = disambiguate_using_introspection(impl_function, first_arg_received)
             if res is not None:
                 return res
 
@@ -180,7 +164,7 @@ def create_single_arg_callable_or_class_disambiguator(decorator_function,
                     return FirstArgDisambiguation.is_decorated_target
             else:
                 # default behaviour, depends on mandatory-ness
-                if is_first_arg_mandatory:
+                if signature_knowledge.is_first_arg_mandatory:
                     # we can safely do this, it will raise a `TypeError` automatically
                     return FirstArgDisambiguation.is_decorated_target
 
@@ -194,7 +178,6 @@ def create_single_arg_callable_or_class_disambiguator(decorator_function,
 
 
 def disambiguate_using_introspection(decorator_function,  # type: Callable
-                                     name_first_arg,      # type: str
                                      first_arg_received   # type: Any
                                      ):
     """
@@ -241,8 +224,7 @@ def disambiguate_using_introspection(decorator_function,  # type: Callable
             raise Exception("Decorator disambiguation using stack introspection is not available in Jupyter/iPython."
                             " Please use the decorator in a non-ambiguous way. For example use explicit parenthesis"
                             " @%s() for no-arg usage, or use 2 non-default arguments, or use explicit keywords. "
-                            "Ambiguous argument received: %s, first argument name is '%s'"
-                            "" % (decorator_function.__name__, first_arg_received, name_first_arg))
+                            "Ambiguous argument received: %s." % (decorator_function.__name__, first_arg_received))
 
         # --with inspect..
         code_context = calframe[5][4]
