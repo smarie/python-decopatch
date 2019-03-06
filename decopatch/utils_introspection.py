@@ -77,9 +77,6 @@ def call_in_appropriate_mode(decorator_function,
                              # first arg
                              name_first_arg_for_msg,
                              first_arg_value,
-                             # mode
-                             is_impl_first_mode,
-                             injected_arg_name,
                              # args
                              args, kwargs
                              ):
@@ -91,8 +88,6 @@ def call_in_appropriate_mode(decorator_function,
     :param is_first_arg_mandatory:
     :param name_first_arg_for_msg:
     :param first_arg_value:
-    :param is_impl_first_mode:
-    :param injected_arg_name:
     :param args:
     :param kwargs:
     :return:
@@ -110,13 +105,11 @@ def call_in_appropriate_mode(decorator_function,
                                                                                  first_arg_value))
         else:
             # ok: do it
-            return no_parenthesis_usage(first_arg_value, decorator_function, is_impl_first_mode,
-                                        injected_arg_name)
+            return no_parenthesis_usage(decorator_function, first_arg_value)
 
     elif res is FirstArgDisambiguation.is_normal_arg:
         # (2) WITH-parenthesis usage: @foo_decorator(*args, **kwargs).
-        return with_parenthesis_usage(decorator_function, is_impl_first_mode, injected_arg_name,
-                                      *args, **kwargs)
+        return with_parenthesis_usage(decorator_function, *args, **kwargs)
 
     elif res is FirstArgDisambiguation.is_ambiguous:
         # (3) STILL AMBIGUOUS
