@@ -35,7 +35,7 @@ LICENSE_LONG = 'License :: OSI Approved :: BSD License'
 version_for_download_url = get_version()
 DOWNLOAD_URL = URL + '/tarball/' + version_for_download_url
 
-KEYWORDS = 'pytest test result store fixture collect benchmark artifact session'
+KEYWORDS = 'decorator parenthesis function class auto easy signature preserve'
 # --Get the long description from the README file
 # with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 #    LONG_DESCRIPTION = f.read()
