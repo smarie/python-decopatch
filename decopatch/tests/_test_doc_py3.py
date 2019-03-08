@@ -49,3 +49,47 @@ def create_test_doc_impl_first_tag_optional_protected(uses_introspection):
         return f
 
     return add_tag
+
+
+# --------- from test_doc_disambiguation.py
+
+def create_test_doc_disambiguation_kwonly_mandatory(flat_mode):
+    """ """
+    if not flat_mode:
+        @decorator
+        def replace_with(*, replacement):
+            """
+            Decorator to replace anything with the <replacement> object.
+            """
+            def _apply_decorator(f):
+                return replacement
+            return _apply_decorator
+    else:
+        @decorator
+        def replace_with(*, replacement, f=DECORATED):
+            """
+            Decorator to replace anything with the <replacement> object.
+            """
+            return replacement
+    return replace_with
+
+
+def create_test_doc_disambiguation_kwonly_optional(flat_mode):
+    """ """
+    if not flat_mode:
+        @decorator
+        def replace_with(*, replacement='hello'):
+            """
+            Decorator to replace anything with the <replacement> object.
+            """
+            def _apply_decorator(f):
+                return replacement
+            return _apply_decorator
+    else:
+        @decorator
+        def replace_with(*, replacement='hello', f=DECORATED):
+            """
+            Decorator to replace anything with the <replacement> object.
+            """
+            return replacement
+    return replace_with
