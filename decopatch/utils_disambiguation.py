@@ -68,43 +68,51 @@ def disambiguate_call(dk,  # type: DecoratorUsageInfo
 
     :return:
     """
-    # because we expose a "true" signature, the only arguments that remain in *args are the ones that CANNOT become kw
-    nb_posonly_received = len(dk.args)
-
-    # (1) use the number of pos-only args to eliminate a few cases
-    if dk.sig_info.is_first_arg_varpositional or dk.sig_info.is_first_arg_positional_only:
-        if nb_posonly_received == 0:
-            # with parenthesis: @foo_decorator(**kwargs)
+    # (1) use the number of args to eliminate a few cases
+    if dk.sig_info.use_signature_trick:
+        # we expose a *args, **kwargs signature so we see exactly what the user has provided.
+        nb_pos_received, nb_kw_received = len(dk.args), len(dk.kwargs)
+        if nb_kw_received > 0 or nb_pos_received == 0 or nb_pos_received > 1:
             return _WITH_PARENTHESIS
-        elif nb_posonly_received >= 2:
-            # with parenthesis: @foo_decorator(a, b, **kwargs)
-            return _WITH_PARENTHESIS
-        else:
-            # AMBIGUOUS:
-            # no parenthesis: @foo_decorator -OR- with 1 positional argument: @foo_decorator(a, **kwargs).
-            # reminder: we can not count the kwargs because they always contain all the arguments
-            dk._first_arg_value = dk.args[0]
-
+        dk._first_arg_value = dk.args[0]
     else:
-        # first arg can be keyword. So it will be in kwargs (even if it was provided as positional).
-        if nb_posonly_received > 0:
-            raise Exception("Internal error - this should not happen, please file an issue on the github page")
+        # we expose a "true" signature, the only arguments that remain in *args are the ones that CANNOT become kw
+        nb_posonly_received = len(dk.args)
+        if dk.sig_info.is_first_arg_varpositional or dk.sig_info.is_first_arg_positional_only:
+            if nb_posonly_received == 0:
+                # with parenthesis: @foo_decorator(**kwargs)
+                return _WITH_PARENTHESIS
+            elif nb_posonly_received >= 2:
+                # with parenthesis: @foo_decorator(a, b, **kwargs)
+                return _WITH_PARENTHESIS
+            else:
+                # AMBIGUOUS:
+                # no parenthesis: @foo_decorator -OR- with 1 positional argument: @foo_decorator(a, **kwargs).
+                # reminder: we can not count the kwargs because they always contain all the arguments
+                dk._first_arg_value = dk.args[0]
+
+        else:
+            # first arg can be keyword. So it will be in kwargs (even if it was provided as positional).
+            if nb_posonly_received > 0:
+                raise Exception("Internal error - this should not happen, please file an issue on the github page")
 
     # (2) Now work on the values themselves
     if not can_arg_be_a_decorator_target(dk.first_arg_value):
         # the first argument can NOT be decorated: we are sure that this was a WITH-parenthesis call
         return _WITH_PARENTHESIS
-    elif dk.first_arg_value is dk.sig_info.first_arg_def.default:
-        # the first argument has NOT been set, we are sure that's WITH-parenthesis call
-        return _WITH_PARENTHESIS
-    else:
-        # check if there is another argument that is different from its default value
-        # skip first entry
-        params = iter(dk.sig_info.exposed_signature.parameters.items())
-        next(params)
-        for p_name, p_def in params:
-            if dk.bound.arguments[p_name] is not p_def.default:
-                return _WITH_PARENTHESIS
+    elif not dk.sig_info.use_signature_trick:
+        # we were not able to use the length of kwargs, but at least we can compare them to defaults.
+        if dk.first_arg_value is dk.sig_info.first_arg_def.default:
+            # the first argument has NOT been set, we are sure that's WITH-parenthesis call
+            return _WITH_PARENTHESIS
+        else:
+            # check if there is another argument that is different from its default value
+            # skip first entry
+            params = iter(dk.sig_info.exposed_signature.parameters.items())
+            next(params)
+            for p_name, p_def in params:
+                if dk.bound.arguments[p_name] is not p_def.default:
+                    return _WITH_PARENTHESIS
 
     # (3) still-ambiguous case, the first parameter is the single non-default one and is a callable or class
     # at this point a no-parenthesis call is still possible.
@@ -138,7 +146,8 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
 
         # introspection-based
         if enable_stack_introspection:
-            res = disambiguate_using_introspection(impl_function, first_arg_received)
+            res = disambiguate_using_introspection(impl_function, first_arg_received,
+                                                   signature_knowledge.use_signature_trick)
             if res is not None:
                 return res
 
@@ -166,7 +175,8 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
 
 
 def disambiguate_using_introspection(decorator_function,  # type: Callable
-                                     first_arg_received   # type: Any
+                                     first_arg_received,   # type: Any
+                                     uses_signature_trick,
                                      ):
     """
     Tries to disambiguate the call situation betwen with-parenthesis and without-parenthesis using call stack
@@ -178,13 +188,15 @@ def disambiguate_using_introspection(decorator_function,  # type: Callable
       so we can not check a full string expression
 
     :param decorator_function:
-    :param name_first_arg:
     :param first_arg_received:
+    :param uses_signature_trick: if True we have to look one less level up in the stack
     :return:
     """
     if isclass(first_arg_received):
         # as of today the introspection mechanism provided below does not work reliably on classes.
         return None
+
+    where_to_look = 4 if uses_signature_trick else 5
 
     try:
         # TODO inspect.stack and inspect.currentframe are extremely slow
@@ -195,9 +207,9 @@ def disambiguate_using_introspection(decorator_function,  # type: Callable
         # --or
         calframe = stack(context=1)
         # ----
-        filename = calframe[5][1]
+        filename = calframe[where_to_look][1]
 
-        # frame = sys._getframe(5)
+        # frame = sys._getframe(where_to_look)
         # filename = frame.f_code.co_filename
         # frame_info = traceback.extract_stack(f=frame, limit=6)[0]
         # filename =frame_info.filename
@@ -215,7 +227,7 @@ def disambiguate_using_introspection(decorator_function,  # type: Callable
                             "Ambiguous argument received: %s." % (decorator_function.__name__, first_arg_received))
 
         # --with inspect..
-        code_context = calframe[5][4]
+        code_context = calframe[where_to_look][4]
         cal_line_str = code_context[0].lstrip()
         # --with ?
         # cal_line_str = frame_info.line

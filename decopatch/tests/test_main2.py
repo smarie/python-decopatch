@@ -17,8 +17,10 @@ from decopatch.tests import test_main2_parametrizers
 
 try:  # python 3.3+
     from inspect import signature
+    funcsigs_used = False
 except ImportError:
     from funcsigs import signature
+    funcsigs_used = True
 
 
 # -------------
@@ -211,10 +213,17 @@ def case_hard_1_m_0_opt_callable(parametrizer, protection, kw_only):
             case_one_arg_positional_callable: (InvalidMandatoryArgError, "calling a decorator with a callable as first "
                                                                          "and only non-default argument leads by "
                                                                          "default to an error"),
-            case_one_kwarg_callable: (InvalidMandatoryArgError, "calling a decorator with a callable as first "
+
+            # with the signature trick it is ok :
+            case_one_kwarg_callable: SUCCESS,
+        })
+        if funcsigs_used:
+            # no signature trick !
+            expected.update({case_one_kwarg_callable: (InvalidMandatoryArgError, "calling a decorator with a callable as first "
                                                                          "and only non-default argument leads by "
                                                                          "default to an error"),
-        })
+                             })
+
     else:
         expected.update({
             case_no_parenthesis: (InvalidMandatoryArgError, "a no-parenthesis usage will be declared by the "
@@ -325,6 +334,7 @@ def case_hard_0_m_2_opt_callable_first(parametrizer, protection):
 
     use_introspection = (protection == 'introspection')
     use_custom = (protection == 'custom_disambiguator')
+    is_default = not use_introspection and not use_custom
 
     # the decorator impl
     def replace_by_foo(replacement=None, dummy=DEFAULT_DUMMY_VALUE):
@@ -349,11 +359,15 @@ def case_hard_0_m_2_opt_callable_first(parametrizer, protection):
     }
 
     # errors that protection changes
-    if not use_introspection and not use_custom:
+    if is_default:
         expected.update({
             case_one_arg_positional_callable: (NotADecoratorError, "No explicit exception is raised but since a "
                                                                    "double-call is made, user will probably realize "
                                                                    "that something is wrong"),
+        })
+        if funcsigs_used:
+            # no signature trick !
+            expected.update({
             case_one_kwarg_callable: (NotADecoratorError, "No explicit exception is raised but since a double-call is "
                                                           "made, user will probably realize that something is wrong"),
             case_two_args_positional_callable_first_dummy_default: (NotADecoratorError, "No explicit exception is "
@@ -361,7 +375,7 @@ def case_hard_0_m_2_opt_callable_first(parametrizer, protection):
                                                                                         " is made, user will probably "
                                                                                         "realize that something is "
                                                                                         "wrong"),
-        })
+            })
 
     default_value = SUCCESS
 

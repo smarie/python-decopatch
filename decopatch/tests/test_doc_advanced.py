@@ -8,8 +8,10 @@ from decopatch import function_decorator, DECORATED, InvalidMandatoryArgError, c
 
 try:  # python 3.3+
     from inspect import signature
+    funcsigs_used = False
 except ImportError:
     from funcsigs import signature
+    funcsigs_used = True
 
 
 @pytest.mark.parametrize('usage_first', [True, False], ids="usage_first={}".format)
@@ -117,7 +119,7 @@ def test_doc_impl_first_tag_optional():
 
     assert foo.my_tag == 'tag!'
 
-    # callable as first arg is not supported by default
+    # callable as first arg should be rejected but cant
     # @add_tag(print)
     # def foo():
     #     return
@@ -126,13 +128,16 @@ def test_doc_impl_first_tag_optional():
     with pytest.raises(AttributeError):
         add_tag(print)
 
-    # @add_tag(tag=print)  # callable as first kwarg
-    # def foo():
-    #     return
-    #
-    # assert foo.my_tag == print
-    with pytest.raises(AttributeError):
-        add_tag(tag=print)
+    uses_trick = not funcsigs_used
+    if uses_trick:
+        @add_tag(tag=print)  # callable as first kwarg works thanks to the trick
+        def foo():
+            return
+
+        assert foo.my_tag == print
+    else:
+        with pytest.raises(AttributeError):
+            add_tag(tag=print)
 
 
 def test_doc_impl_first_say_hello(capsys):
@@ -386,7 +391,8 @@ def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
 
     assert foo.my_tag == 'tag!'
 
-    if with_star or uses_introspection:
+    uses_signature_trick = not funcsigs_used
+    if with_star or uses_introspection or uses_signature_trick:
         # when we add the star, disambiguation always works (even without introspection
         @add_tag(tag=print)
         def foo():
@@ -394,7 +400,7 @@ def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
 
         assert foo.my_tag == print
     else:
-        # when we do not add the star and "poor man's disambiguation" (no introspection) is used, theres a problem
+        # when we do not add the star and no introspection is used and we do not use the trick, there is a problem
         with pytest.raises(AttributeError):
             @add_tag(tag=print)
             def foo():

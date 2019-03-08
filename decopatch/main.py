@@ -75,6 +75,7 @@ def decorator(is_function_decorator=True,  # type: bool
               is_class_decorator=True,  # type: bool
               enable_stack_introspection=False,  # type: bool
               custom_disambiguator=None,  # type: Callable[[Any], FirstArgDisambiguation]
+              use_signature_trick=True,  # type: bool
               flat_mode_decorated_name=None,  # type: str
               ):
     """
@@ -94,7 +95,7 @@ def decorator(is_function_decorator=True,  # type: bool
     `DECORATED`, or a non-None `decorated` argument name should be provided. This argument will be injected with the
     decorated target when your decorator is used.
 
-    In any other case the "nested" mode is activated. In this mode your implementation is nested:
+    Otherwise the "nested" mode is activated. In this mode your implementation is nested, as usual in python:
 
     ```python
     def my_decorator(a, b):
@@ -105,31 +106,11 @@ def decorator(is_function_decorator=True,  # type: bool
     ```
 
     In both modes, because python language does not redirect no-parenthesis usages (@my_decorator) to no-args usages
-    (@my_decorator()), `decopatch` tries to disambiguate automatically the type of call.
+    (@my_decorator()), `decopatch` tries to disambiguate automatically the type of call. See documentation for details.
 
-    Here is the logic is follows:
-
-     - if your implementation has no arguments at all, a special decorator with variable-length args
-    is created and the mode is detected from the number of arguments (0=with empty parenthesis, 1=no parenthesis,
-    2+=error)
-     - if your implementation has only keyword-only arguments
-       - if it has at least a mandatory one, it is exposed "as is" as it is natively protected.
-       - otherwise (all arguments are optional), we modify the created decorator's signature to add a
-         leading var-args, so that users will be able to call the decorator without parenthesis. The call mode is then
-         detected from the number and type of arguments in this var-args (0: with empty parenthesis, 1: disambiguation
-         is needed, 2+: error)
-     - If you implementation's first argument is a variable-length arg, we can safely say that when it contains 0 or 2+
-       elements it is a with-parenthesis call. Otherwise disambiguation is needed
-     - in the general case disambiguation works as follows:
-       - the first argument is not a callable nor a class, this is a parenthesis call.
-       - if the first argument is equal to its default value, this is a parenthesis call
-       - if at least two arguments have values different from their default values, this is a parenthesis call
-       - otherwise, we enter a "configurable disambiguation zone".
-
-
-    Finally you can use this function to directly create a "function wrapper" decorator. For this, use
-    the `WRAPPED` default value instead of `DECORATED`, and include two arguments with default values `F_ARGS` and
-    `F_KWARGS`:
+    Finally you can use this function to directly create a "signature preserving function wrapper" decorator. This mode
+    is called "double flat" because it saves you from 2 levels of nesting. For this, use the `WRAPPED` default value
+    instead of `DECORATED`, and include two arguments with default values `F_ARGS` and `F_KWARGS`:
 
     ```python
     @function_decorator
@@ -148,6 +129,10 @@ def decorator(is_function_decorator=True,  # type: bool
     :param is_class_decorator:
     :param enable_stack_introspection:
     :param custom_disambiguator:
+    :param use_signature_trick: if set to `True`, generated decorators will have a generic signature but the `help`
+        and `signature` modules will still think that they have the specific signature, because by default they
+        follow the `__wrapped__` attribute if it is set. See
+        https://docs.python.org/3/library/inspect.html#inspect.signature for details.
     :param flat_mode_decorated_name:
     :return:
     """
@@ -164,7 +149,8 @@ def decorator(is_function_decorator=True,  # type: bool
                                     is_class_decorator=is_class_decorator,
                                     enable_stack_introspection=enable_stack_introspection,
                                     custom_disambiguator=custom_disambiguator,
-                                    flat_mode_decorated_name=flat_mode_decorated_name)
+                                    flat_mode_decorated_name=flat_mode_decorated_name,
+                                    use_signature_trick=use_signature_trick)
         return _apply_on
 
 
@@ -173,6 +159,7 @@ def create_decorator(impl_function,
                      is_class_decorator=True,  # type: bool
                      enable_stack_introspection=False,  # type: bool
                      custom_disambiguator=None,  # type: Callable[[Any], FirstArgDisambiguation]
+                     use_signature_trick=True,  # type: bool
                      flat_mode_decorated_name=None,  # type: Optional[str]
                      ):
     """
@@ -183,6 +170,7 @@ def create_decorator(impl_function,
     :param is_class_decorator:
     :param enable_stack_introspection:
     :param custom_disambiguator:
+    :param use_signature_trick:
     :param flat_mode_decorated_name:
     :return:
     """
@@ -192,6 +180,7 @@ def create_decorator(impl_function,
 
     # (1) --- Detect mode and prepare signature to generate --------
     sig_info, f_for_metadata, nested_impl_function = make_decorator_spec(impl_function, flat_mode_decorated_name)
+    sig_info.use_signature_trick = use_signature_trick
 
     # (2) --- Generate according to the situation--------
     # check if the resulting function has any parameter at all
@@ -216,10 +205,10 @@ def create_decorator(impl_function,
             # which will happen in the no-parenthesis case. We have to modify the signature to allow no-parenthesis
             return create_kwonly_decorator(sig_info, nested_impl_function, disambiguator,
                                            function_for_metadata=f_for_metadata)
-        else:
-            # general case
-            return create_general_case_decorator(sig_info, nested_impl_function, disambiguator,
-                                                 function_for_metadata=f_for_metadata)
+
+        # general case
+        return create_general_case_decorator(sig_info, nested_impl_function, disambiguator,
+                                             function_for_metadata=f_for_metadata)
 
 
 def create_no_args_decorator(decorator_function,
@@ -310,15 +299,18 @@ def create_kwonly_decorator(sig_info,  # type: SignatureInfo
             return with_parenthesis_usage(decorator_function, *no_args, **kwargs)
 
         return new_decorator
+    elif sig_info.use_signature_trick:
+        # no need to modify the signature, we will expose *args, **kwargs
+        pass
     else:
         # modify the signature to add a var-positional first
         gen_varpos_param = Parameter(_GENERATED_VARPOS_NAME, kind=Parameter.VAR_POSITIONAL)
         sig_info.exposed_signature = add_signature_parameters(sig_info.exposed_signature, first=[gen_varpos_param])
         sig_info.first_arg_def = gen_varpos_param
 
-        # we can fallback to the same case than varpositional
-        return create_general_case_decorator(sig_info, decorator_function, disambiguator,
-                                             function_for_metadata=function_for_metadata)
+    # we can fallback to the same case than varpositional
+    return create_general_case_decorator(sig_info, decorator_function, disambiguator,
+                                         function_for_metadata=function_for_metadata)
 
 
 def create_general_case_decorator(sig_info,  # type: SignatureInfo
@@ -327,6 +319,7 @@ def create_general_case_decorator(sig_info,  # type: SignatureInfo
                                   function_for_metadata,
                                   ):
     """
+    This method supports both with-trick and without-trick
 
     :param sig_info:
     :param impl_function:
@@ -335,7 +328,7 @@ def create_general_case_decorator(sig_info,  # type: SignatureInfo
         generated function
     :return:
     """
-    @with_signature(sig_info.exposed_signature,
+    @with_signature(None if sig_info.use_signature_trick else sig_info.exposed_signature,
                     func_name=function_for_metadata.__name__,
                     doc=function_for_metadata.__doc__,
                     modulename=function_for_metadata.__module__)
@@ -354,5 +347,13 @@ def create_general_case_decorator(sig_info,  # type: SignatureInfo
 
         # call
         return call_in_appropriate_mode(impl_function, dk, disambiguation_result)
+
+    # trick to declare that our true signature is different than our actual one
+    if sig_info.use_signature_trick:
+        # thanks to setting this field, python help() and signature() will be tricked without compromising the
+        # actual code signature (so, no dynamic function creation in @with_signature above).
+        # Indeed by default they follow the `__wrapped__` attribute if it is set. See
+        # https://docs.python.org/3/library/inspect.html#inspect.signature for details.
+        new_decorator.__wrapped__ = impl_function
 
     return new_decorator

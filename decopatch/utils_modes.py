@@ -2,8 +2,10 @@ from makefun import remove_signature_parameters, with_signature
 
 try:  # python 3.3+
     from inspect import signature, Parameter
+    funcsigs_used = False
 except ImportError:
     from funcsigs import signature, Parameter
+    funcsigs_used = True
 
 
 class DECORATED:
@@ -238,11 +240,22 @@ class SignatureInfo(object):
     Represents the knowledge we have on the decorator signature.
     Provides handy properties to separate the code requirements from the implementation (and possibly cache).
     """
-    __slots__ = 'exposed_signature', 'first_arg_def'
+    __slots__ = 'exposed_signature', 'first_arg_def', '_use_signature_trick'
 
     def __init__(self, decorator_signature):
         self.exposed_signature = decorator_signature
         _, self.first_arg_def = get_first_parameter(decorator_signature)
+        self._use_signature_trick = False
+
+    @property
+    def use_signature_trick(self):
+        return self._use_signature_trick
+
+    @use_signature_trick.setter
+    def use_signature_trick(self, use_signature_trick):
+        # note: as of today python 2.7 backport does not handle it properly, but hopefully it will :)
+        # see https://github.com/testing-cabal/funcsigs/issues/33.
+        self._use_signature_trick = use_signature_trick and not funcsigs_used
 
     @property
     def first_arg_name(self):
