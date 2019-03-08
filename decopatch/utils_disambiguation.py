@@ -245,5 +245,7 @@ def disambiguate_using_introspection(depth):
             # no @, so most probably a with-arg call
             return FirstArgDisambiguation.is_normal_arg
 
-    except Exception:
+    except Exception as e:
+        print(e)
+        warn(e)
         return None
