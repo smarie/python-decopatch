@@ -1,4 +1,4 @@
-from utils_disambiguation import disambiguate_using_introspection, FirstArgDisambiguation
+from decopatch.utils_disambiguation import disambiguate_using_introspection, FirstArgDisambiguation
 
 
 def test_on_functions():
