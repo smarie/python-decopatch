@@ -1,4 +1,16 @@
 from decopatch.utils_disambiguation import disambiguate_using_introspection, FirstArgDisambiguation
+from decopatch.utils_modes import SignatureInfo
+
+try:  # python 3.3+
+    from inspect import signature
+except ImportError:
+    from funcsigs import signature
+
+
+def test_signature_trick():
+    sig_info = SignatureInfo(signature(test_signature_trick))
+    sig_info.use_signature_trick = True
+    raise Exception("use signature trick = %s" % sig_info.use_signature_trick)
 
 
 def test_on_functions():
