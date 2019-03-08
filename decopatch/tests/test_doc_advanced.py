@@ -4,8 +4,7 @@ import sys
 import pytest
 from makefun import with_signature
 
-from decopatch import function_decorator, DECORATED, \
-    InvalidMandatoryArgError, AmbiguousDecoratorDefinitionError, class_decorator, WRAPPED, F_ARGS, F_KWARGS, decorator
+from decopatch import function_decorator, DECORATED, InvalidMandatoryArgError, class_decorator
 
 try:  # python 3.3+
     from inspect import signature
@@ -315,38 +314,38 @@ def test_doc_impl_first_tag_mandatory_protected(with_star, uses_introspection):
 @pytest.mark.parametrize('with_star', [False, True], ids="kwonly={}".format)
 def test_doc_impl_first_tag_optional_nonprotected(with_star):
     """Tests that an error is raised when nonprotected code is created """
-    with pytest.raises(AmbiguousDecoratorDefinitionError):
-        if with_star:
-            if sys.version_info < (3, 0):
-                pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
-            else:
-                from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_optional_nonprotected_star
-                add_tag = create_test_doc_impl_first_tag_optional_nonprotected_star()
+    # with pytest.raises(AmbiguousDecoratorDefinitionError):
+    if with_star:
+        if sys.version_info < (3, 0):
+            pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
         else:
-            @function_decorator(enable_stack_introspection=False, can_first_arg_be_ambiguous=None)
-            def add_tag(tag='tag!', f=DECORATED):
-                """
-                This decorator adds the 'my_tag' tag on the decorated function,
-                with the value provided as argument
+            from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_optional_nonprotected_star
+            add_tag = create_test_doc_impl_first_tag_optional_nonprotected_star()
+    else:
+        @function_decorator
+        def add_tag(tag='tag!', f=DECORATED):
+            """
+            This decorator adds the 'my_tag' tag on the decorated function,
+            with the value provided as argument
 
-                :param tag: the tag value to set
-                :param f: represents the decorated item. Automatically injected.
-                :return:
-                """
-                setattr(f, 'my_tag', tag)
-                return f
+            :param tag: the tag value to set
+            :param f: represents the decorated item. Automatically injected.
+            :return:
+            """
+            setattr(f, 'my_tag', tag)
+            return f
 
-    # @add_tag(tag='hello')
-    # def foo():
-    #     return
-    #
-    # assert foo.my_tag == 'hello'
-    #
-    # @add_tag
-    # def foo():
-    #     return
-    #
-    # assert foo.my_tag == 'tag!'
+    @add_tag(tag='hello')
+    def foo():
+        return
+
+    assert foo.my_tag == 'hello'
+
+    @add_tag
+    def foo():
+        return
+
+    assert foo.my_tag == 'tag!'
 
 
 @pytest.mark.parametrize('with_star', [False, True], ids="kwonly={}".format)
@@ -362,8 +361,7 @@ def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
             add_tag = create_test_doc_impl_first_tag_optional_protected(uses_introspection)
     else:
         # protect it explicitly if introspection is disabled
-        @function_decorator(can_first_arg_be_ambiguous=None if uses_introspection else False,
-                            enable_stack_introspection=uses_introspection)
+        @function_decorator(enable_stack_introspection=uses_introspection)
         def add_tag(tag='tag!', f=DECORATED):
             """
             This decorator adds the 'my_tag' tag on the decorated function,

@@ -12,7 +12,7 @@ except ImportError:
     from funcsigs import signature
 
 
-@pytest.mark.parametrize('flat_mode', [False, True])
+@pytest.mark.parametrize('flat_mode', [False, True], ids="flat_mode={}".format)
 def test_doc_add_tag_function(flat_mode):
     """ Tests that the @add_tag example from doc (functions only) works """
 
@@ -20,15 +20,9 @@ def test_doc_add_tag_function(flat_mode):
         @function_decorator
         def add_tag(tag='hi!'):
             """
-            This is the @add_tag decorator. Its signature and docstring are the ones
-            that users will see.
-            ---
-            Example decorator to add a 'tag' attribute to a function. It can be used
-            with and without parenthesis, with and without arguments.
-
+            Example decorator to add a 'tag' attribute to a function.
             :param tag: the 'tag' value to set on the decorated function (default 'hi!).
             """
-
             def apply_decorator(f):
                 """
                 This is the method that will be called when your decorator is used on a
@@ -44,16 +38,7 @@ def test_doc_add_tag_function(flat_mode):
         @function_decorator
         def add_tag(tag='hi!', f=DECORATED):
             """
-            This is the @add_tag decorator. Its signature (except `f`) and docstring are
-            the ones that users will see.
-
-            This method will be called when your decorator is used on a function `f`, with
-            or without parenthesis or parameters. It should return the replacement for
-            this function (it can be the same object or another one, not even a function!)
-            ---
-            Example decorator to add a 'tag' attribute to a function. It can be used
-            with and without parenthesis, with and without arguments.
-
+            Example decorator to add a 'tag' attribute to a function.
             :param tag: the 'tag' value to set on the decorated function (default 'hi!).
             """
             setattr(f, 'tag', tag)
@@ -81,9 +66,14 @@ def test_doc_add_tag_function(flat_mode):
     add_tag()(foo)
     assert foo.tag == 'hi!'
 
+    # signature and help
+    assert "%s%s" % (add_tag.__name__, signature(add_tag)) == "add_tag(tag='hi!')"
     print(help(add_tag))
-
-    assert str(signature(add_tag)) == "(tag='hi!')"
+    assert add_tag.__doc__ == """
+            Example decorator to add a 'tag' attribute to a function.
+            :param tag: the 'tag' value to set on the decorated function (default 'hi!).
+            """
+    assert add_tag.__module__ == test_doc_add_tag_function.__module__
 
 
 @pytest.mark.parametrize('mode', ['nested', 'flat', 'double-flat'])
@@ -182,6 +172,12 @@ def test_doc_say_hello(capsys, mode):
 
     print("Signature: %s" % signature(say_hello))
 
+    @say_hello  # no parenthesis
+    def add_ints(a, b):
+        return a + b
+
+    assert add_ints(1, 3) == 4
+
     captured = capsys.readouterr()
     with capsys.disabled():
         print(captured.out)
@@ -203,6 +199,7 @@ say_hello(person='world')
     :param person: the person name in the print message. Default = "world"
 
 Signature: (person='world')
+hello, world !
 """
 
     assert captured.err == ""

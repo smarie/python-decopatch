@@ -1,7 +1,7 @@
 from enum import Enum
 from inspect import isclass, stack
 
-from decopatch.utils_signatures import SignatureInfo
+from decopatch.utils_modes import SignatureInfo
 
 
 class FirstArgDisambiguation(Enum):
@@ -14,7 +14,10 @@ class FirstArgDisambiguation(Enum):
 
 
 _WITH_PARENTHESIS = FirstArgDisambiguation.is_normal_arg
+"""Alias for the case where the arg is a normal arg"""
+
 _NO_PARENTHESIS = FirstArgDisambiguation.is_decorated_target
+"""Alias for the case where the arg is a decorated target"""
 
 
 def can_arg_be_a_decorator_target(arg):
@@ -80,7 +83,7 @@ def disambiguate_call(dk,  # type: DecoratorUsageInfo
             # AMBIGUOUS:
             # no parenthesis: @foo_decorator -OR- with 1 positional argument: @foo_decorator(a, **kwargs).
             # reminder: we can not count the kwargs because they always contain all the arguments
-            dk._first_arg_value=dk.args[0]
+            dk._first_arg_value = dk.args[0]
 
     else:
         # first arg can be keyword. So it will be in kwargs (even if it was provided as positional).
@@ -112,8 +115,7 @@ def disambiguate_call(dk,  # type: DecoratorUsageInfo
 def create_single_arg_callable_or_class_disambiguator(impl_function,
                                                       is_function_decorator,
                                                       is_class_decorator,
-                                                      can_first_arg_be_ambiguous,
-                                                      callable_or_cls_firstarg_disambiguator,
+                                                      custom_disambiguator,
                                                       enable_stack_introspection,
                                                       signature_knowledge,  # type: SignatureInfo
                                                       ):
@@ -149,30 +151,16 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
             # that class cannot be a decorator target so it has to be the first argument
             return FirstArgDisambiguation.is_normal_arg
 
-        elif callable_or_cls_firstarg_disambiguator is not None:
+        elif custom_disambiguator is not None:
             # an explicit disambiguator is provided, use it
-            return callable_or_cls_firstarg_disambiguator(first_arg_received)
+            return custom_disambiguator(first_arg_received)
 
         else:
-            if can_first_arg_be_ambiguous is not None:
-                # it has explicitly been set by user
-                if can_first_arg_be_ambiguous:
-                    # the first arg is declared explicitly as possibly ambiguous.
-                    return FirstArgDisambiguation.is_ambiguous
-                else:
-                    # user set 'can_first_arg_be_ambiguous' to False explicitly: he assumes that this is a decorator
-                    return FirstArgDisambiguation.is_decorated_target
-            else:
-                # default behaviour, depends on mandatory-ness
-                if signature_knowledge.is_first_arg_mandatory:
-                    # we can safely do this, it will raise a `TypeError` automatically
-                    return FirstArgDisambiguation.is_decorated_target
-
-                else:
-                    # The function has only optional parameters > ask for explicit protection to be able to use it
-                    # NOTE: now this should NEVER happen because we now force the implementor to take position
-                    # return FirstArgDisambiguation.is_ambiguous
-                    raise Exception("Internal error - this line of code is not supposed to be hit")
+            # Always say "decorated target" because
+            # - if 1+ mandatory arg, we can safely do this, it will raise a `TypeError` automatically
+            # - if 0 mandatory args, the most probable scenario for receiving a single callable or class argument is
+            # still the no-arg. We do not want to penalize users.
+            return FirstArgDisambiguation.is_decorated_target
 
     return disambiguate_call
 
