@@ -156,11 +156,13 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
                     res = disambiguate_using_introspection(depth)
                     if res is not None:
                         return res
-                except IPythonException:
+                except IPythonException as e:
                     warn("Decorator disambiguation using stack introspection is not available in Jupyter/iPython. "
                          "Please use the decorator in a non-ambiguous way. For example use explicit parenthesis @%s() "
                          "for no-arg usage, or use 2 non-default arguments, or use explicit keywords. Ambiguous "
                          "argument received: %s." % (impl_function.__name__, first_arg_received))
+                    #temporary
+                    raise e
 
         # we want to eliminate as much as possible the args that cannot be first args
         if callable(first_arg_received) and not isclass(first_arg_received) and not is_function_decorator:
@@ -202,50 +204,44 @@ def disambiguate_using_introspection(depth):
     :param depth:
     :return:
     """
-    try:
-        # TODO inspect.stack and inspect.currentframe are extremely slow
-        # https://gist.github.com/JettJones/c236494013f22723c1822126df944b12
-        # --
-        # curframe = currentframe()
-        # calframe = getouterframes(curframe, 4)
-        # --or
-        calframe = stack(context=1)
-        # ----
-        filename = calframe[depth][1]
+    # TODO inspect.stack and inspect.currentframe are extremely slow
+    # https://gist.github.com/JettJones/c236494013f22723c1822126df944b12
+    # --
+    # curframe = currentframe()
+    # calframe = getouterframes(curframe, 4)
+    # --or
+    calframe = stack(context=1)
+    # ----
+    filename = calframe[depth][1]
 
-        # frame = sys._getframe(where_to_look)
-        # filename = frame.f_code.co_filename
-        # frame_info = traceback.extract_stack(f=frame, limit=6)[0]
-        # filename =frame_info.filename
+    # frame = sys._getframe(where_to_look)
+    # filename = frame.f_code.co_filename
+    # frame_info = traceback.extract_stack(f=frame, limit=6)[0]
+    # filename =frame_info.filename
 
-        # print(filename)
+    # print(filename)
 
-        if filename.startswith('<'):
-            # iPython / jupyter
-            # warning('disambiguating input within ipython... special care: this might be incorrect')
-            # # TODO strangely the behaviour of stack() is reversed in this case and the deeper the target the more
-            #  context we need.... quite difficult to handle in a generic simple way
-            raise IPythonException()
+    if filename.startswith('<'):
+        # iPython / jupyter
+        # warning('disambiguating input within ipython... special care: this might be incorrect')
+        # # TODO strangely the behaviour of stack() is reversed in this case and the deeper the target the more
+        #  context we need.... quite difficult to handle in a generic simple way
+        raise IPythonException(calframe)
 
-        # --with inspect..
-        code_context = calframe[depth][4]
-        cal_line_str = code_context[0].lstrip()
-        # --with ?
-        # cal_line_str = frame_info.line
+    # --with inspect..
+    code_context = calframe[depth][4]
+    cal_line_str = code_context[0].lstrip()
+    # --with ?
+    # cal_line_str = frame_info.line
 
-        # print(cal_line_str)
+    # print(cal_line_str)
 
-        if cal_line_str.startswith('@'):
-            if '(' not in cal_line_str:
-                # crude way
-                return FirstArgDisambiguation.is_decorated_target
-            else:
-                return FirstArgDisambiguation.is_normal_arg
+    if cal_line_str.startswith('@'):
+        if '(' not in cal_line_str:
+            # crude way
+            return FirstArgDisambiguation.is_decorated_target
         else:
-            # no @, so most probably a with-arg call
             return FirstArgDisambiguation.is_normal_arg
-
-    except Exception as e:
-        print(e)
-        warn(e)
-        return None
+    else:
+        # no @, so most probably a with-arg call
+        return FirstArgDisambiguation.is_normal_arg
