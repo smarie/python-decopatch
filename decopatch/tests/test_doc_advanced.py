@@ -14,12 +14,12 @@ except ImportError:
     funcsigs_used = True
 
 
-@pytest.mark.parametrize('usage_first', [True, False], ids="usage_first={}".format)
+@pytest.mark.parametrize('nested_mode', [True, False], ids="nested_mode={}".format)
 @pytest.mark.parametrize('uses_introspection', [True, False], ids="uses_introspection={}".format)
-def test_doc_impl_first_tag_mandatory(uses_introspection, usage_first):
+def test_doc_impl_first_tag_mandatory(uses_introspection, nested_mode):
     """ The first implementation-first example in the doc """
 
-    if usage_first:
+    if nested_mode:
         @function_decorator(enable_stack_introspection=uses_introspection)
         def add_tag(tag):
             """
@@ -264,7 +264,7 @@ def test_doc_impl_first_class_tag_mandatory(uses_introspection):
     #     assert Foo.my_tag == object
 
 
-def test_doc_usage_first_tag_mandatory():
+def test_doc_nested_mode_tag_mandatory():
     @function_decorator
     def add_tag(tag):
         """

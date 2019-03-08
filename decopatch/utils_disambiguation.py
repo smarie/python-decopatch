@@ -1,5 +1,6 @@
 from enum import Enum
 from inspect import isclass, stack
+from warnings import warn
 
 from decopatch.utils_modes import SignatureInfo
 
@@ -146,10 +147,20 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
 
         # introspection-based
         if enable_stack_introspection:
-            res = disambiguate_using_introspection(impl_function, first_arg_received,
-                                                   signature_knowledge.use_signature_trick)
-            if res is not None:
-                return res
+            if isclass(first_arg_received):
+                # as of today the introspection mechanism provided below does not work reliably on classes.
+                pass
+            else:
+                depth = 4 if signature_knowledge.use_signature_trick else 5
+                try:
+                    res = disambiguate_using_introspection(depth)
+                    if res is not None:
+                        return res
+                except IPythonException:
+                    warn("Decorator disambiguation using stack introspection is not available in Jupyter/iPython. "
+                         "Please use the decorator in a non-ambiguous way. For example use explicit parenthesis @%s() "
+                         "for no-arg usage, or use 2 non-default arguments, or use explicit keywords. Ambiguous "
+                         "argument received: %s." % (impl_function.__name__, first_arg_received))
 
         # we want to eliminate as much as possible the args that cannot be first args
         if callable(first_arg_received) and not isclass(first_arg_received) and not is_function_decorator:
@@ -174,10 +185,11 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
     return disambiguate_call
 
 
-def disambiguate_using_introspection(decorator_function,  # type: Callable
-                                     first_arg_received,   # type: Any
-                                     uses_signature_trick,
-                                     ):
+class IPythonException(Exception):
+    pass
+
+
+def disambiguate_using_introspection(depth):
     """
     Tries to disambiguate the call situation betwen with-parenthesis and without-parenthesis using call stack
     introspection.
@@ -187,17 +199,9 @@ def disambiguate_using_introspection(decorator_function,  # type: Callable
     TODO it could be worth investigating how to improve this logic.. but remember that the decorator can also be renamed
       so we can not check a full string expression
 
-    :param decorator_function:
-    :param first_arg_received:
-    :param uses_signature_trick: if True we have to look one less level up in the stack
+    :param depth:
     :return:
     """
-    if isclass(first_arg_received):
-        # as of today the introspection mechanism provided below does not work reliably on classes.
-        return None
-
-    where_to_look = 4 if uses_signature_trick else 5
-
     try:
         # TODO inspect.stack and inspect.currentframe are extremely slow
         # https://gist.github.com/JettJones/c236494013f22723c1822126df944b12
@@ -207,7 +211,7 @@ def disambiguate_using_introspection(decorator_function,  # type: Callable
         # --or
         calframe = stack(context=1)
         # ----
-        filename = calframe[where_to_look][1]
+        filename = calframe[depth][1]
 
         # frame = sys._getframe(where_to_look)
         # filename = frame.f_code.co_filename
@@ -221,13 +225,10 @@ def disambiguate_using_introspection(decorator_function,  # type: Callable
             # warning('disambiguating input within ipython... special care: this might be incorrect')
             # # TODO strangely the behaviour of stack() is reversed in this case and the deeper the target the more
             #  context we need.... quite difficult to handle in a generic simple way
-            raise Exception("Decorator disambiguation using stack introspection is not available in Jupyter/iPython."
-                            " Please use the decorator in a non-ambiguous way. For example use explicit parenthesis"
-                            " @%s() for no-arg usage, or use 2 non-default arguments, or use explicit keywords. "
-                            "Ambiguous argument received: %s." % (decorator_function.__name__, first_arg_received))
+            raise IPythonException()
 
         # --with inspect..
-        code_context = calframe[where_to_look][4]
+        code_context = calframe[depth][4]
         cal_line_str = code_context[0].lstrip()
         # --with ?
         # cal_line_str = frame_info.line
