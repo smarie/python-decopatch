@@ -17,6 +17,9 @@ def test_on_functions():
         else:
             raise Exception()
 
+    # trying to use the trick to see if that perturbates the introspection
+    my_decorator.__wrapped__ = level1
+
     @my_decorator
     def foo():
         pass
