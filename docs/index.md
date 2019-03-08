@@ -6,86 +6,7 @@
 
 [![Documentation](https://img.shields.io/badge/doc-latest-blue.svg)](https://smarie.github.io/python-decopatch/) [![PyPI](https://img.shields.io/pypi/v/decopatch.svg)](https://pypi.python.org/pypi/decopatch/) [![Downloads](https://pepy.tech/badge/decopatch)](https://pepy.tech/project/decopatch) [![Downloads per week](https://pepy.tech/badge/decopatch/week)](https://pepy.tech/project/decopatch) [![GitHub stars](https://img.shields.io/github/stars/smarie/python-decopatch.svg)](https://github.com/smarie/python-decopatch/stargazers)
 
-Because of a tiny oddity in the python language, writing decorators without help can be a pain. `decopatch` provides a simple way to solve this issue.
-
-## Motivation
-
-### a- Problem
-
-In python, a decorator used without arguments such as 
-
-```python
-@say_hello  # (1) no-parenthesis
-def foo(a, b):
-    pass
-```
-
-requires a completely different implementation code than
-
-```python
-@say_hello()  # (2) empty-parenthesis
-def foo(a, b):
-    pass
-```
-
-Indeed (1) requires `say_hello` to directly return a replacement for the decorated object (in that case function `foo`), while (2) requires `say_hello` to return a **function** that returns a replacement for the decorated object ! This is one more level of nesting. If you wish to handle both situations in a robust way, **you end-up having to design some ridiculously complex code**, relying on some well-known "tricks" based either on checking the type or existence of first argument provided. For example:
-
-```python
-def say_hello(f=None):
-    if f is not None:
-        # this is (1) @say_hello (without parenthesis)
-        # we have to directly return a replacement for f
-        def new_f(...):
-            ...
-        return new_f
-    else:
-        # this is (2) @say_hello()
-        # we have to return a decorator function
-        def decorate(f):
-            def new_f(...):
-                ...
-            return new_f
-        return decorate
-```
-
-Unfortunately, the 'trick' to use is different for almost every type of decorator signature (var-args, keyword-only, all-optional, ...). So if you change your mind about your API during development time (this often happens, at least to me :)), you end up having to change this useless piece of code several times!
-
-### b- Solution
-
-`decopatch` provides a simple way to solve this issue. It always uses the best "trick", so that you do not have to care, you just implement one case:
-
-```python
-from decopatch import function_decorator
-
-@function_decorator
-def say_hello():
-    def _decorate_f(f):
-        def new_f(...):
-            ...
-        return new_f
-    return _decorate_f
-```
-
-To ease things even more, `decopatch` also supports a *flat* mode:
-
-```python
-from decopatch import function_decorator, DECORATED
-
-@function_decorator
-def say_hello(f=DECORATED):
-    def new_f(...):
-        ...
-    return new_f
-```
-
-In both cases, generated decorators have a proper `help` and `signature`, so users do not see the difference.
-
-### c- Why something new ?
-
-As opposed to the great [`decorator`](https://github.com/micheles/decorator) and [`wrapt`](https://wrapt.readthedocs.io/) libraries, `decopatch` does not try **at the same time** to help you create decorators and function wrappers. In my opinion creating function wrappers is a completely independent topic, you can wish to do it in with a decorator OR without. 
-
-Nevertheless since it is an important use case, I show below how to do it. If you're interested in this topic, see [`makefun`](https://smarie.github.io/python-makefun/), my fork of `decorator`'s core engine supporting additional use cases such as signature modification.
- 
+Because of a tiny oddity in the python language, writing decorators without help can be a pain because you have to handle the no-parenthesis usage [explicitly](./motivation). `decopatch` provides a simple way to solve this issue so that writing decorators is simple and straightforward.
 
 ## Installing
 
@@ -95,120 +16,103 @@ Nevertheless since it is an important use case, I show below how to do it. If yo
 
 ## Usage
 
-### a- Flat mode
+### 1- As usual, a.k.a nested mode
 
-In this mode the decorator is implemented as a function, that should return the replacement for the decorated item. To create a decorator you have to do two things:
- 
- - use `@function_decorator`, `@class_decorator` or `@decorator` on your implementation function
- - declare which variable represents the injected decorated item by using the `DECORATED` keyword as its default value. 
- 
-Note: if you can not or do not want to add the `DECORATED` default value, you can specify the variable name explicitly with `wraps=<argname>`.
+Let's create a `add_tag` decorator, that will simply add a new attribute on the decorated function:
 
-#### *1- Simple with mandatory arg*
+```python
+from decopatch import function_decorator
 
-Let's create a simple `@add_tag` decorator that adds a tag on the decorated function:
+@function_decorator
+def add_tag(tag='hi!'):
+    """
+    Example decorator to add a 'tag' attribute to a function. 
+    :param tag: the 'tag' value to set on the decorated function (default 'hi!).
+    """
+    def _apply_decorator(f):
+        """
+        This is the method that will be called when `@add_tag` is used on a 
+        function `f`. It should return a replacement for `f`.
+        """
+        setattr(f, 'tag', tag)
+        return f
+    return _apply_decorator
+```
+
+Apart from the new `@function_decorator`, it should look very familiar to those of you who tried to write decorators using the native python mechanisms. **Except** that it works out of the box with and without parenthesis, with and without arguments:
+
+```python
+@add_tag  # no parenthesis
+def foo():
+    pass
+assert foo.tag == 'hi!'
+
+@add_tag()  # empty parenthesis
+def foo():
+    pass
+assert foo.tag == 'hi!'
+
+@add_tag('hello')  # with args
+def foo():
+    pass
+assert foo.tag == 'hello'
+
+add_tag()(foo)  # manual decoration
+assert foo.tag == 'hi!'  
+```
+
+Besides, its signature and docstring are preserved:
+
+```python
+print("%s%s" % (add_tag.__name__, signature(add_tag)))
+print(help(add_tag))
+```
+
+yields
+
+```bash
+add_tag(tag='hi!')
+Help on function add_tag in module decopatch.tests.test_doc:
+
+add_tag(tag='hi!')
+    Example decorator to add a 'tag' attribute to a function.
+    :param tag: the 'tag' value to set on the decorated function (default 'hi!).
+```
+
+Finally note that `_apply_decorator` *can* return a wrapper, but is not forced to: you are free to return `f`, a wrapper of `f`, or a complete replacement for `f`, not even a function! This is the default python language capability, but we tend to forget it when we use `wrapt` or `decorator` because they are designed for wrappers.
+
+### 2- More compact: flat mode
+
+To ease code readability, `decopatch` also supports a *flat* mode:
 
 ```python
 from decopatch import function_decorator, DECORATED
 
 @function_decorator
-def add_tag(tag, f=DECORATED):
+def add_tag(tag='hi!', f=DECORATED):
     """
-    This decorator adds the 'my_tag' tag on the decorated function,
-    with the value provided as argument
-
-    :param tag: the tag value to set
-    :param f: represents the decorated item. Automatically injected.
-    :return:
+    Example decorator to add a 'tag' attribute to a function.
+    :param tag: the 'tag' value to set on the decorated function (default 'hi!).
     """
-    setattr(f, 'my_tag', tag)
+    setattr(f, 'tag', tag)
     return f
 ```
 
-You can test that your new `@add_tag` decorator works:
+As you can see, in that mode you can use one less level of nesting. You indicate which argument is the decorated object by using the `DECORATED` default value. 
 
-```python
-@add_tag('hello')
-def foo():
-    return
-
-# let's check that the `foo` function has been correctly decorated
-assert foo.my_tag == 'hello'
-```
-
-And also that using your decorator without argument raises an error as expected:
-
-```python
-@add_tag
-def foo():
-    return
-```
-
-yields `TypeError: add_tag() missing 1 required positional argument: 'tag'`.
-
-Finally, note that calling the decorator with a callable as first argument is even correctly handled:
-
-```python
-@add_tag(print)
-def foo():
-    return
-
-assert foo.my_tag == print  # works !
-```
-
-#### *2- Same with all-optional args*
-
-Let's modify the above example so that the argument is optional:
-
-```python
-@function_decorator
-def add_tag(tag='tag!', f=DECORATED):
-    setattr(f, 'my_tag', tag)
-    return f
-```
-
-You can check that everything works as expected:
-
-```python
-@add_tag('hello')                 # normal arg
-def foo():
-    return
-assert foo.my_tag == 'hello'
-
-@add_tag(tag='hello')           # normal kwarg
-def foo():
-    return
-assert foo.my_tag == 'hello'
-
-@add_tag                      # no parenthesis
-def foo():
-    return
-assert foo.my_tag == 'tag!'
-
-@add_tag()                 # empty parenthesis
-def foo():
-    return
-assert foo.my_tag == 'tag!'
-
-@add_tag(print)        # callable as first arg
-def foo():
-    return
-assert foo.my_tag == print
-
-@add_tag(tag=print)  # callable as first kwarg
-def foo():
-    return
-assert foo.my_tag == print
-```
+But the cool thing is that using this development style does not change the signature that gets exposed to your users: they do not see the `DECORATED` argument, you can check it with `help(add_tag)`! Of course you should not mention it in the docstring.
 
 
-#### *3- Function wrapper creator*
+### 3- Creating function wrappers
 
-In real-world applications you often wish to not only modify the decorated item, but to **replace** it with something else. 
+A very popular use case for decorators is to create signature-preserving function wrappers. The great [`decorator`](https://github.com/micheles/decorator) library in particular, provides tools to solve this problem "all at once" (decorator + signature-preserving wrapper).
 
-A typical use case is the creation of a **function wrapper**, for example to add behaviours to a function when decorating it. The great `wrapt` and `decorator` libraries have been designed mostly to cover this purpose, but they blend it quite tightly to the decorator creation. Below we show that the same result can be obtained by combining two distinct libraries: `decopatch` to create the decorator, and the library of your choice for the signature-preserving wrapper. In this example we use `makefun`.
+With `decopatch` and its optional companion [`makefun`](https://smarie.github.io/python-makefun/), each problem is now solved in a dedicated library, because the author believes that these are two completely independent problems.
+
+ - `decopatch` (this library) focuses on helping you create decorators that nicely handle the without-parenthesis case. You can decorate functions and classes, and your decorator is free to return anything (the same object that was decorated, a wrapper, or another object).
+ - [`makefun`](https://smarie.github.io/python-makefun/) can be used to generate functions with any signature dynamically ; in particular its `with_signature` method makes it very easy to create signature-preserving wrappers. It relies on the same tricks than [`decorator`](https://github.com/micheles/decorator) to perform the function generation, but also supports more complex use cases such as signature modification. It can be used anywhere of course, it is not specific to decorators.
  
-Let's create a `@say_hello` decorator, that prints a message to stdout before each call to the decorated function. 
+Both work well together of course:
 
 ```python
 from decopatch import function_decorator, DECORATED
@@ -217,42 +121,45 @@ from makefun import with_signature
 @function_decorator
 def say_hello(person="world", f=DECORATED):
     """
-    This decorator modifies the decorated function so that a nice hello 
-    message is printed before the call.
+    This decorator modifies the decorated function so as to print a greetings 
+    message before each execution.
 
     :param person: the person name in the print message. Default = "world"
-    :param f: represents the decorated item. Automatically injected.
-    :return: a modified version of `f` that will print a msg before executing
     """
-    # create a wrapper of f that will do the print before call
-    # we rely on `makefun.with_signature` to preserve signature
-    @with_signature(f)
+    # (1) create a wrapper of f that will do the print before call
+    @with_signature(f)  # rely on `makefun` to preserve signature of `f`
     def new_f(*args, **kwargs):
-        nonlocal person
         print("hello, %s !" % person)  # say hello
-        return f(*args, **kwargs)      # call f
+        return f(*args, **kwargs)      # execute f
 
-    # return the new function
+    # (2) return it as a replacement for `f`
     return new_f
 ```
 
 Once again, you can check that all call modes are properly implemented:
 
 ```python
-@say_hello
+@say_hello  # no parenthesis
 def foo():
     print("<executing foo>")
 foo()
 
-@say_hello()
+@say_hello()  # empty parenthesis
 def bar():
     print("<executing bar>")
 bar()
 
-@say_hello("you")
+@say_hello("you")  # arg
 def custom():
     print("<executing custom>")
 custom()
+
+# manual decoration
+def custom2():
+    print("<executing custom2>")
+    
+custom2 = say_hello()(custom2)
+custom2()
 ```
 
 yields
@@ -264,91 +171,84 @@ hello, world !
 <executing bar>
 hello, you !
 <executing custom>
+hello, world !
+<executing custom2>
 ```
 
-!!! note "nonlocal in python 2"
-    In python 2 the `nonlocal` keyword from [PEP3104](https://www.python.org/dev/peps/pep-3104/) is not available. See [this workaround](https://stackoverflow.com/a/16032631/7262247)
+As stated previously, you can use any other means to generate your function wrapper at step (1) of this example, such as `functools.wraps`, etc. But beware that not all of them are signature-preserving!
 
-#### *4- Class decorator*
+#### ...even simpler ?
 
-You can similarly use `@class_decorator` to create a decorator that works for classes.
-
-
-
-#### *5- Class+Function decorator*
-
-Both `@function_decorator` and `@class_decorator` are actually user-friendly presets for the more generic `@decorator`. If you wish to write a decorator that can be used both for functions and classes, you can use it.
-
-
-### b- Nested mode
-
-In *nested* mode you write your decorator's signature thinking about what the **user** will have to enter. So for example if you wish to create `@say_hello(person)` you will define `def say_hello(person)`. In that case your function has to return a function. 
-
-In other words, *nested* mode is equivalent to how you write python decorators with arguments today, except that you do not have to write anything special to handle the case where your decorator is used without parenthesis. It is silently redirected to the case where it is used with parenthesis. 
-
-To write decorators in this mode, you only have to decorate them with `@function_decorator`, `@class_decorator` or `@decorator`.
-
-#### *1- Simple with mandatory arg*
-
-We can reproduce the same example than above, in this alternate style:
+If you **really** want to avoid nesting in the above example (and take the risk of making your code less readable), `decopatch` supports a double-flat mode:
 
 ```python
+from decopatch import function_decorator, WRAPPED, F_ARGS, F_KWARGS
+
 @function_decorator
-def add_tag(tag):
+def say_hello(person="world", f=WRAPPED, f_args=F_ARGS, f_kwargs=F_KWARGS):
     """
-    This decorator adds the 'my_tag' tag on the decorated function,
-    with the value provided as argument
+    This decorator modifies the decorated function so as to print a greetings 
+    message before execution.
 
-    :param tag: the tag value to set
-    :param f: represents the decorated item. Automatically injected.
-    :return:
+    :param person: the person name in the print message. Default = "world"
     """
-    def replace_f(f):
-        setattr(f, 'my_tag', tag)
-        return f
-    return replace_f
+    print("hello, %s !" % person)  # say hello
+    return f(*f_args, **f_kwargs)      # execute f
 ```
 
-You can test that your new `@add_tag` decorator works:
+This syntax is completely equivalent to the one shown previously. You can check it:
 
 ```python
-@add_tag('hello')
-def foo():
-    return
-
-# let's check that the `foo` function has been correctly decorated
-assert foo.my_tag == 'hello'
-```
-
-### c- Behind the scenes
-
-When you use `@function_decorator` or the like, your function is dynamically replaced with another one with the same signature (if you're in *nested* mode) or where the `f` parameter is removed (if you're in *flat* mode). You can see it by using `help` on your function, or by looking at its signature:
-
-```python
-help(say_hello)
-
-from inspect import signature
-print("Signature: %s" % signature(say_hello))
+@say_hello  # no parenthesis
+def add_ints(a, b):
+    return a + b
+assert add_ints(1, 3) == 4
 ```
 
 yields
 
-```bash
-Help on function say_hello in module my_module:
-
-say_hello(person='world')
-    This decorator modifies the decorated function so that a nice hello
-    message is printed before the call.
-    
-    :param person: the person name in the print message. Default = "world"
-    :return:
-
-Signature: (person='world')
+```
+hello, world !
 ```
 
+As you can see above, the principles of this syntax are simple: all arguments are decorator arguments, except for the ones with default values `WRAPPED` (the decorated item), `F_ARGS` and `F_KWARGS` (the `*args` and `**kwargs` of each function call).
+
+
+### 4- Decorating classes
+
+You can similarly use `@class_decorator` to create a decorator that works for classes.
+
+Both `@function_decorator` and `@class_decorator` are actually user-friendly presets for the more generic `@decorator` function. So if you wish to write a decorator that can be used both for functions and classes, use `@decorator`:
+
+```python
+from decopatch import decorator
+
+@decorator
+def add_tag(tag='hi!'):
+    """
+    Example decorator to add a 'tag' attribute to a function or class.
+    :param tag: the 'tag' value to set on the decorated item (default 'hi!).
+    """
+    def _apply_decorator(o):
+        """
+        This is the method that will be called when your decorator is used on a
+        class or function `o`. It should return the replacement for this object.
+        """
+        setattr(o, 'tag', tag)
+        return o
+    return _apply_decorator
+```
+
+## How does it work ?
+
+There is no magic here. Without language modification (see [proposal](./pep_proposal)) or additional knowledge or source code introspection, python is just **not capable** of detecting that `@say_hello(foo)` is different from `@say_hello` applied to function `foo`.
+
+However in most standard cases there are well-known "tricks" to perform a disambiguation that covers most standard cases. `decopatch` is basically a collection of such tricks. Some of them are static, based on your decorator's signature, and some others are dynamic, based on the received arguments. See [disambiguation details](./disambiguation) for the complete list and for advanced usage.
 
 ## See Also
 
+ - [PEP318](https://www.python.org/dev/peps/pep-0318/) decorators for functions and methods
+ - [PEP3129](https://www.python.org/dev/peps/pep-3129/) decorators for classes
  - [decorator](https://github.com/micheles/decorator), the reference library for creating decorators in python. I used it a lot before writing `makefun` and `decopatch`, big thanks to [`micheles`](https://github.com/micheles) !
  - [tutorial 1](https://realpython.com/primer-on-python-decorators/)
  - [tutorial 2](https://www.thecodeship.com/patterns/guide-to-python-function-decorators/)

@@ -3,11 +3,14 @@ site_name: decopatch
 repo_url: https://github.com/smarie/python-decopatch
 docs_dir: .
 site_dir: ../site
-pages:
+nav:
     - Home: index.md
-    # - API reference: api_reference.md
+    - Motivation: motivation.md
+    - Disambiguation principes: disambiguation.md
+#    - Usage details: usage_details.md
+    - PEP proposal: pep_proposal.md
     - Changelog: changelog.md
-#    - Advanced Usage: advanced_usage.md
+
 theme: material  # readthedocs  mkdocs
 
 markdown_extensions:
