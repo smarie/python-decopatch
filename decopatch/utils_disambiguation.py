@@ -161,8 +161,9 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
                          "Please use the decorator in a non-ambiguous way. For example use explicit parenthesis @%s() "
                          "for no-arg usage, or use 2 non-default arguments, or use explicit keywords. Ambiguous "
                          "argument received: %s." % (impl_function.__name__, first_arg_received))
-                    #temporary
-                    raise e
+                except Exception:
+                    # silently escape all exceptions by default - safer for users
+                    pass
 
         # we want to eliminate as much as possible the args that cannot be first args
         if callable(first_arg_received) and not isclass(first_arg_received) and not is_function_decorator:
@@ -188,6 +189,8 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
 
 
 class IPythonException(Exception):
+    """Exception raised by `disambiguate_using_introspection` when the file where the decorator was used seems to be
+    an ipython one"""
     pass
 
 
@@ -204,8 +207,9 @@ def disambiguate_using_introspection(depth):
     :param depth:
     :return:
     """
-    # TODO inspect.stack and inspect.currentframe are extremely slow
-    # https://gist.github.com/JettJones/c236494013f22723c1822126df944b12
+    # Unfortunately inspect.stack and inspect.currentframe are extremely slow
+    # see https://gist.github.com/JettJones/c236494013f22723c1822126df944b12
+    # but as of now could not find another way.
     # --
     # curframe = currentframe()
     # calframe = getouterframes(curframe, 4)
@@ -223,9 +227,8 @@ def disambiguate_using_introspection(depth):
 
     if filename.startswith('<'):
         # iPython / jupyter
-        # warning('disambiguating input within ipython... special care: this might be incorrect')
-        # # TODO strangely the behaviour of stack() is reversed in this case and the deeper the target the more
-        #  context we need.... quite difficult to handle in a generic simple way
+        # strangely the behaviour of stack() is reversed in this case and the deeper the target the more
+        # context we need.... quite difficult to handle in a generic simple way !
         raise IPythonException(calframe)
 
     # --with inspect..
