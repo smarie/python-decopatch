@@ -1,0 +1,624 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.2">
+    
+    
+      
+        <title>Disambiguation principes - decopatch</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.982221ab.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#disambiguation-principles" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="decopatch" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              decopatch
+            </span>
+            <span class="md-header-nav__topic">
+              Disambiguation principes
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/smarie/python-decopatch/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="decopatch" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    decopatch
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/smarie/python-decopatch/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../motivation/" title="Motivation" class="md-nav__link">
+      Motivation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Disambiguation principes
+      </label>
+    
+    <a href="./" title="Disambiguation principes" class="md-nav__link md-nav__link--active">
+      Disambiguation principes
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-no-args-decorators" title="1- no-args decorators" class="md-nav__link">
+    1- no-args decorators
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-keyword-only-decorators" title="2- keyword-only decorators" class="md-nav__link">
+    2- keyword-only decorators
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mandatory-arguments" title="1+ mandatory argument(s)" class="md-nav__link">
+    1+ mandatory argument(s)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0-mandatory-arguments" title="0 mandatory arguments" class="md-nav__link">
+    0 mandatory arguments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-general-case" title="3- General case" class="md-nav__link">
+    3- General case
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../pep_proposal/" title="PEP proposal" class="md-nav__link">
+      PEP proposal
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-no-args-decorators" title="1- no-args decorators" class="md-nav__link">
+    1- no-args decorators
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-keyword-only-decorators" title="2- keyword-only decorators" class="md-nav__link">
+    2- keyword-only decorators
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-mandatory-arguments" title="1+ mandatory argument(s)" class="md-nav__link">
+    1+ mandatory argument(s)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#0-mandatory-arguments" title="0 mandatory arguments" class="md-nav__link">
+    0 mandatory arguments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-general-case" title="3- General case" class="md-nav__link">
+    3- General case
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/smarie/python-decopatch/edit/master/docs/disambiguation.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="disambiguation-principles">Disambiguation principles<a class="headerlink" href="#disambiguation-principles" title="Permanent link">&para;</a></h1>
+<p>As stated in the <a href="../index">introduction</a>, without language modification (see <a href="../pep_proposal">proposal</a>) or additional knowledge or source code introspection, python is just <strong>not capable</strong> of detecting that <code>@say_hello(foo)</code> is different from <code>@say_hello</code> applied to function <code>foo</code> without parenthesis.</p>
+<p>However there are well-known "tricks" to perform a disambiguation that covers most standard cases. <code>decopatch</code> is basically a collection of such tricks. Some of them are static, based on your decorator's signature, and some others are dynamic, based on the received arguments. This section explains what happens behind the scenes.</p>
+<p>The reader is encouraged to get familiar with the basic <code>decopatch</code> principles first by reading the  <a href="../index">introduction</a>. In particular the two main development styles (nested and flat) are assumed to be understood. All examples below use the "flat" style, but the equivalent "nested" style would lead to the exact same result.</p>
+<h2 id="1-no-args-decorators">1- no-args decorators<a class="headerlink" href="#1-no-args-decorators" title="Permanent link">&para;</a></h2>
+<p>It is probably quite useless to use <code>decopatch</code> if your decorator has no arguments, except if you wish to easily support with- and without- parenthesis usage. This is how you can do it </p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">decopatch</span> <span class="kn">import</span> <span class="n">decorator</span><span class="p">,</span> <span class="n">DECORATED</span>
+
+<span class="nd">@decorator</span>
+<span class="k">def</span> <span class="nf">replace_with_hello</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="n">DECORATED</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator to replace anything with the &#39;hello&#39; string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s1">&#39;hello&#39;</span>
+</pre></div>
+
+
+<p>You can of course test that it works fine:</p>
+<div class="codehilite"><pre><span></span><span class="nd">@replace_with_hello</span>  <span class="c1"># no parenthesis</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="k">pass</span>
+<span class="k">assert</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;hello&#39;</span>
+
+<span class="nd">@replace_with_hello</span><span class="p">()</span>  <span class="c1"># with parenthesis</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="k">pass</span>
+<span class="k">assert</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;hello&#39;</span>
+</pre></div>
+
+
+<p>In this particular case, <code>decopatch</code> does not expose a decorator with no arguments as you would expect, but it instead adds a "dummy" var-positional argument named <code>_</code>, so that both with- and without- parenthesis usages are supported: </p>
+<div class="codehilite"><pre><span></span>&gt;&gt;&gt; help(replace_with_hello)
+Help on function replace_with_hello in module ...:
+
+replace_with_hello(*_)
+    Decorator to replace anything by the &#39;hello&#39; string.
+</pre></div>
+
+
+<p>If your users try to input arguments they will get a <code>TypeError</code>, except if they provide a single argument that is a callable or a class. In that case we have no means to disambiguate so we prefer to consider that this is a no-parenthesis usage, rather than trying complex disambiguation tricks. After all, your decorator is supposed to have no arguments :)</p>
+<div class="codehilite"><pre><span></span><span class="n">replace_with_hello</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>      <span class="c1"># TypeError: function &#39;replace_with_hello&#39; does not accept any argument.</span>
+<span class="n">replace_with_hello</span><span class="p">(</span><span class="k">print</span><span class="p">)</span>  <span class="c1"># no error !</span>
+</pre></div>
+
+
+<p>See <code>create_no_args_decorator</code> in the <a href="https://github.com/smarie/python-decopatch/blob/master/decopatch/main.py">source code</a> for details.</p>
+<h2 id="2-keyword-only-decorators">2- keyword-only decorators<a class="headerlink" href="#2-keyword-only-decorators" title="Permanent link">&para;</a></h2>
+<h3 id="1-mandatory-arguments">1+ mandatory argument(s)<a class="headerlink" href="#1-mandatory-arguments" title="Permanent link">&para;</a></h3>
+<p>If your decorator is keyword-only and has <strong>at least one mandatory argument</strong>:</p>
+<div class="codehilite"><pre><span></span><span class="nd">@decorator</span>
+<span class="k">def</span> <span class="nf">replace_with</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">replacement</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">DECORATED</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Decorator to replace anything with the &lt;replacement&gt; object. &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">replacement</span>
+</pre></div>
+
+
+<p>then everything is very easy for <code>decopatch</code>: it can expose your desired signature directly, users have no way to use it in an ambiguous manner, and a successful call will always be a with-parenthesis call. </p>
+<div class="codehilite"><pre><span></span><span class="nd">@replace_with</span><span class="p">(</span><span class="n">replacement</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="k">pass</span>
+<span class="k">assert</span> <span class="n">foo</span> <span class="o">==</span> <span class="s1">&#39;hello&#39;</span>
+
+<span class="n">replace_with</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># TypeError: replace_with() takes 0 positional arguments</span>
+<span class="n">replace_with</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>  <span class="c1"># TypeError: replace_with() takes 0 positional arguments</span>
+</pre></div>
+
+
+<p>See <code>create_kwonly_decorator</code> in the <a href="https://github.com/smarie/python-decopatch/blob/master/decopatch/main.py">source code</a> for details.</p>
+<h3 id="0-mandatory-arguments">0 mandatory arguments<a class="headerlink" href="#0-mandatory-arguments" title="Permanent link">&para;</a></h3>
+<p>If your decorator is keyword-only but has <strong>no mandatory argument</strong>:</p>
+<div class="codehilite"><pre><span></span><span class="nd">@decorator</span>
+<span class="k">def</span> <span class="nf">replace_with</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">DECORATED</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator to replace anything with the &lt;replacement&gt; object.</span>
+<span class="sd">    Default value is &#39;hello&#39;.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">replacement</span>
+</pre></div>
+
+
+<p><code>decopatch</code> automatically adds a dummy var-positional argument named <code>_</code> to the decorator signature so that your users can use it without arguments nor parenthesis:</p>
+<div class="codehilite"><pre><span></span>&gt;&gt;&gt;help(replace_with)
+Help on function replace_with in module ...:
+replace_with(*_, replacement=&#39;hello&#39;)
+    Decorator to replace anything with the &lt;replacement&gt; object.
+</pre></div>
+
+
+<p>Then disambiguations are handled similarly to all other decorators (see below).</p>
+<p>See <code>create_kwonly_decorator</code> in the <a href="https://github.com/smarie/python-decopatch/blob/master/decopatch/main.py">source code</a> for details.</p>
+<h2 id="3-general-case">3- General case<a class="headerlink" href="#3-general-case" title="Permanent link">&para;</a></h2>
+<p>In the general case, disambiguation is made of two phases: first eliminating cases for which we have no doubts, then handling the remaining ambiguous cases.</p>
+<p>See <code>disambiguate_call</code> in the <a href="https://github.com/smarie/python-decopatch/blob/master/decopatch/utils_disambiguation.py">source code</a> for details.</p>
+<p><strong>a- Eliminating easy cases:</strong></p>
+<ul>
+<li>we look at the number of positional and keyword arguments to eliminate cases that can not be a "no-parenthesis" usage</li>
+<li>we look at the value of the argument received to eliminate further: for example, if it is not a callable nor a class it is has to be provided with parenthesis.</li>
+</ul>
+<p><strong>b- Handling still-ambiguous cases</strong></p>
+<p>If we reach this part, that's because the first argument in the signature is </p>
+<ul>
+<li>a callable or a class,</li>
+<li>positional (or in python 2, is different from its default value), </li>
+<li>and it is the only one (or in python 2, the only one different from its default value)</li>
+</ul>
+<p>Note: python 2 behaviour should align when this <a href="https://github.com/testing-cabal/funcsigs/issues/33"><code>funcsigs</code> issue</a> is fixed.</p>
+<p>In that scenario, <code>decopatch</code> makes the least worst guess: <strong>this is probably a no-parenthesis call</strong>. Because it is not very probable that your decorator is made to receive a function or a class as first argument.</p>
+<p>However you can change this default behaviour, by providing additional knowledge.</p>
+<p>First, you can <strong>explicitly declare that your decorator is a function-only or class-only decorator</strong>, by using <code>@decorator(is_function_decorator=False)</code> or <code>(is_class_decorator=False)</code>, or by using the shortcut aliases <code>@class_decorator</code> or <code>@function_decorator</code> respectively. In that case, <code>decopatch</code> will know that for example a class received by a function decorator is probably a with-parenthesis first argument.</p>
+<p>You can also <strong>provide an explicit disambiguation function</strong> (<code>custom_disambiguator=...</code>). This function will only be called for ambiguous cases. It should accept a single argument (the first argument's value), and should return either <code>FirstArgDisambiguation.is_normal_arg</code> or <code>FirstArgDisambiguation.is_decorated_target</code>. It can also return <code>FirstArgDisambiguation.is_ambiguous</code> if it can not decide ; in which case an exception will be raised.</p>
+<p>Finally as a last resort scenario you can <strong>enable introspection</strong> (<code>enable_stack_introspection=True</code>). This beta feature seems to only work reliably with function decorators, because <code>inspect.stack</code> does not provide a reliable way to access the decorator usage source code line when used on a class.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../motivation/" title="Motivation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Motivation
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../pep_proposal/" title="PEP proposal" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                PEP proposal
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.d9aa80ab.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

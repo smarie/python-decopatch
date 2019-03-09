@@ -36,7 +36,7 @@
     
     
       
-        <title>Changelog - decopatch</title>
+        <title>PEP proposal - decopatch</title>
       
     
     
@@ -94,7 +94,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#changelog" tabindex="1" class="md-skip">
+      <a href="#pep-proposal-draft" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -119,7 +119,7 @@
               decopatch
             </span>
             <span class="md-header-nav__topic">
-              Changelog
+              PEP proposal
             </span>
           
         </div>
@@ -263,18 +263,6 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../pep_proposal/" title="PEP proposal" class="md-nav__link">
-      PEP proposal
-    </a>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
@@ -286,11 +274,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Changelog
+        PEP proposal
       </label>
     
-    <a href="./" title="Changelog" class="md-nav__link md-nav__link--active">
-      Changelog
+    <a href="./" title="PEP proposal" class="md-nav__link md-nav__link--active">
+      PEP proposal
     </a>
     
       
@@ -304,8 +292,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#050-first-version" title="0.5.0 - First version" class="md-nav__link">
-    0.5.0 - First version
+  <a href="#1-breaking-backwards-compatibility" title="1- breaking backwards compatibility" class="md-nav__link">
+    1- breaking backwards compatibility
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preserving-backwards-compatibility" title="2- preserving backwards compatibility" class="md-nav__link">
+    2- preserving backwards compatibility
   </a>
   
 </li>
@@ -318,6 +313,18 @@
   
 </nav>
     
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
   </li>
 
     
@@ -342,8 +349,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#050-first-version" title="0.5.0 - First version" class="md-nav__link">
-    0.5.0 - First version
+  <a href="#1-breaking-backwards-compatibility" title="1- breaking backwards compatibility" class="md-nav__link">
+    1- breaking backwards compatibility
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preserving-backwards-compatibility" title="2- preserving backwards compatibility" class="md-nav__link">
+    2- preserving backwards compatibility
   </a>
   
 </li>
@@ -364,12 +378,66 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/smarie/python-decopatch/edit/master/docs/changelog.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/smarie/python-decopatch/edit/master/docs/pep_proposal.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
-<h3 id="050-first-version">0.5.0 - First version<a class="headerlink" href="#050-first-version" title="Permanent link">&para;</a></h3>
-<p>Fully functional with 100+ tests.</p>
+                <h1 id="pep-proposal-draft">PEP proposal draft<a class="headerlink" href="#pep-proposal-draft" title="Permanent link">&para;</a></h1>
+<p>Below are a few ideas that would fix the decorator problem once and for all (hopefully!) in the python language. Feedback welcome !</p>
+<h2 id="1-breaking-backwards-compatibility">1- breaking backwards compatibility<a class="headerlink" href="#1-breaking-backwards-compatibility" title="Permanent link">&para;</a></h2>
+<p>The easiest way to fix the no-parenthesis case directly in the language would be to automatically redirect <strong>all</strong> decorator usage without parenthesis, to empty-parenthesis. So if you have a <code>set_hello_tag(tag='world')</code> decorator, if you use it without parenthesis:</p>
+<div class="codehilite"><pre><span></span><span class="nd">@set_hello_tag</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+
+
+<p>the python language interpreter would interprete it exactly the same way than</p>
+<div class="codehilite"><pre><span></span><span class="nd">@set_hello_tag</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+
+
+<p>In other words, using a decorator with the <code>@</code> syntax and without parenthesis would simply be an alias for the same usage with empty parenthesis.</p>
+<p>Implementation would therefore be extremely easy: for all decorators, you would always code it in a "nested" way:</p>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_hello_tag</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;world&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorate</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>  <span class="c1"># set a hello=&lt;tag&gt; tag on the decorated f</span>
+        <span class="k">return</span> <span class="n">f</span>
+    <span class="k">return</span> <span class="n">decorate</span>
+</pre></div>
+
+
+<p><strong>Drawbacks</strong>: this change in the python interpreter behaviour would obviously break compatibility for legacy decorators that did not support arguments at all, such as this one:</p>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">set_helloworld_tag</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="nb">setattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">)</span>  <span class="c1"># set a hello=world tag on the decorated f</span>
+    <span class="k">return</span> <span class="n">f</span>
+</pre></div>
+
+
+<h2 id="2-preserving-backwards-compatibility">2- preserving backwards compatibility<a class="headerlink" href="#2-preserving-backwards-compatibility" title="Permanent link">&para;</a></h2>
+<p>If we need to preserve backwards compatibility, then we need to make the new mechanism optional, so that developers explicitly choose to use it.</p>
+<p>My suggestion would be to introduce a new <code>@decorator_factory</code> decorator in the <code>stdlib</code>, that developers would use to declare that they are ok with redirecting all no-parenthesis usages to with-empty-parenthesis usages. Note that I use the term "factory" because <a href="https://stackoverflow.com/questions/28693930/when-to-use-decorator-and-decorator-factory">some users</a> use it to distinguish between the no-argument ones (decorators) and the with-argument ones (decorator factories).</p>
+<p>This is how you would create a <code>set_hello_tag</code> decorator:</p>
+<div class="codehilite"><pre><span></span><span class="nd">@decorator_factory</span>
+<span class="k">def</span> <span class="nf">set_hello_tag</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;world&#39;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorate</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>  <span class="c1"># set a hello tag on the decorated f</span>
+        <span class="k">return</span> <span class="n">f</span>
+    <span class="k">return</span> <span class="n">decorate</span>
+</pre></div>
+
+
+<p>The explicit <code>@decorator_factory</code> annotation would make the interpreter/stdlib redirect all occurences of <code>@set_hello_tag</code> (without parenthesis) into explicit <code>@set_hello_tag()</code> (with empty parenthesis).</p>
+<p><strong>Notes:</strong> </p>
+<ul>
+<li>
+<p>if this is a too low-level feature it might require a dedicated language symbol instead of a "normal" decorator ; but it seems overkill - it would be better if we can avoid creating a new language element.</p>
+</li>
+<li>
+<p>alternatively or in addition, the python <code>stdlib</code> could provide a method that would return <code>True</code> if and only if the current stack is inside a no-parenthesis decorator call. This method, for example named <code>inspect.is_in_decorator_call_stack()</code>, could then be used by the various helper libraries, including <code>decopatch</code>.</p>
+</li>
+</ul>
                 
                   
                 
@@ -390,7 +458,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../pep_proposal/" title="PEP proposal" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../disambiguation/" title="Disambiguation principes" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -399,11 +467,25 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                PEP proposal
+                Disambiguation principes
               </span>
             </div>
           </a>
         
+        
+          <a href="../changelog/" title="Changelog" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Changelog
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>
