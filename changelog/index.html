@@ -304,6 +304,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#100-refactoring-new-double-flat-mode-api-changes-documentation" title="1.0.0 - Refactoring + New "double-flat" mode + API changes + documentation" class="md-nav__link">
+    1.0.0 - Refactoring + New "double-flat" mode + API changes + documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#050-first-version" title="0.5.0 - First version" class="md-nav__link">
     0.5.0 - First version
   </a>
@@ -342,6 +349,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#100-refactoring-new-double-flat-mode-api-changes-documentation" title="1.0.0 - Refactoring + New "double-flat" mode + API changes + documentation" class="md-nav__link">
+    1.0.0 - Refactoring + New "double-flat" mode + API changes + documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#050-first-version" title="0.5.0 - First version" class="md-nav__link">
     0.5.0 - First version
   </a>
@@ -368,6 +382,27 @@
                 
                 
                 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h3 id="100-refactoring-new-double-flat-mode-api-changes-documentation">1.0.0 - Refactoring + New "double-flat" mode + API changes + documentation<a class="headerlink" href="#100-refactoring-new-double-flat-mode-api-changes-documentation" title="Permanent link">&para;</a></h3>
+<p><strong>API changes:</strong></p>
+<ul>
+<li>Added support for a new "double-flat" mode so that users can create decorators creating <em>signature-preserving function wrappers</em> with zero level of nesting. Fixes <a href="https://github.com/smarie/python-decopatch/issues/2">#2</a>.</li>
+<li>Generated var-positional name for kw-only methods is now <code>'*_'</code></li>
+<li><code>can_first_arg_be_ambiguous</code> parameter removed completely, it was too complex to use.</li>
+<li><code>callable_or_cls_firstarg_disambiguator</code> renamed <code>custom_disambiguator</code> to be more intuitive</li>
+<li><code>wraps</code> argument renamed <code>flat_mode_decorated_name</code>. It was too similar to the wording used in functools, and specific to the flat mode only. Fixes <a href="https://github.com/smarie/python-decopatch/issues/1">#1</a>.</li>
+</ul>
+<p><strong>Improved behaviour</strong></p>
+<ul>
+<li>Now the flat mode behaves exactly like nested mode concerning signature-related <code>TypeError</code>. This is because when you use the flat mode we now generate a nested mode function with a true signature.</li>
+<li>Now the exposed decorator uses the <code>__wrapped__</code> trick to expose </li>
+</ul>
+<p><strong>Major refactoring for code readability:</strong></p>
+<ul>
+<li>Submodules are now consistent and readable. In particular <code>utils_disambiguation</code> now provides a clear <code>disambiguate_call</code> method, and <code>util_modes</code> provides a clear <code>make_decorator_spec</code> to handle all the per-mode specificity and always come back to a nested case before going further.</li>
+<li>removed a case in the <code>main</code> module (var-positional) as it was completely covered by the general case.</li>
+<li>Information is now passed as objects through the various functions, using two main classes <code>SignatureInfo</code> (for static information) and <code>DecoratorUsageInfo</code> (for dynamic/usage information). The information is computed in a lazy way for each to avoid unnecessary signature binding for example.</li>
+</ul>
+<p><strong>Major documentation update.</strong></p>
 <h3 id="050-first-version">0.5.0 - First version<a class="headerlink" href="#050-first-version" title="Permanent link">&para;</a></h3>
 <p>Fully functional with 100+ tests.</p>
                 
