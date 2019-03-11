@@ -252,7 +252,10 @@ However in most standard cases there are well-known "tricks" to perform a disamb
  - [decorator](https://github.com/micheles/decorator), the reference library for creating decorators in python. I used it a lot before writing `makefun` and `decopatch`, big thanks to [`micheles`](https://github.com/micheles) !
  - [tutorial 1](https://realpython.com/primer-on-python-decorators/)
  - [tutorial 2](https://www.thecodeship.com/patterns/guide-to-python-function-decorators/)
+ - [tutorial 3](http://coderazzi.net/tnotes/python/decoratorsWithoutArguments.html)
+ - [tutorial 4](https://www.saltycrane.com/blog/2010/03/simple-python-decorator-examples/)
  - [decorator recipes](https://wiki.python.org/moin/PythonDecoratorLibrary)
+
 
 ### Others
 
