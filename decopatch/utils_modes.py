@@ -8,24 +8,26 @@ except ImportError:
     funcsigs_used = True
 
 
-class DECORATED:
-    """A symbol used in your flat-mode signatures to declare where the decorated object should be injected"""
+class _SYMBOL:
+    """A symbol used in your flat-mode signatures to declare where the various objects should be injected"""
+    # def __call__(self, *args, **kwargs):
     pass
 
 
-class WRAPPED:
-    """A symbol used in your double flat-mode signatures to declare where the decorated object should be injected"""
-    pass
+DECORATED = _SYMBOL()
+# A symbol used in flat-mode signatures to declare where the decorated function should be injected
 
 
-class F_ARGS:
-    """A symbol used in your double flat-mode signatures to declare where the wrapper args should be injected"""
-    pass
+WRAPPED = _SYMBOL()
+# A symbol used in double flat-mode signatures to declare where the wrapped function should be injected
 
 
-class F_KWARGS:
-    """A symbol used in your double flat-mode signatures to declare where the wrapper kwargs should be injected"""
-    pass
+F_ARGS = _SYMBOL()
+# A symbol used in your double flat-mode signatures to declare where the wrapper args should be injected
+
+
+F_KWARGS = _SYMBOL()
+# A symbol used in your double flat-mode signatures to declare where the wrapper kwargs should be injected
 
 
 def make_decorator_spec(impl_function,
