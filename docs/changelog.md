@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.1.0 - Dependency update
+
+The double-flat mode now relies on `@makefun.wraps`, from `makefun>=1.3.0`. Fixes [#3](https://github.com/smarie/python-decopatch/issues/3).
+Updated documentation accordingly.
+
 ### 1.0.0 - Refactoring + New "double-flat" mode + API changes + documentation
 
 **API changes:**
