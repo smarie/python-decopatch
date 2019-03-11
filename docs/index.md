@@ -110,13 +110,13 @@ A very popular use case for decorators is to create signature-preserving functio
 With `decopatch` and its optional companion [`makefun`](https://smarie.github.io/python-makefun/), each problem is now solved in a dedicated library, because the author believes that these are two completely independent problems.
 
  - `decopatch` (this library) focuses on helping you create decorators that nicely handle the without-parenthesis case. You can decorate functions and classes, and your decorator is free to return anything (the same object that was decorated, a wrapper, or another object).
- - [`makefun`](https://smarie.github.io/python-makefun/) can be used to generate functions with any signature dynamically ; in particular its `with_signature` method makes it very easy to create signature-preserving wrappers. It relies on the same tricks than [`decorator`](https://github.com/micheles/decorator) to perform the function generation, but also supports more complex use cases such as signature modification. It can be used anywhere of course, it is not specific to decorators.
+ - [`makefun`](https://smarie.github.io/python-makefun/) can be used to generate functions with any signature dynamically ; in particular its `@wraps` decorator makes it very easy to create signature-preserving wrappers. It relies on the same tricks than [`decorator`](https://github.com/micheles/decorator) to perform the function generation, but also supports more complex use cases such as signature modification. It can be used anywhere of course, it is not specific to decorators.
  
 Both work well together of course:
 
 ```python
 from decopatch import function_decorator, DECORATED
-from makefun import with_signature
+from makefun import wraps
 
 @function_decorator
 def say_hello(person="world", f=DECORATED):
@@ -127,7 +127,7 @@ def say_hello(person="world", f=DECORATED):
     :param person: the person name in the print message. Default = "world"
     """
     # (1) create a wrapper of f that will do the print before call
-    @with_signature(f)  # rely on `makefun` to preserve signature of `f`
+    @wraps(f)  # rely on `makefun` to preserve signature of `f`
     def new_f(*args, **kwargs):
         print("hello, %s !" % person)  # say hello
         return f(*args, **kwargs)      # execute f

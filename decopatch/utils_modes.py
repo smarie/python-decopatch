@@ -1,4 +1,4 @@
-from makefun import remove_signature_parameters, with_signature
+from makefun import remove_signature_parameters, with_signature, wraps
 
 try:  # python 3.3+
     from inspect import signature, Parameter
@@ -157,8 +157,8 @@ def make_nested_impl_for_doubleflat_mode(decorator_signature, user_provided_wrap
             # the injected function is f. Add it to the other decorator parameters, under name requested by user.
             kwargs[injected_name] = f
 
-            # create a signature-preserving wrapper using `makefun.with_signature`
-            @with_signature(f)
+            # create a signature-preserving wrapper using `makefun.wraps`
+            @wraps(f)
             def wrapper(*f_args, **f_kwargs):
                 # if the user wishes us to inject the actual args and kwargs, let's inject them
                 if f_args_name is not None:
