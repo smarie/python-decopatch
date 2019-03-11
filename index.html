@@ -635,11 +635,11 @@ add_tag<span class="o">(</span><span class="nv">tag</span><span class="o">=</spa
 <p>With <code>decopatch</code> and its optional companion <a href="https://smarie.github.io/python-makefun/"><code>makefun</code></a>, each problem is now solved in a dedicated library, because the author believes that these are two completely independent problems.</p>
 <ul>
 <li><code>decopatch</code> (this library) focuses on helping you create decorators that nicely handle the without-parenthesis case. You can decorate functions and classes, and your decorator is free to return anything (the same object that was decorated, a wrapper, or another object).</li>
-<li><a href="https://smarie.github.io/python-makefun/"><code>makefun</code></a> can be used to generate functions with any signature dynamically ; in particular its <code>with_signature</code> method makes it very easy to create signature-preserving wrappers. It relies on the same tricks than <a href="https://github.com/micheles/decorator"><code>decorator</code></a> to perform the function generation, but also supports more complex use cases such as signature modification. It can be used anywhere of course, it is not specific to decorators.</li>
+<li><a href="https://smarie.github.io/python-makefun/"><code>makefun</code></a> can be used to generate functions with any signature dynamically ; in particular its <code>@wraps</code> decorator makes it very easy to create signature-preserving wrappers. It relies on the same tricks than <a href="https://github.com/micheles/decorator"><code>decorator</code></a> to perform the function generation, but also supports more complex use cases such as signature modification. It can be used anywhere of course, it is not specific to decorators.</li>
 </ul>
 <p>Both work well together of course:</p>
 <div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">decopatch</span> <span class="kn">import</span> <span class="n">function_decorator</span><span class="p">,</span> <span class="n">DECORATED</span>
-<span class="kn">from</span> <span class="nn">makefun</span> <span class="kn">import</span> <span class="n">with_signature</span>
+<span class="kn">from</span> <span class="nn">makefun</span> <span class="kn">import</span> <span class="n">wraps</span>
 
 <span class="nd">@function_decorator</span>
 <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="n">person</span><span class="o">=</span><span class="s2">&quot;world&quot;</span><span class="p">,</span> <span class="n">f</span><span class="o">=</span><span class="n">DECORATED</span><span class="p">):</span>
@@ -650,7 +650,7 @@ add_tag<span class="o">(</span><span class="nv">tag</span><span class="o">=</spa
 <span class="sd">    :param person: the person name in the print message. Default = &quot;world&quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># (1) create a wrapper of f that will do the print before call</span>
-    <span class="nd">@with_signature</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>  <span class="c1"># rely on `makefun` to preserve signature of `f`</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>  <span class="c1"># rely on `makefun` to preserve signature of `f`</span>
     <span class="k">def</span> <span class="nf">new_f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="s2">&quot;hello, </span><span class="si">%s</span><span class="s2"> !&quot;</span> <span class="o">%</span> <span class="n">person</span><span class="p">)</span>  <span class="c1"># say hello</span>
         <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>      <span class="c1"># execute f</span>
