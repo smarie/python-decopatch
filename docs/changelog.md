@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.1 - Symbols are not classes anymore
+
+Default-value symbols `DECORATED`, `WRAPPED`, `F_ARGS` and `F_KWARGS` are now objects and not classes any more. This prevents IDE to flag the corresponding argument as being misused (not iterable...). Fixes [#4](https://github.com/smarie/python-decopatch/issues/4).
+
 ### 1.1.0 - Dependency update
 
 The double-flat mode now relies on `@makefun.wraps`, from `makefun>=1.3.0`. Fixes [#3](https://github.com/smarie/python-decopatch/issues/3).
