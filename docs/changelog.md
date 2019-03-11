@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.2.0 - Dependency update for important fix
+
+`makefun>=1.4.0` is now required, as it fixes a major issue: [#5](https://github.com/smarie/python-decopatch/issues/5)
+
 ### 1.1.1 - Symbols are not classes anymore
 
 Default-value symbols `DECORATED`, `WRAPPED`, `F_ARGS` and `F_KWARGS` are now objects and not classes any more. This prevents IDE to flag the corresponding argument as being misused (not iterable...). Fixes [#4](https://github.com/smarie/python-decopatch/issues/4).
