@@ -20,6 +20,29 @@ class injected(Enum):
     F_ARGS = 3
     F_KWARGS = 4
 
+    # dummy methods so that pycharm and other static checkers (mypy?) are happy
+
+    def __len__(self):
+        pass
+
+    def __contains__(self, x):
+        pass
+
+    def __getitem__(self, key):
+        pass
+
+    def __call__(self, *args, **kwargs):
+        pass
+
+    def __iter__(self):
+        pass
+
+    def __next__(self):
+        pass
+
+    def keys(self):
+        pass
+
 
 DECORATED = injected.DECORATED
 # A symbol used in flat-mode signatures to declare where the decorated function should be injected
