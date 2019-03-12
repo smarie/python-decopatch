@@ -1,3 +1,4 @@
+from enum import Enum
 from makefun import remove_signature_parameters, with_signature, wraps
 
 try:  # python 3.3+
@@ -8,25 +9,27 @@ except ImportError:
     funcsigs_used = True
 
 
-class _SYMBOL:
-    """A symbol used in your flat-mode signatures to declare where the various objects should be injected"""
-    # def __call__(self, *args, **kwargs):
-    pass
+class injected(Enum):
+    """Symbols used in your (double) flat-mode signatures to declare where the various objects should be injected"""
+    DECORATED = 1
+    WRAPPED = 2
+    F_ARGS = 3
+    F_KWARGS = 4
 
 
-DECORATED = _SYMBOL()
+DECORATED = injected.DECORATED
 # A symbol used in flat-mode signatures to declare where the decorated function should be injected
 
 
-WRAPPED = _SYMBOL()
+WRAPPED = injected.WRAPPED
 # A symbol used in double flat-mode signatures to declare where the wrapped function should be injected
 
 
-F_ARGS = _SYMBOL()
+F_ARGS = injected.F_ARGS
 # A symbol used in your double flat-mode signatures to declare where the wrapper args should be injected
 
 
-F_KWARGS = _SYMBOL()
+F_KWARGS = injected.F_KWARGS
 # A symbol used in your double flat-mode signatures to declare where the wrapper kwargs should be injected
 
 
