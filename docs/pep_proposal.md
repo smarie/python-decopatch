@@ -1,6 +1,24 @@
 # PEP proposal draft
 
-Below are a few ideas that would fix the decorator problem once and for all (hopefully!) in the python language. Feedback welcome !
+As already stated in this documentation, there is as of python 3.7, absolutely no way to detect that the usage of `@say_hello` in:
+
+```python
+@say_hello(foo)
+def bar():
+    pass
+```
+
+is different from 
+
+```python
+@say_hello
+def foo():
+    pass
+```
+
+As we saw in the [disambiguation principles](../disambiguation/#3-general-case), a library can disambiguate only if the decorator developer provides additional knowledge.
+
+Below are a few ideas that would fix this problem once and for all (hopefully!) directly in the python language instead. Feedback welcome !
 
 ## 1- breaking backwards compatibility
 
