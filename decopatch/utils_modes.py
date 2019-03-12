@@ -181,6 +181,15 @@ def make_nested_impl_for_doubleflat_mode(decorator_signature, user_provided_wrap
     return _decorator
 
 
+class InvalidSignatureError(Exception):
+    """
+    Exception raised when a decorator signature is invalid with respect to the selected mode.
+    Typically when you use flat-mode or wrapped-mode symbols but your signature does not allow them to be safely
+    injected as keyword because they are followed by a var-positional argument.
+    """
+    pass
+
+
 def extract_mode_info(impl_sig,                      # type: Signature
                       flat_mode_decorated_name=None  # type: str
                       ):
@@ -200,8 +209,8 @@ def extract_mode_info(impl_sig,                      # type: Signature
     if flat_mode_decorated_name is not None:
         # validate that the 'decorated' parameter is a string representing a real parameter of the function
         if not isinstance(flat_mode_decorated_name, str):
-            raise TypeError("'decorated' argument should be a string with the argument name where the wrapped object "
-                            "should be injected")
+            raise InvalidSignatureError("'decorated' argument should be a string with the argument name where the "
+                                        "wrapped object should be injected")
 
         mode = DECORATED
         try:
@@ -212,6 +221,7 @@ def extract_mode_info(impl_sig,                      # type: Signature
 
     else:
         # analyze signature to detect
+        already_found = False
         for p_name, p in impl_sig.parameters.items():
             if p.default is DECORATED:
                 if mode is not None:
@@ -219,16 +229,25 @@ def extract_mode_info(impl_sig,                      # type: Signature
                 else:
                     mode = DECORATED
                     injected = p
+                    already_found = True
             elif p.default is WRAPPED:
                 if mode is not None:
                     raise ValueError("only one of `DECORATED` or `WRAPPED` can be used in your signature")
                 else:
                     mode = WRAPPED
                     injected = p
+                    already_found = True
             elif p.default is F_ARGS:
                 f_args = p
+                already_found = True
             elif p.default is F_KWARGS:
                 f_kwargs = p
+                already_found = True
+            else:
+                if already_found and p.kind in {Parameter.VAR_POSITIONAL, Parameter.POSITIONAL_ONLY}:
+                    raise InvalidSignatureError("Flat and double-flat mode are not supported if your signature does not"
+                                                " allow them to be safely injected as keyword args. Please use the "
+                                                "nested mode.")
 
         if mode in {None, DECORATED} and (f_args is not None or f_kwargs is not None):
             raise ValueError("`F_ARGS` or `F_KWARGS` should only be used if you use `WRAPPED`")

@@ -4,7 +4,7 @@ import sys
 import pytest
 from makefun import with_signature
 
-from decopatch import function_decorator, DECORATED, InvalidMandatoryArgError, class_decorator
+from decopatch import function_decorator, DECORATED, InvalidMandatoryArgError, class_decorator, InvalidSignatureError
 
 try:  # python 3.3+
     from inspect import signature
@@ -422,3 +422,13 @@ def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
             return
 
         assert foo.my_tag == print
+
+
+def test_varpos_and_decorated_before_in_flat_mode():
+    """"""
+
+    with pytest.raises(InvalidSignatureError):
+        @function_decorator
+        def foo(func=DECORATED, *tags):
+            setattr(func, 'tags', tags)
+            return func
