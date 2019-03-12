@@ -335,7 +335,8 @@ class SignatureInfo(object):
 
     @property
     def is_first_arg_mandatory(self):
-        return self.first_arg_def.default is Parameter.empty and not self.is_first_arg_varpositional
+        return self.first_arg_def.default is Parameter.empty and self.first_arg_kind not in {Parameter.VAR_POSITIONAL,
+                                                                                             Parameter.VAR_KEYWORD}
 
 
 def get_first_parameter(ds  # type: Signature
