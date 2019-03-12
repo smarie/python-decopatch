@@ -122,8 +122,11 @@ def disambiguate_call(dk,  # type: DecoratorUsageInfo
             params = iter(dk.sig_info.exposed_signature.parameters.items())
             next(params)
             for p_name, p_def in params:
-                if dk.bound.arguments[p_name] is not p_def.default:
-                    return _WITH_PARENTHESIS
+                try:
+                    if dk.bound.arguments[p_name] is not p_def.default:
+                        return _WITH_PARENTHESIS
+                except KeyError:
+                    pass  # this can happen when the argument is **kwargs and not filled: it does not even appear.
 
     # (3) still-ambiguous case, the first parameter is the single non-default one and is a callable or class
     # at this point a no-parenthesis call is still possible.

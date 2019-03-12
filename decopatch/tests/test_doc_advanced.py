@@ -4,7 +4,8 @@ import sys
 import pytest
 from makefun import with_signature
 
-from decopatch import function_decorator, DECORATED, InvalidMandatoryArgError, class_decorator, InvalidSignatureError
+from decopatch import function_decorator, DECORATED, InvalidMandatoryArgError, class_decorator, InvalidSignatureError, \
+    WRAPPED
 
 try:  # python 3.3+
     from inspect import signature
@@ -425,10 +426,39 @@ def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
 
 
 def test_varpos_and_decorated_before_in_flat_mode():
-    """"""
+    """
+    Tests that an error is correctly raised if the decorator implementation does not make it possible for the
+    injected args to be injected in flat and double-flat modes.
+    """
 
     with pytest.raises(InvalidSignatureError):
         @function_decorator
         def foo(func=DECORATED, *tags):
-            setattr(func, 'tags', tags)
-            return func
+            pass
+
+    with pytest.raises(InvalidSignatureError):
+        @function_decorator
+        def foo(func=WRAPPED, *tags):
+            pass
+
+    if sys.version_info >= (3, 0):
+        from decopatch.tests._test_doc_py3 import create_test_wrapped_bad_signature
+        for i in range(4):
+            with pytest.raises(InvalidSignatureError):
+                create_test_wrapped_bad_signature(i)
+
+
+def test_kwargs():
+    """
+    Tests that we support a case where there are variable-length arguments in the decorator signature in flat mode.
+    """
+    @function_decorator
+    def foo_deco(fixture_func=DECORATED,
+                 **kwargs):
+        return fixture_func
+
+    @foo_deco
+    def foo():
+        pass
+
+    foo()

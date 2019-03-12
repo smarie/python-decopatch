@@ -1,4 +1,4 @@
-from decopatch import function_decorator, DECORATED, decorator
+from decopatch import function_decorator, DECORATED, decorator, F_ARGS, F_KWARGS, WRAPPED
 
 
 def create_test_doc_impl_first_tag_mandatory_protected_with_star(uses_introspection):
@@ -50,6 +50,29 @@ def create_test_doc_impl_first_tag_optional_protected(uses_introspection):
 
     return add_tag
 
+
+def create_test_wrapped_bad_signature(test_nb):
+    """
+
+    :param test_nb:
+    :return:
+    """
+    if test_nb == 0:
+        @function_decorator
+        def foo(func=WRAPPED, *tags, f_args=F_ARGS, f_kwargs=F_KWARGS):
+            pass
+    elif test_nb == 1:
+        @function_decorator
+        def foo(f_args=F_ARGS, *tags, func=WRAPPED, f_kwargs=F_KWARGS):
+            pass
+    elif test_nb == 2:
+        @function_decorator
+        def foo(f_kwargs=F_KWARGS, *tags, func=WRAPPED, f_args=F_ARGS):
+            pass
+    elif test_nb == 3:
+        @function_decorator
+        def foo(f_kwargs=F_KWARGS, func=WRAPPED, *tags, f_args=F_ARGS):
+            pass
 
 # --------- from test_doc_disambiguation.py
 
