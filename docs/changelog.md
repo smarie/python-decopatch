@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.2.1 - Flat and double flat symbols: additional protection and bugfix
+
+Default-value symbols `DECORATED`, `WRAPPED`, `F_ARGS` and `F_KWARGS` now have a nicer representation. Fixes [#7](https://github.com/smarie/python-decopatch/issues/7).
+
+When a symbol is used in a signature where it can not be safely injected as keyword argument, an `InvalidSignatureError` is now raised. Fixes [#6](https://github.com/smarie/python-decopatch/issues/6).
+
 ### 1.2.0 - Dependency update for important fix
 
 `makefun>=1.4.0` is now required, as it fixes a major issue: [#5](https://github.com/smarie/python-decopatch/issues/5)
