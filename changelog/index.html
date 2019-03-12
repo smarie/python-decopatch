@@ -304,6 +304,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#130-predefined-disambiguators-and-init-file-fix" title="1.3.0 - Predefined disambiguators and init file fix" class="md-nav__link">
+    1.3.0 - Predefined disambiguators and init file fix
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#121-flat-and-double-flat-symbols-additional-protection-and-bugfix" title="1.2.1 - Flat and double flat symbols: additional protection and bugfix" class="md-nav__link">
     1.2.1 - Flat and double flat symbols: additional protection and bugfix
   </a>
@@ -377,6 +384,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#130-predefined-disambiguators-and-init-file-fix" title="1.3.0 - Predefined disambiguators and init file fix" class="md-nav__link">
+    1.3.0 - Predefined disambiguators and init file fix
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#121-flat-and-double-flat-symbols-additional-protection-and-bugfix" title="1.2.1 - Flat and double flat symbols: additional protection and bugfix" class="md-nav__link">
     1.2.1 - Flat and double flat symbols: additional protection and bugfix
   </a>
@@ -438,6 +452,27 @@
                 
                 
                 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h3 id="130-predefined-disambiguators-and-init-file-fix">1.3.0 - Predefined disambiguators and init file fix<a class="headerlink" href="#130-predefined-disambiguators-and-init-file-fix" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>We now provide predefined disambiguators <code>with_parenthesis</code> and <code>no_parenthesis</code>. Fixes <a href="https://github.com/smarie/python-decopatch/issues/8">#8</a>.</p>
+</li>
+<li>
+<p>Fixed <code>KeyError</code> when the signature contains <code>**kwargs</code>. Fixes <a href="https://github.com/smarie/python-decopatch/issues/9">#9</a>.</p>
+</li>
+<li>
+<p>Fixed issue when the signature only contains <code>**kwargs</code>. Fixes <a href="https://github.com/smarie/python-decopatch/issues/10">#10</a></p>
+</li>
+<li>
+<p>Fixed static checker problem in PyCharm with the symbols (it came back when we moved to an Enum)</p>
+</li>
+<li>
+<p>Improved exception re-raising in flat mode.</p>
+</li>
+<li>
+<p>Minor: fixed init file.</p>
+</li>
+</ul>
 <h3 id="121-flat-and-double-flat-symbols-additional-protection-and-bugfix">1.2.1 - Flat and double flat symbols: additional protection and bugfix<a class="headerlink" href="#121-flat-and-double-flat-symbols-additional-protection-and-bugfix" title="Permanent link">&para;</a></h3>
 <p>Default-value symbols <code>DECORATED</code>, <code>WRAPPED</code>, <code>F_ARGS</code> and <code>F_KWARGS</code> now have a nicer representation. Fixes <a href="https://github.com/smarie/python-decopatch/issues/7">#7</a>.</p>
 <p>When a symbol is used in a signature where it can not be safely injected as keyword argument, an <code>InvalidSignatureError</code> is now raised. Fixes <a href="https://github.com/smarie/python-decopatch/issues/6">#6</a>.</p>
