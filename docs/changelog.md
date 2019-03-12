@@ -1,5 +1,19 @@
 # Changelog
 
+### 1.3.0 - Predefined disambiguators and init file fix
+
+ - We now provide predefined disambiguators `with_parenthesis` and `no_parenthesis`. Fixes [#8](https://github.com/smarie/python-decopatch/issues/8).
+
+ - Fixed `KeyError` when the signature contains `**kwargs`. Fixes [#9](https://github.com/smarie/python-decopatch/issues/9).
+
+ - Fixed issue when the signature only contains `**kwargs`. Fixes [#10](https://github.com/smarie/python-decopatch/issues/10)
+
+ - Fixed static checker problem in PyCharm with the symbols (it came back when we moved to an Enum)
+
+ - Improved exception re-raising in flat mode.
+
+ - Minor: fixed init file.
+
 ### 1.2.1 - Flat and double flat symbols: additional protection and bugfix
 
 Default-value symbols `DECORATED`, `WRAPPED`, `F_ARGS` and `F_KWARGS` now have a nicer representation. Fixes [#7](https://github.com/smarie/python-decopatch/issues/7).
