@@ -21,6 +21,16 @@ _NO_PARENTHESIS = FirstArgDisambiguation.is_decorated_target
 """Alias for the case where the arg is a decorated target"""
 
 
+def with_parenthesis(ambiguous_first_arg):
+    """hardcoded disambiguator to say that in case of doubt, it is probably a with-parenthesis call"""
+    return _WITH_PARENTHESIS
+
+
+def no_parenthesis(ambiguous_first_arg):
+    """hardcoded disambiguator to say that in case of doubt, it is probably a no-parenthesis"""
+    return _NO_PARENTHESIS
+
+
 def can_arg_be_a_decorator_target(arg):
     """
     Returns True if the argument received has a type that can be decorated.
