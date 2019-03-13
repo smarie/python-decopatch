@@ -235,7 +235,7 @@ def create_no_args_decorator(decorator_function,
     @with_signature(None,
                     func_name=function_for_metadata.__name__,
                     doc=function_for_metadata.__doc__,
-                    modulename=function_for_metadata.__module__)
+                    module_name=function_for_metadata.__module__)
     def new_decorator(*_):
         if len(_) == 0:
             # called with no args BUT parenthesis: @foo_decorator().
@@ -331,7 +331,7 @@ def create_general_case_decorator(sig_info,  # type: SignatureInfo
     @with_signature(None if sig_info.use_signature_trick else sig_info.exposed_signature,
                     func_name=function_for_metadata.__name__,
                     doc=function_for_metadata.__doc__,
-                    modulename=function_for_metadata.__module__)
+                    module_name=function_for_metadata.__module__)
     def new_decorator(*args, **kwargs):
         # Note: since we expose a decorator with a preserved signature and not (*args, **kwargs)
         # we lose the information about the number of arguments *actually* provided.
