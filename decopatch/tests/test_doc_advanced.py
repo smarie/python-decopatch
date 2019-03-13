@@ -2,7 +2,7 @@ from __future__ import print_function
 import sys
 
 import pytest
-from makefun import with_signature
+from makefun import wraps
 
 from decopatch import function_decorator, DECORATED, InvalidMandatoryArgError, class_decorator, InvalidSignatureError, \
     WRAPPED
@@ -156,8 +156,8 @@ def test_doc_impl_first_say_hello(capsys):
         """
 
         # create a wrapper of f that will do the print before call
-        # we rely on `makefun.with_signature` to preserve signature
-        @with_signature(f)
+        # we rely on `makefun.wraps` to preserve signature
+        @wraps(f)
         def new_f(*args, **kwargs):
             # nonlocal person
             person = new_f.person

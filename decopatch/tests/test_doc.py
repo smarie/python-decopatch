@@ -2,7 +2,7 @@ from __future__ import print_function
 
 
 import pytest
-from makefun import with_signature
+from makefun import wraps
 
 from decopatch import function_decorator, DECORATED, WRAPPED, F_ARGS, F_KWARGS, decorator
 
@@ -92,8 +92,8 @@ def test_doc_say_hello(capsys, mode):
                 """
 
                 # create a wrapper of f that will do the print before call
-                # we rely on `makefun.with_signature` to preserve signature
-                @with_signature(f)
+                # we rely on `makefun.wraps` to preserve signature
+                @wraps(f)
                 def new_f(*args, **kwargs):
                     print("hello, %s !" % person)  # say hello
                     return f(*args, **kwargs)  # call f
@@ -111,8 +111,8 @@ def test_doc_say_hello(capsys, mode):
                 """
 
                 # create a wrapper of f that will do the print before call
-                # we rely on `makefun.with_signature` to preserve signature
-                @with_signature(f)
+                # we rely on `makefun.wraps` to preserve signature
+                @wraps(f)
                 def new_f(*args, **kwargs):
                     print("hello, %s !" % person)  # say hello
                     return f(*args, **kwargs)  # call f
