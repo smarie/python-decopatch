@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.4.0 - Minor dependency version update
+
+Now relying on `makefun>=1.5.0` where arg names changed a bit.
+
 ### 1.3.0 - Predefined disambiguators and init file fix
 
  - We now provide predefined disambiguators `with_parenthesis` and `no_parenthesis`. Fixes [#8](https://github.com/smarie/python-decopatch/issues/8).
