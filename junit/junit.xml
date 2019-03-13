@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="pytest" skips="40" tests="245" time="2.097"><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="14" name="test_doc_add_tag_function[flat_mode=False]" time="0.009055137634277344"><system-out>Help on function add_tag in module decopatch.tests.test_doc:
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="pytest" skips="40" tests="245" time="1.578"><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="14" name="test_doc_add_tag_function[flat_mode=False]" time="0.005987644195556641"><system-out>Help on function add_tag in module decopatch.tests.test_doc:
 
 add_tag(tag=&apos;hi!&apos;)
     Example decorator to add a &apos;tag&apos; attribute to a function.
     :param tag: the &apos;tag&apos; value to set on the decorated function (default &apos;hi!).
 
 None
-</system-out></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="14" name="test_doc_add_tag_function[flat_mode=True]" time="0.0029544830322265625"><system-out>Help on function add_tag in module decopatch.tests.test_doc:
+</system-out></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="14" name="test_doc_add_tag_function[flat_mode=True]" time="0.0024971961975097656"><system-out>Help on function add_tag in module decopatch.tests.test_doc:
 
 add_tag(tag=&apos;hi!&apos;)
     Example decorator to add a &apos;tag&apos; attribute to a function.
     :param tag: the &apos;tag&apos; value to set on the decorated function (default &apos;hi!).
 
 None
-</system-out></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="78" name="test_doc_say_hello[nested]" time="0.006183147430419922"></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="78" name="test_doc_say_hello[flat]" time="0.010185718536376953"></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="78" name="test_doc_say_hello[double-flat]" time="0.0064983367919921875"></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="207" name="test_doc_add_tag_class_and_function[flat_mode=False]" time="0.008388996124267578"><system-out>Help on function add_tag in module decopatch.tests.test_doc:
+</system-out></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="78" name="test_doc_say_hello[nested]" time="0.008816003799438477"></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="78" name="test_doc_say_hello[flat]" time="0.006916046142578125"></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="78" name="test_doc_say_hello[double-flat]" time="0.004387378692626953"></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="207" name="test_doc_add_tag_class_and_function[flat_mode=False]" time="0.0017039775848388672"><system-out>Help on function add_tag in module decopatch.tests.test_doc:
 
 add_tag(tag=&apos;hi!&apos;)
     Example decorator to add a &apos;tag&apos; attribute to a function or class. It can be
@@ -21,7 +21,7 @@ add_tag(tag=&apos;hi!&apos;)
     :param tag: the &apos;tag&apos; value to set on the decorated item (default &apos;hi!).
 
 None
-</system-out></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="207" name="test_doc_add_tag_class_and_function[flat_mode=True]" time="0.0033550262451171875"><system-out>Help on function add_tag in module decopatch.tests.test_doc:
+</system-out></testcase><testcase classname="decopatch.tests.test_doc" file="decopatch/tests/test_doc.py" line="207" name="test_doc_add_tag_class_and_function[flat_mode=True]" time="0.0028645992279052734"><system-out>Help on function add_tag in module decopatch.tests.test_doc:
 
 add_tag(tag=&apos;hi!&apos;)
     Example decorator to add a &apos;tag&apos; attribute to a function or class. It can be
@@ -30,849 +30,849 @@ add_tag(tag=&apos;hi!&apos;)
     :param tag: the &apos;tag&apos; value to set on the decorated item (default &apos;hi!).
 
 None
-</system-out></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="17" name="test_doc_impl_first_tag_mandatory[uses_introspection=True-nested_mode=True]" time="0.030155181884765625"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="17" name="test_doc_impl_first_tag_mandatory[uses_introspection=True-nested_mode=False]" time="0.018055200576782227"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="17" name="test_doc_impl_first_tag_mandatory[uses_introspection=False-nested_mode=True]" time="0.00251007080078125"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="17" name="test_doc_impl_first_tag_mandatory[uses_introspection=False-nested_mode=False]" time="0.008737564086914062"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="82" name="test_doc_impl_first_tag_optional" time="0.0025823116302490234"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="143" name="test_doc_impl_first_say_hello" time="0.004389524459838867"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="217" name="test_doc_impl_first_class_tag_mandatory[uses_introspection=True]" time="0.00568842887878418"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="217" name="test_doc_impl_first_class_tag_mandatory[uses_introspection=False]" time="0.0035331249237060547"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="267" name="test_doc_nested_mode_tag_mandatory" time="0.0016646385192871094"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="288" name="test_doc_impl_first_tag_mandatory_protected[uses_introspection=True-kwonly=True]" time="0.005567789077758789"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="288" name="test_doc_impl_first_tag_mandatory_protected[uses_introspection=False-kwonly=True]" time="0.0032460689544677734"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="319" name="test_doc_impl_first_tag_optional_nonprotected[kwonly=False]" time="0.002215147018432617"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="319" name="test_doc_impl_first_tag_optional_nonprotected[kwonly=True]" time="0.0022814273834228516"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="356" name="test_doc_impl_first_tag_optional_protected[introspection=True-kwonly=False]" time="0.013165712356567383"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="356" name="test_doc_impl_first_tag_optional_protected[introspection=True-kwonly=True]" time="0.01405477523803711"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="356" name="test_doc_impl_first_tag_optional_protected[introspection=False-kwonly=False]" time="0.0032341480255126953"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="356" name="test_doc_impl_first_tag_optional_protected[introspection=False-kwonly=True]" time="0.0027320384979248047"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="427" name="test_varpos_and_decorated_before_in_flat_mode" time="0.0032923221588134766"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="450" name="test_kwargs" time="0.002032041549682617"></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="9" name="test_no_args[flat_mode=False]" time="0.003784656524658203"></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="9" name="test_no_args[flat_mode=True]" time="0.004255056381225586"></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="66" name="test_mandatory_kwargs[flat_mode=False]" time="0.002763986587524414"><system-out>Help on function replace_with in module decopatch.tests._test_doc_py3:
+</system-out></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="17" name="test_doc_impl_first_tag_mandatory[uses_introspection=True-nested_mode=True]" time="0.012667417526245117"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="17" name="test_doc_impl_first_tag_mandatory[uses_introspection=True-nested_mode=False]" time="0.0069539546966552734"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="17" name="test_doc_impl_first_tag_mandatory[uses_introspection=False-nested_mode=True]" time="0.0015866756439208984"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="17" name="test_doc_impl_first_tag_mandatory[uses_introspection=False-nested_mode=False]" time="0.0018050670623779297"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="82" name="test_doc_impl_first_tag_optional" time="0.0022764205932617188"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="143" name="test_doc_impl_first_say_hello" time="0.008437156677246094"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="217" name="test_doc_impl_first_class_tag_mandatory[uses_introspection=True]" time="0.0016434192657470703"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="217" name="test_doc_impl_first_class_tag_mandatory[uses_introspection=False]" time="0.001806497573852539"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="267" name="test_doc_nested_mode_tag_mandatory" time="0.0018718242645263672"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="288" name="test_doc_impl_first_tag_mandatory_protected[uses_introspection=True-kwonly=True]" time="0.003683328628540039"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="288" name="test_doc_impl_first_tag_mandatory_protected[uses_introspection=False-kwonly=True]" time="0.0027425289154052734"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="319" name="test_doc_impl_first_tag_optional_nonprotected[kwonly=False]" time="0.0023047924041748047"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="319" name="test_doc_impl_first_tag_optional_nonprotected[kwonly=True]" time="0.0023736953735351562"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="356" name="test_doc_impl_first_tag_optional_protected[introspection=True-kwonly=False]" time="0.0066602230072021484"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="356" name="test_doc_impl_first_tag_optional_protected[introspection=True-kwonly=True]" time="0.006563663482666016"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="356" name="test_doc_impl_first_tag_optional_protected[introspection=False-kwonly=False]" time="0.0028710365295410156"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="356" name="test_doc_impl_first_tag_optional_protected[introspection=False-kwonly=True]" time="0.001743316650390625"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="427" name="test_varpos_and_decorated_before_in_flat_mode" time="0.0015177726745605469"></testcase><testcase classname="decopatch.tests.test_doc_advanced" file="decopatch/tests/test_doc_advanced.py" line="450" name="test_kwargs" time="0.0010704994201660156"></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="9" name="test_no_args[flat_mode=False]" time="0.005446195602416992"></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="9" name="test_no_args[flat_mode=True]" time="0.004163026809692383"></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="66" name="test_mandatory_kwargs[flat_mode=False]" time="0.002030611038208008"><system-out>Help on function replace_with in module decopatch.main:
 
 replace_with(*, replacement)
     Decorator to replace anything with the &lt;replacement&gt; object.
 
-</system-out></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="66" name="test_mandatory_kwargs[flat_mode=True]" time="0.002933025360107422"><system-out>Help on function replace_with in module decopatch.tests._test_doc_py3:
+</system-out></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="66" name="test_mandatory_kwargs[flat_mode=True]" time="0.0022115707397460938"><system-out>Help on function replace_with in module decopatch.main:
 
 replace_with(*, replacement)
     Decorator to replace anything with the &lt;replacement&gt; object.
 
-</system-out></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="90" name="test_optional_kwargs[flat_mode=False]" time="0.0023946762084960938"><system-out>Help on function replace_with in module decopatch.tests._test_doc_py3:
+</system-out></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="90" name="test_optional_kwargs[flat_mode=False]" time="0.0024619102478027344"><system-out>Help on function replace_with in module decopatch.tests._test_doc_py3:
 
 replace_with(*, replacement=&apos;hello&apos;)
     Decorator to replace anything with the &lt;replacement&gt; object.
 
-</system-out></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="90" name="test_optional_kwargs[flat_mode=True]" time="0.004695415496826172"><system-out>Help on function replace_with in module decopatch.tests._test_doc_py3:
+</system-out></testcase><testcase classname="decopatch.tests.test_doc_disambiguation" file="decopatch/tests/test_doc_disambiguation.py" line="90" name="test_optional_kwargs[flat_mode=True]" time="0.0028007030487060547"><system-out>Help on function replace_with in module decopatch.tests._test_doc_py3:
 
 replace_with(*, replacement=&apos;hello&apos;)
     Decorator to replace anything with the &lt;replacement&gt; object.
 
-</system-out></testcase><testcase classname="decopatch.tests.test_introspection" file="decopatch/tests/test_introspection.py" line="3" name="test_on_functions" time="0.011090755462646484"></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo]" time="0.002355813980102539"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_introspection" file="decopatch/tests/test_introspection.py" line="3" name="test_on_functions" time="0.007435798645019531"></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo]" time="0.0014793872833251953"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo()]" time="0.0022742748260498047"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo()]" time="0.0024917125701904297"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo()
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(goo)]" time="0.002312183380126953"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(goo)]" time="0.0027213096618652344"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;NotADecoratorError&apos; because We are not able to disambiguate but hopefully users will realize
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(&apos;hello&apos;)]" time="0.0023300647735595703"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(&apos;hello&apos;)]" time="0.002779245376586914"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because we correctly disambiguate by default since the argument is non-callable
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0023195743560791016"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0028727054595947266"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because we correctly disambiguate by default since the argument is non-callable
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(replacement=goo)]" time="0.0027391910552978516"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(replacement=goo)]" time="0.0028536319732666016"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(replacement=goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002239704132080078"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002392292022705078"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0022389888763427734"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0027174949645996094"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002270936965942383"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002509593963623047"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0023221969604492188"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0025238990783691406"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0022034645080566406"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0028793811798095703"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0021147727966308594"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0015208721160888672"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo]" time="0.0026907920837402344"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo]" time="0.0017828941345214844"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo()]" time="0.003118753433227539"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo()]" time="0.002456188201904297"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo()
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(goo)]" time="0.002943754196166992"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(goo)]" time="0.0029304027557373047"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;NotADecoratorError&apos; because We are not able to disambiguate but hopefully users will realize
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(&apos;hello&apos;)]" time="0.002633810043334961"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(&apos;hello&apos;)]" time="0.003009796142578125"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because we correctly disambiguate by default since the argument is non-callable
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0026345252990722656"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.002902507781982422"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because we correctly disambiguate by default since the argument is non-callable
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(replacement=goo)]" time="0.0026934146881103516"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(replacement=goo)]" time="0.002634286880493164"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(replacement=goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0027158260345458984"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002675294876098633"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.002763509750366211"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0026504993438720703"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002707242965698242"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0017309188842773438"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0031015872955322266"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0040318965911865234"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.00272369384765625"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0030138492584228516"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0028519630432128906"><system-out>Generated decorator : replace_by_foo(*_)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_0_args()_flatmode_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002751588821411133"><system-out>Generated decorator : replace_by_foo(*_)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow our decorator to be called with more than 1 positional, 
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo]" time="0.004412412643432617"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo]" time="0.0023584365844726562"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo()]" time="0.0026307106018066406"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo()]" time="0.001361846923828125"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo()
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(goo)]" time="0.0026772022247314453"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(goo)]" time="0.0016624927520751953"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;NotADecoratorError&apos; because We are not able to disambiguate but hopefully users will realize
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(&apos;hello&apos;)]" time="0.0026123523712158203"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(&apos;hello&apos;)]" time="0.0029478073120117188"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.004353046417236328"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.003186941146850586"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(replacement=goo)]" time="0.002691507339477539"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(replacement=goo)]" time="0.004838705062866211"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(replacement=goo)
 Expected ERROR: &apos;TypeError&apos; because decorator impl does not accept keyword args
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002643108367919922"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.001918792724609375"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because decorator impl does not accept keyword args
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0033783912658691406"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0020456314086914062"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because decorator impl does not accept keyword args
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002661466598510742"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0025539398193359375"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0025844573974609375"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0026810169219970703"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002558469772338867"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0026853084564208984"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0025565624237060547"><system-out>Generated decorator : replace_by_foo(*args)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[case_hard_varpositional-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0015282630920410156"><system-out>Generated decorator : replace_by_foo(*args)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo]" time="0.002861499786376953"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo]" time="0.0017549991607666016"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo
 Expected ERROR: &apos;InvalidMandatoryArgError&apos; because a no-parenthesis usage will be declared by the default disambiguator or the stack introspecter as decorated target
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo()]" time="0.002515554428100586"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo()]" time="0.002264738082885742"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo()
 Expected ERROR: &apos;TypeError&apos; because python does not allow f() if f has 1 mandatory arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(goo)]" time="0.002486705780029297"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(goo)]" time="0.0025463104248046875"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;InvalidMandatoryArgError&apos; because calling with a single positional callablewill be declared by the default disambiguator or the stack introspecter as decorated target, andtherefore it will say that there is something missing
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(&apos;hello&apos;)]" time="0.0032918453216552734"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(&apos;hello&apos;)]" time="0.0021932125091552734"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.002382993698120117"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.002644062042236328"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(replacement=goo)]" time="0.0025827884674072266"><skipped message="decorator impl does not have a &apos;replacement&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7106ef0&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(replacement=goo)]" time="0.0021677017211914062"><skipped message="decorator impl does not have a &apos;replacement&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8b11240&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(replacement=goo)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(replacement=goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0024230480194091797"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0025985240936279297"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0035588741302490234"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.002610921859741211"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002510547637939453"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0014216899871826172"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.002444028854370117"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0028553009033203125"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002476930618286133"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002602815628051758"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.003859281539916992"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_1m_arg(dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0026357173919677734"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo]" time="0.007889986038208008"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo]" time="0.004611492156982422"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo
 Expected ERROR: &apos;InvalidMandatoryArgError&apos; because a no-parenthesis usage will be declared by the default disambiguator or the stack introspecter as decorated target
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo()]" time="0.002513408660888672"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo()]" time="0.0023484230041503906"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo()
 Expected ERROR: &apos;TypeError&apos; because python does not allow f() if f has 1 mandatory arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(goo)]" time="0.009063959121704102"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(goo)]" time="0.00606536865234375"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;AssertionError&apos; because The stack introspector will work correctly. So the decorated functionwill be replaced by foo. Which is not`goo`
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(&apos;hello&apos;)]" time="0.002447366714477539"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(&apos;hello&apos;)]" time="0.0015342235565185547"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.004276752471923828"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0023462772369384766"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(replacement=goo)]" time="0.0025064945220947266"><skipped message="decorator impl does not have a &apos;replacement&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70be0f0&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(replacement=goo)]" time="0.0026612281799316406"><skipped message="decorator impl does not have a &apos;replacement&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8abf400&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(replacement=goo)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(replacement=goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0024318695068359375"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002603769302368164"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0023071765899658203"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0022809505462646484"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0038330554962158203"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0026671886444091797"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0025320053100585938"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.002539396286010742"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0024886131286621094"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.00273895263671875"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002497434616088867"><system-out>Generated decorator : replace_by_foo(dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_1m_arg(dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0028162002563476562"><system-out>Generated decorator : replace_by_foo(dummy)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo]" time="0.0027930736541748047"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo]" time="0.0011782646179199219"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo
 Expected ERROR: &apos;InvalidMandatoryArgError&apos; because using the decorator without parenthesis mimics usage with a single arg.
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo()]" time="0.0024423599243164062"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo()]" time="0.0012810230255126953"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo()
 Expected ERROR: &apos;TypeError&apos; because python does not allow f() if f has 1 mandatory arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo)]" time="0.002451658248901367"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo)]" time="0.002478361129760742"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;InvalidMandatoryArgError&apos; because calling a decorator with a callable as first and only non-default argument leads by default to an error
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(&apos;hello&apos;)]" time="0.0024063587188720703"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70cbb70&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(&apos;hello&apos;)]" time="0.0024077892303466797"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8ac9e80&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0028390884399414062"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70cb9e8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.005293369293212891"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8ac9da0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(replacement=goo)]" time="0.0024051666259765625"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(replacement=goo)]" time="0.0022499561309814453"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(replacement=goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0024178028106689453"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70cf898&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0023882389068603516"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8acebe0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.002759695053100586"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70d6470&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.002728700637817383"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8ad6828&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002591371536254883"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0019669532775878906"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0024597644805908203"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0023615360260009766"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0024366378784179688"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0023992061614990234"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002492189407348633"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002385377883911133"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo]" time="0.002573251724243164"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo]" time="0.002390146255493164"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo
 Expected ERROR: &apos;InvalidMandatoryArgError&apos; because a no-parenthesis usage will be declared by the disambiguator as decorated target
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo()]" time="0.002523183822631836"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo()]" time="0.0022630691528320312"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo()
 Expected ERROR: &apos;TypeError&apos; because python does not allow f() if f has 1 mandatory arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo)]" time="0.0023636817932128906"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo)]" time="0.0026023387908935547"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(&apos;hello&apos;)]" time="0.0022826194763183594"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70ddda0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(&apos;hello&apos;)]" time="0.002432584762573242"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8ae11d0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0028073787689208984"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70e0208&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.006256103515625"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8ae15f8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(replacement=goo)]" time="0.002628326416015625"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(replacement=goo)]" time="0.002685070037841797"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(replacement=goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.005139827728271484"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70e5358&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0023806095123291016"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8ae5748&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0030679702758789062"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70e5f60&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0025930404663085938"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8aed390&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002633810043334961"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0026628971099853516"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0024514198303222656"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0023229122161865234"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.003740549087524414"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0023643970489501953"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0024237632751464844"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=False-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0022187232971191406"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo]" time="0.0024023056030273438"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo]" time="0.0017023086547851562"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo
 Expected ERROR: &apos;InvalidMandatoryArgError&apos; because using the decorator without parenthesis mimics usage with a single arg.
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo()]" time="0.0025300979614257812"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo()]" time="0.0026102066040039062"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo()
 Expected ERROR: &apos;TypeError&apos; because python does not allow f() if f has 1 mandatory arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo)]" time="0.002541780471801758"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo)]" time="0.0025789737701416016"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;InvalidMandatoryArgError&apos; because calling a decorator with a callable as first and only non-default argument leads by default to an error
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(&apos;hello&apos;)]" time="0.0023157596588134766"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7070e80&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(&apos;hello&apos;)]" time="0.0023763179779052734"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a762b0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0023653507232666016"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70752e8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0024874210357666016"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a766d8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(replacement=goo)]" time="0.002354145050048828"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(replacement=goo)]" time="0.0014395713806152344"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(replacement=goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0023856163024902344"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7079438&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.001668691635131836"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a7c828&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0026197433471679688"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a73014a8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0027761459350585938"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a7ccc0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0023567676544189453"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002590179443359375"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.002403736114501953"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0019805431365966797"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0024242401123046875"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.001934051513671875"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0023903846740722656"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(default)_1m_arg(replacement)_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0027418136596679688"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo]" time="0.0023801326751708984"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo]" time="0.002659320831298828"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo
 Expected ERROR: &apos;InvalidMandatoryArgError&apos; because a no-parenthesis usage will be declared by the disambiguator as decorated target
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo()]" time="0.002369403839111328"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo()]" time="0.0025243759155273438"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo()
 Expected ERROR: &apos;TypeError&apos; because python does not allow f() if f has 1 mandatory arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo)]" time="0.0022759437561035156"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo)]" time="0.0021371841430664062"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(&apos;hello&apos;)]" time="0.0025177001953125"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7081f98&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(&apos;hello&apos;)]" time="0.003698587417602539"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a88c88&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.002268075942993164"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a708b208&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0024836063385009766"><skipped message="This decorator does not access a noncallable positional arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8d06940&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(replacement=goo)]" time="0.003624439239501953"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(replacement=goo)]" time="0.0024690628051757812"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(replacement=goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002341032028198242"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7091358&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002682924270629883"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8ae5048&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0040547847747802734"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a708b278&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0019078254699707031"><skipped message="decorator impl does not have a &apos;dummy&apos; arg" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a8d3c8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002306699752807617"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002414703369140625"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.002319812774658203"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.001897573471069336"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002317190170288086"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0019915103912353516"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0022912025451660156"><system-out>Generated decorator : replace_by_foo(replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[protected(explicit)_1m_arg(replacement)_kwonly=True-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0014672279357910156"><system-out>Generated decorator : replace_by_foo(replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow 2 args if f has 1 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo]" time="0.002413511276245117"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo]" time="0.001971721649169922"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo()]" time="0.004092216491699219"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo()]" time="0.0024530887603759766"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo()
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(goo)]" time="0.0024328231811523438"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(goo)]" time="0.0026323795318603516"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(&apos;hello&apos;)]" time="0.0024232864379882812"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(&apos;hello&apos;)]" time="0.0014183521270751953"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0027534961700439453"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0030901432037353516"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(replacement=goo)]" time="0.0026662349700927734"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(replacement=goo)]" time="0.0016901493072509766"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(replacement=goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002403736114501953"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0011365413665771484"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0025038719177246094"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0022974014282226562"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002322673797607422"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002680063247680664"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.003414154052734375"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7099ac8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0022525787353515625"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a9c668&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002386808395385742"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0015113353729248047"><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0027337074279785156"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70997b8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement, dummy)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(replacement, dummy)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0015535354614257812"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a9c2e8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement, dummy)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo]" time="0.0037202835083007812"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo]" time="0.002335786819458008"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo()]" time="0.0024194717407226562"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo()]" time="0.002399921417236328"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo()
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(goo)]" time="0.00241851806640625"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(goo)]" time="0.0015137195587158203"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(&apos;hello&apos;)]" time="0.0023713111877441406"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(&apos;hello&apos;)]" time="0.0021369457244873047"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.002290964126586914"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0020079612731933594"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(replacement=goo)]" time="0.0023179054260253906"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(replacement=goo)]" time="0.0023183822631835938"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(replacement=goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0023903846740722656"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0023834705352783203"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0027141571044921875"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0026700496673583984"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002388477325439453"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70a69b0&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0022025108337402344"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8aaa4e0&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.002484560012817383"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0016558170318603516"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002441883087158203"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70aba58&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002214193344116211"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a305f8&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0026001930236816406"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, replacement)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0022602081298828125"><system-out>Generated decorator : replace_by_foo(dummy, replacement)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo]" time="0.003937959671020508"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo]" time="0.002473592758178711"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo()]" time="0.0029244422912597656"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo()]" time="0.0027511119842529297"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo()
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(goo)]" time="0.0025336742401123047"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(goo)]" time="0.0017991065979003906"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(&apos;hello&apos;)]" time="0.0025489330291748047"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(&apos;hello&apos;)]" time="0.0021042823791503906"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0025358200073242188"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0023622512817382812"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(replacement=goo)]" time="0.002594470977783203"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(replacement=goo)]" time="0.002353668212890625"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(replacement=goo)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0024466514587402344"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0024335384368896484"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0026078224182128906"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0020706653594970703"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected ERROR: &apos;TypeError&apos; because python does not allow &lt; 2 args if f has 2 arg
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.003171682357788086"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0016689300537109375"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.002411365509033203"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.002312183380126953"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0027205944061279297"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0025331974029541016"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002435445785522461"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[easy_2m_args(dummy, dummy2)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002337217330932617"><system-out>Generated decorator : replace_by_foo(dummy, dummy2)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo]" time="0.0025043487548828125"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo]" time="0.002329111099243164"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo()]" time="0.0023589134216308594"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo()]" time="0.0016825199127197266"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo()
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo)]" time="0.00238037109375"><skipped message="the first positional arg is supposed not to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7041550&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo)]" time="0.0019237995147705078"><skipped message="the first positional arg is supposed not to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a460f0&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(&apos;hello&apos;)]" time="0.002348184585571289"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(&apos;hello&apos;)]" time="0.0023262500762939453"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.002382040023803711"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0023260116577148438"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(replacement=goo)]" time="0.0026352405548095703"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(replacement=goo)]" time="0.0027070045471191406"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(replacement=goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002302408218383789"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0019466876983642578"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.002319812774658203"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0016684532165527344"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002471923828125"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7045c88&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0023429393768310547"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a4a828&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.002443552017211914"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0022788047790527344"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002386331558227539"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a704add8&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002367258071899414"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a53978&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0028417110443115234"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0025854110717773438"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo]" time="0.00744175910949707"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo]" time="0.006180286407470703"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo()]" time="0.0024597644805908203"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo()]" time="0.0024871826171875"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo()
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo)]" time="0.0024459362030029297"><skipped message="the first positional arg is supposed not to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a70506d8&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo)]" time="0.0024323463439941406"><skipped message="the first positional arg is supposed not to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a4f278&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(&apos;hello&apos;)]" time="0.002455472946166992"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(&apos;hello&apos;)]" time="0.002256631851196289"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0024590492248535156"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0017652511596679688"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(replacement=goo)]" time="0.002885103225708008"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(replacement=goo)]" time="0.002660512924194336"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(replacement=goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002454996109008789"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0022895336151123047"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0023870468139648438"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.002153158187866211"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002392292022705078"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7055dd8&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0022385120391845703"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a5b978&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0024008750915527344"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0017495155334472656"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002402067184448242"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7059f28&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0021758079528808594"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a60ac8&gt;</skipped><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0027823448181152344"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002651214599609375"><system-out>Generated decorator : replace_by_foo(dummy=12, replacement=None)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo]" time="0.002277374267578125"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo]" time="0.0023772716522216797"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo()]" time="0.0022640228271484375"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo()]" time="0.0018749237060546875"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo()
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo)]" time="0.0024678707122802734"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo)]" time="0.0018181800842285156"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(goo)
 Expected ERROR: &apos;NotADecoratorError&apos; because No explicit exception is raised but since a double-call is made, user will probably realize that something is wrong
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;)]" time="0.002363920211791992"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a705fbe0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;)]" time="0.001875162124633789"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a66780&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.002446889877319336"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7064828&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0036933422088623047"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a6b3c8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(replacement=goo)]" time="0.0027887821197509766"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(replacement=goo)]" time="0.002979278564453125"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(replacement=goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002328157424926758"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.003217458724975586"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0023622512817382812"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0031588077545166016"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0023255348205566406"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.00304412841796875"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0023224353790283203"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a706a4e0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0028171539306640625"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a6a080&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002559185028076172"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0014867782592773438"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002427339553833008"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a706e630&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.001692056655883789"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c89f71d0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo]" time="0.008036613464355469"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo]" time="0.006386756896972656"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo()]" time="0.002298593521118164"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo()]" time="0.0030252933502197266"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo()
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo)]" time="0.007733345031738281"><system-out>
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo)]" time="0.005664348602294922"><system-out>
 Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;)]" time="0.004303693771362305"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a6ff7780&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;)]" time="0.0036551952362060547"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c89f75c0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.002424955368041992"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a706e2b0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.0033063888549804688"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a6b400&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(replacement=goo)]" time="0.002330303192138672"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(replacement=goo)]" time="0.002125978469848633"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(replacement=goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.0027861595153808594"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.003186464309692383"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0024645328521728516"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0032427310943603516"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.002437114715576172"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0019369125366210938"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0024895668029785156"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a6ff0a90&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.0018041133880615234"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a01630&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.008529186248779297"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0014157295227050781"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002549409866333008"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a6ff0f60&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0012090206146240234"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a01b00&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo]" time="0.002455472946166992"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo]" time="0.0027878284454345703"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo()]" time="0.002471446990966797"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo()]" time="0.0028760433197021484"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo()
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo)]" time="0.002791166305541992"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo)]" time="0.0015561580657958984"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;)]" time="0.002376079559326172"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7004b38&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;)]" time="0.001346588134765625"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a0a6d8&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.002349376678466797"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7004588&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE)]" time="0.003681659698486328"><skipped message="the first positional arg is supposed to be the callable here" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c89fd6a0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(replacement=goo)]" time="0.007534503936767578"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(replacement=goo)]" time="0.003129243850708008"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(replacement=goo)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002215147018432617"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=&apos;hello&apos;)]" time="0.002600431442260742"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(dummy=&apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0023229122161865234"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)]" time="0.0015468597412109375"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.0023403167724609375"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, &apos;hello&apos;)]" time="0.004284858703613281"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(goo, &apos;hello&apos;)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.003154754638671875"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7011b70&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(&apos;hello&apos;, goo)]" time="0.003645658493041992"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a14710&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(&apos;hello&apos;, goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.002835512161254883"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)]" time="0.0031478404998779297"><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(goo, DEFAULT_DUMMY_VALUE)
 Expected SUCCESS
 
-</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.002418994903564453"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f23a7015080&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
+</system-out></testcase><testcase classname="decopatch.tests.test_main2" file="decopatch/tests/test_main2.py" line="391" name="test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]" time="0.0019698143005371094"><skipped message="the order of positional args in the test does not match" type="pytest.skip">/home/travis/build/smarie/python-decopatch/decopatch/tests/test_main2.py:409: &lt;py._xmlgen.raw object at 0x7f86c8a14be0&gt;</skipped><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
 </system-out><system-out>Generated decorator : replace_by_foo(replacement=None, dummy=12)
 Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
-</system-out></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="10" name="test_so_flat" time="0.008424043655395508"><system-out>hello from before run
+</system-out></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="10" name="test_so_flat" time="0.0019495487213134766"><system-out>hello from before run
 a -1 b 2
 hello from before run
 a 100 b 2
-</system-out></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="35" name="test_so_double_flat" time="0.0026035308837890625"><system-out>hello from before run
+</system-out></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="35" name="test_so_double_flat" time="0.002589702606201172"><system-out>hello from before run
 a -1 b 2
 hello from before run
 a 100 b 2
-</system-out></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="57" name="test_so_wrap[style=flat]" time="0.003073453903198242"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="57" name="test_so_wrap[style=double-flat]" time="0.0033690929412841797"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="95" name="test_so_2[mode=flat]" time="0.008548259735107422"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="95" name="test_so_2[mode=double-flat]" time="0.0031232833862304688"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="139" name="test_so_3[mode=flat]" time="0.0029609203338623047"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="139" name="test_so_3[mode=double-flat]" time="0.002965688705444336"></testcase></testsuite>
+</system-out></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="57" name="test_so_wrap[style=flat]" time="0.003241300582885742"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="57" name="test_so_wrap[style=double-flat]" time="0.0025675296783447266"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="95" name="test_so_2[mode=flat]" time="0.0021414756774902344"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="95" name="test_so_2[mode=double-flat]" time="0.002282381057739258"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="139" name="test_so_3[mode=flat]" time="0.003373861312866211"></testcase><testcase classname="decopatch.tests.test_so" file="decopatch/tests/test_so.py" line="139" name="test_so_3[mode=double-flat]" time="0.0025985240936279297"></testcase></testsuite>
