@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.4.1 - Minor default symbols improvement
+
+Removed the clunky `Enum` for symbols. Back to a normal class, with a custom `__repr__`.
+
 ### 1.4.0 - Minor dependency version update
 
 Now relying on `makefun>=1.5.0` where arg names changed a bit.
