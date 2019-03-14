@@ -383,3 +383,38 @@ Help on function test in module decopatch.tests.test_so:
 test(x, y)
 
 """
+
+
+def test_so_6(capsys):
+    """
+    Tests that the answer at
+    https://stackoverflow.com/a/55163391/7262247
+    is correct
+    """
+    @function_decorator
+    def my_decorator(name='my_decorator', func=DECORATED):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        wrapper._decorator_name_ = name
+        return wrapper
+
+    @my_decorator
+    def my_func(x):
+        """my function"""
+        print('hello %s' % x)
+
+    assert my_func._decorator_name_ == 'my_decorator'
+    help(my_func)
+
+    captured = capsys.readouterr()
+    with capsys.disabled():
+        print(captured.out)
+
+    assert captured.out == """Help on function my_func in module decopatch.tests.test_so:
+
+my_func(x)
+    my function
+
+"""
