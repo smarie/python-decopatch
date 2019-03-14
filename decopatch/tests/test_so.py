@@ -1,11 +1,16 @@
 from __future__ import print_function
 
 import logging
-
 import pytest
 
+try:  # python 3.3+
+    from inspect import signature, Parameter
+except ImportError:
+    from funcsigs import signature, Parameter
+
+
 from decopatch import function_decorator, WRAPPED, F_ARGS, F_KWARGS, DECORATED
-from makefun import wraps
+from makefun import wraps, add_signature_parameters
 
 
 def test_so_flat():
@@ -181,3 +186,122 @@ def test_so_3(mode):
     def my_function():
         print('hi...')
 
+
+@pytest.mark.parametrize('mode', [None, 'flat'], ids="mode={}".format)
+def test_so_4(capsys, mode):
+    """
+    Checks that the answer at
+    https://stackoverflow.com/a/55160435/7262247
+    works
+    """
+    if mode is None:
+        def my_decorator(decorator_arg1=None, decorator_arg2=False):
+            # Inside the wrapper maker
+
+            def _decorator(func):
+                # (1) capture the signature of the function to wrap ...
+                func_sig = signature(func)
+                # ... and modify it to add new optional parameters 'new_arg1' and 'new_arg2'.
+                # (if they are optional that's where you provide their defaults)
+                new_arg1 = Parameter('new_arg1', kind=Parameter.POSITIONAL_OR_KEYWORD, default=False)
+                new_arg2 = Parameter('new_arg2', kind=Parameter.POSITIONAL_OR_KEYWORD, default=None)
+                new_sig = add_signature_parameters(func_sig, last=[new_arg1, new_arg2])
+
+                # (2) create a wrapper with the new signature
+                @wraps(func, new_sig=new_sig)
+                def func_wrapper(*args, **kwds):
+                    # Inside the wrapping function
+
+                    # Pop the extra args (they will always be there, no need to provide default)
+                    new_arg1 = kwds.pop('new_arg1')
+                    new_arg2 = kwds.pop('new_arg2')
+
+                    # Calling the wrapped function
+                    if new_arg1:
+                        print("new_arg1 True branch; new_arg2 is {}".format(new_arg2))
+                        return func(*args, **kwds)
+                    else:
+                        print("new_arg1 False branch; new_arg2 is {}".format(new_arg2))
+                        # do something with new_arg2
+                        return func(*args, **kwds)
+
+                def added_function():
+                    # Do Something 2
+                    print('added_function')
+
+                func_wrapper.added_function = added_function
+                return func_wrapper
+
+            return _decorator
+    else:
+        @function_decorator
+        def my_decorator(decorator_arg1=None, decorator_arg2=False, func=DECORATED):
+
+            # (1) capture the signature of the function to wrap ...
+            func_sig = signature(func)
+            # ... and modify it to add new optional parameters 'new_arg1' and 'new_arg2'.
+            # (if they are optional that's where you provide their defaults)
+            new_arg1 = Parameter('new_arg1', kind=Parameter.POSITIONAL_OR_KEYWORD, default=False)
+            new_arg2 = Parameter('new_arg2', kind=Parameter.POSITIONAL_OR_KEYWORD, default=None)
+            new_sig = add_signature_parameters(func_sig, last=[new_arg1, new_arg2])
+
+            # (2) create a wrapper with the new signature
+            @wraps(func, new_sig=new_sig)
+            def func_wrapper(*args, **kwds):
+                # Inside the wrapping function
+
+                # Pop the extra args (they will always be there, no need to provide default)
+                new_arg1 = kwds.pop('new_arg1')
+                new_arg2 = kwds.pop('new_arg2')
+
+                # Calling the wrapped function
+                if new_arg1:
+                    print("new_arg1 True branch; new_arg2 is {}".format(new_arg2))
+                    return func(*args, **kwds)
+                else:
+                    print("new_arg1 False branch; new_arg2 is {}".format(new_arg2))
+                    # do something with new_arg2
+                    return func(*args, **kwds)
+
+            def added_function():
+                # Do Something 2
+                print('added_function')
+
+            func_wrapper.added_function = added_function
+            return func_wrapper
+
+    @my_decorator(decorator_arg1=4, decorator_arg2=True)
+    def foo(a, b):
+        """This is my foo function"""
+        print("a={}, b={}".format(a,b))
+
+    foo(1, 2, True, 7)  # works, except if you use kind=Parameter.KEYWORD_ONLY above (in which case wont work in python 2)
+    foo(1, 2, new_arg1=True, new_arg2=7)
+    foo(a=3, b=4, new_arg1=False, new_arg2=42)
+    foo(new_arg2=-1,b=100,a='AAA')
+    foo(b=100,new_arg1=True,a='AAA')
+    foo.added_function()
+
+    help(foo)
+
+    captured = capsys.readouterr()
+    with capsys.disabled():
+        print(captured.out)
+
+    assert captured.out == """new_arg1 True branch; new_arg2 is 7
+a=1, b=2
+new_arg1 True branch; new_arg2 is 7
+a=1, b=2
+new_arg1 False branch; new_arg2 is 42
+a=3, b=4
+new_arg1 False branch; new_arg2 is -1
+a=AAA, b=100
+new_arg1 True branch; new_arg2 is None
+a=AAA, b=100
+added_function
+Help on function foo in module decopatch.tests.test_so:
+
+foo(a, b, new_arg1=False, new_arg2=None)
+    This is my foo function
+
+"""
