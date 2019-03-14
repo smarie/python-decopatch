@@ -10,7 +10,7 @@ except ImportError:
 
 
 from decopatch import function_decorator, WRAPPED, F_ARGS, F_KWARGS, DECORATED
-from makefun import wraps, add_signature_parameters
+from makefun import wraps, add_signature_parameters, remove_signature_parameters
 
 
 def test_so_flat():
@@ -303,5 +303,83 @@ Help on function foo in module decopatch.tests.test_so:
 
 foo(a, b, new_arg1=False, new_arg2=None)
     This is my foo function
+
+"""
+
+
+@pytest.mark.parametrize('mode', ['no-deco', None, 'flat'], ids="mode={}".format)
+def test_so_5(capsys, mode):
+    """
+    Tests that the solution at
+    https://stackoverflow.com/a/55161579/7262247
+    works
+    """
+
+    if mode == 'no-deco':
+        def make_test(a, b):
+            """A factory to create the test function in various flavours according to meta-parameters (a, b)"""
+            def test(x, y):
+                print(a, b)
+                print(x, y)
+
+            # here you could play around with the created functions' identity if needed
+            # test.__name__ = ...
+            # test.__qualname__ = ...
+            # test.__module__ = ...
+            # test.__dict__ = ...
+            return test
+
+        test = make_test(a='hello', b='world')
+    else:
+        if mode is None:
+            def more_vars(**extras):
+                def wrapper(f):
+                    # (1) capture the signature of the function to wrap and remove the invisible
+                    func_sig = signature(f)
+                    new_sig = remove_signature_parameters(func_sig, 'invisible_args')
+
+                    # (2) create a wrapper with the new signature
+                    @wraps(f, new_sig=new_sig)
+                    def wrapped(*args, **kwargs):
+                        # inject the invisible args again
+                        kwargs['invisible_args'] = extras
+                        return f(*args, **kwargs)
+
+                    return wrapped
+                return wrapper
+        else:
+            @function_decorator
+            def more_vars(f=DECORATED, **extras):
+                # (1) capture the signature of the function to wrap and remove the invisible
+                func_sig = signature(f)
+                new_sig = remove_signature_parameters(func_sig, 'invisible_args')
+
+                # (2) create a wrapper with the new signature
+                @wraps(f, new_sig=new_sig)
+                def wrapped(*args, **kwargs):
+                    kwargs['invisible_args'] = extras
+                    return f(*args, **kwargs)
+
+                return wrapped
+
+        @more_vars(a='hello', b='world')
+        def test(x, y, invisible_args):
+            a = invisible_args['a']
+            b = invisible_args['b']
+            print(a, b)
+            print(x, y)
+
+    test(1, 2)
+    help(test)
+
+    captured = capsys.readouterr()
+    with capsys.disabled():
+        print(captured.out)
+
+    assert captured.out == """hello world
+1 2
+Help on function test in module decopatch.tests.test_so:
+
+test(x, y)
 
 """
