@@ -1,5 +1,4 @@
 import sys
-from enum import Enum
 
 from six import reraise
 
@@ -13,50 +12,33 @@ except ImportError:
     funcsigs_used = True
 
 
-class injected(Enum):
-    """Symbols used in your (double) flat-mode signatures to declare where the various objects should be injected"""
-    DECORATED = 1
-    WRAPPED = 2
-    F_ARGS = 3
-    F_KWARGS = 4
+class _Symbol:
+    """
+    Symbols used in your (double) flat-mode signatures to declare where the various objects should be injected
+    These symbols have a nice representation.
+    """
+    __slots__ = ('repr_', )
 
-    # dummy methods so that pycharm and other static checkers (mypy?) are happy
+    def __init__(self, repr_):
+        self.repr_ = repr_
 
-    def __len__(self):
-        pass
-
-    def __contains__(self, x):
-        pass
-
-    def __getitem__(self, key):
-        pass
-
-    def __call__(self, *args, **kwargs):
-        pass
-
-    def __iter__(self):
-        pass
-
-    def __next__(self):
-        pass
-
-    def keys(self):
-        pass
+    def __repr__(self):
+        return self.repr_
 
 
-DECORATED = injected.DECORATED
+DECORATED = _Symbol('DECORATED')
 # A symbol used in flat-mode signatures to declare where the decorated function should be injected
 
 
-WRAPPED = injected.WRAPPED
+WRAPPED = _Symbol('WRAPPED')
 # A symbol used in double flat-mode signatures to declare where the wrapped function should be injected
 
 
-F_ARGS = injected.F_ARGS
+F_ARGS = _Symbol('F_ARGS')
 # A symbol used in your double flat-mode signatures to declare where the wrapper args should be injected
 
 
-F_KWARGS = injected.F_KWARGS
+F_KWARGS = _Symbol('F_KWARGS')
 # A symbol used in your double flat-mode signatures to declare where the wrapper kwargs should be injected
 
 
