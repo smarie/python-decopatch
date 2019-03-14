@@ -235,7 +235,7 @@ function filter_table(elem) {
 }
 </script>
     <h1>report.html</h1>
-    <p>Report generated on 13-Mar-2019 at 13:48:03 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v1.20.0</p>
+    <p>Report generated on 14-Mar-2019 at 11:20:28 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v1.20.0</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
@@ -246,7 +246,7 @@ function filter_table(elem) {
         <td>/usr/lib/jvm/java-8-oracle</td></tr>
       <tr>
         <td>Packages</td>
-        <td>{&apos;pytest&apos;: &apos;3.7.1&apos;, &apos;pluggy&apos;: &apos;0.7.1&apos;, &apos;py&apos;: &apos;1.5.4&apos;}</td></tr>
+        <td>{&apos;py&apos;: &apos;1.5.4&apos;, &apos;pluggy&apos;: &apos;0.7.1&apos;, &apos;pytest&apos;: &apos;3.7.1&apos;}</td></tr>
       <tr>
         <td>Platform</td>
         <td>Linux-4.4.0-101-generic-x86_64-with-debian-jessie-sid</td></tr>
@@ -261,28 +261,28 @@ function filter_table(elem) {
         <td>master</td></tr>
       <tr>
         <td>TRAVIS_BUILD_ID</td>
-        <td>505770461</td></tr>
+        <td>506230737</td></tr>
       <tr>
         <td>TRAVIS_BUILD_NUMBER</td>
-        <td>38</td></tr>
+        <td>39</td></tr>
       <tr>
         <td>TRAVIS_COMMIT</td>
-        <td>952e3cf28ea7e5ec312dcc6099dbab618727667d</td></tr>
+        <td>ef7d96e380a74a4089628cd0cb364e08d77f7f73</td></tr>
       <tr>
         <td>TRAVIS_COMMIT_MESSAGE</td>
-        <td>Dummy mod to trigger a new build</td></tr>
+        <td>Added a test for a stack overflow discussion</td></tr>
       <tr>
         <td>TRAVIS_COMMIT_RANGE</td>
-        <td>cc4ea5d633f8...952e3cf28ea7</td></tr>
+        <td>952e3cf28ea7...ef7d96e380a7</td></tr>
       <tr>
         <td>TRAVIS_EVENT_TYPE</td>
         <td>push</td></tr>
       <tr>
         <td>TRAVIS_JOB_ID</td>
-        <td>505770463</td></tr>
+        <td>506230739</td></tr>
       <tr>
         <td>TRAVIS_JOB_NUMBER</td>
-        <td>38.2</td></tr>
+        <td>39.2</td></tr>
       <tr>
         <td>TRAVIS_OS_NAME</td>
         <td>linux</td></tr>
@@ -296,8 +296,8 @@ function filter_table(elem) {
         <td>TRAVIS_SUDO</td>
         <td>true</td></tr></table>
     <h2>Summary</h2>
-    <p>205 tests ran in 1.77 seconds. </p>
-    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="passed">205 passed</span>, <input checked="true" class="filter" data-test-result="skipped" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="skipped">40 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <p>207 tests ran in 1.68 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="passed">207 passed</span>, <input checked="true" class="filter" data-test-result="skipped" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="skipped">40 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filter_table(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
       <thead id="results-table-head">
@@ -741,7 +741,7 @@ Calling it as @replace_by_foo(&#x27;hello&#x27;, goo)
         <tr>
           <td class="col-result">Skipped</td>
           <td class="col-name">decopatch/tests/test_main2.py::test_all[custom_disambiguator_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -752,7 +752,7 @@ Calling it as @replace_by_foo(DEFAULT_DUMMY_VALUE, goo)
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_doc.py::test_doc_add_tag_function[flat_mode=False]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -937,7 +937,7 @@ None
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_doc_advanced.py::test_doc_impl_first_tag_mandatory_protected[uses_introspection=False-kwonly=True]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -973,7 +973,7 @@ None
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_doc_advanced.py::test_doc_impl_first_tag_optional_protected[introspection=True-kwonly=True]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -1712,7 +1712,7 @@ Expected ERROR: &#x27;TypeError&#x27; because python does not allow 2 args if f 
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_main2.py::test_all[introspection_1m_arg(dummy)-@replace_by_foo]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -2700,7 +2700,7 @@ Expected SUCCESS
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_main2.py::test_all[default_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo()]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -2804,7 +2804,7 @@ Expected SUCCESS
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_main2.py::test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -2856,7 +2856,7 @@ Expected SUCCESS
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_main2.py::test_all[introspection_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)-@replace_by_foo(replacement=goo)]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -2947,7 +2947,7 @@ Expected SUCCESS
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_main2.py::test_all[unprotected (default)_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo(goo)]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -3025,7 +3025,7 @@ Expected SUCCESS
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_main2.py::test_all[introspection_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)-@replace_by_foo]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -3269,7 +3269,7 @@ a 100 b 2
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_so.py::test_so_wrap[style=double-flat]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -3305,6 +3305,24 @@ a 100 b 2
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">decopatch/tests/test_so.py::test_so_3[mode=double-flat]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">decopatch/tests/test_so.py::test_so_4[mode=None]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">decopatch/tests/test_so.py::test_so_4[mode=flat]</td>
           <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
