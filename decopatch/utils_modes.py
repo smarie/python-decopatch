@@ -1,7 +1,3 @@
-import sys
-
-from six import reraise
-
 from makefun import remove_signature_parameters, with_signature, wraps
 
 try:  # python 3.3+
@@ -125,20 +121,21 @@ def make_nested_impl_for_flat_mode(decorator_signature, user_provided_applier, i
 
             # the injected function is f. Add it to the other decorator parameters, under name requested by user.
             kwargs[injected_name] = f
-            try:
-                return user_provided_applier(*args, **kwargs)
-            except TypeError as err:
-                # slightly improve the error message when this talks about keyword arguments: we remove the keyword
-                # args part because it always contains the full number of optional arguments even if the user did
-                # not provide them (that's a consequence of creating a 'true' signature and not *args, **kwargs)
-                t, v, tb = sys.exc_info()
-                if type(err) is TypeError and err.args:
-                    try:
-                        idx = err.args[0].index('takes 0 positional arguments but 1 positional argument (')
-                        err.args = (err.args[0][0:(idx + 55)] + 'were given.',) + err.args[1:]
-                    except:  # ValueError: substring not found, or anything else actually
-                        pass
-                reraise(t, v, tb)
+            # try:
+            return user_provided_applier(*args, **kwargs)
+            # except TypeError as err:
+            #     # slightly improve the error message when this talks about keyword arguments: we remove the keyword
+            #     # args part because it always contains the full number of optional arguments even if the user did
+            #     # not provide them (that's a consequence of creating a 'true' signature and not *args, **kwargs)
+            #     t, v, tb = sys.exc_info()
+            #     if type(err) is TypeError and err.args:
+            #         try:
+            #             idx = err.args[0].index('takes 0 positional arguments but 1 positional argument (')
+            #             err.args = (err.args[0][0:(idx + 55)] + 'were given.',) + err.args[1:]
+            #         except:  # ValueError: substring not found, or anything else actually
+            #             pass
+            #     reraise(t, v, tb)
+            # NOTE: COMMENTED OUT THIS HACK BECAUSE THERE IS NO GOOD REASON TO DO IT (OR AT LEAST NO CORRESPONDING TEST)
 
         return _apply_decorator
 
