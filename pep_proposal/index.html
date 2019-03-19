@@ -450,7 +450,7 @@
 <p>if this is a too low-level feature it might require a dedicated language symbol instead of a "normal" decorator ; but it seems overkill - it would be better if we can avoid creating a new language element.</p>
 </li>
 <li>
-<p>alternatively or in addition, the python <code>stdlib</code> could provide a method that would return <code>True</code> if and only if the current stack is inside a no-parenthesis decorator call. This method, for example named <code>inspect.is_in_decorator_call_stack()</code>, could then be used by the various helper libraries, including <code>decopatch</code>.</p>
+<p>alternatively or in addition, the python <code>stdlib</code> could provide a method that would return <code>True</code> if and only if a given frame is a no-parenthesis decorator call. This method, for example named <code>inspect.is_decorator_call(frame)</code>, could then be used by the various helper libraries, including <code>decopatch</code>.</p>
 </li>
 </ul>
                 
