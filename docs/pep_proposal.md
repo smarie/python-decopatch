@@ -82,4 +82,4 @@ The explicit `@decorator_factory` annotation would make the interpreter/stdlib r
 
  - if this is a too low-level feature it might require a dedicated language symbol instead of a "normal" decorator ; but it seems overkill - it would be better if we can avoid creating a new language element.
  
- - alternatively or in addition, the python `stdlib` could provide a method that would return `True` if and only if the current stack is inside a no-parenthesis decorator call. This method, for example named `inspect.is_in_decorator_call_stack()`, could then be used by the various helper libraries, including `decopatch`.
+ - alternatively or in addition, the python `stdlib` could provide a method that would return `True` if and only if a given frame is a no-parenthesis decorator call. This method, for example named `inspect.is_decorator_call(frame)`, could then be used by the various helper libraries, including `decopatch`.
