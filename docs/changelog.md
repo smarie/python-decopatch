@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.4.2 - Bugfix in flat mode
+
+When flat mode was used in a context where the signature contains a var-positional argument, the arguments were not correctly injected. Fixes [#12](https://github.com/smarie/python-decopatch/issues/12).
+
 ### 1.4.1 - Minor default symbols improvement
 
 Removed the clunky `Enum` for symbols. Back to a normal class, with a custom `__repr__`.
