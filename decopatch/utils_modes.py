@@ -263,10 +263,9 @@ def extract_mode_info(impl_sig,                      # type: Signature
         if mode in {None, DECORATED} and (f_args is not None or f_kwargs is not None):
             raise InvalidSignatureError("`F_ARGS` or `F_KWARGS` should only be used if you use `WRAPPED`")
 
-    if mode in {DECORATED, WRAPPED}:
-        if position_of_varpos > 0:
-            # if there is a var-positional we will have to inject arguments before it manually
-            argnames_before_varpos_arg = tuple(k for k in list(impl_sig.parameters.keys())[0:position_of_varpos])
+    if position_of_varpos > 0:
+        # if there is a var-positional we will have to inject arguments before it manually
+        argnames_before_varpos_arg = tuple(k for k in list(impl_sig.parameters.keys())[0:position_of_varpos])
 
     if argnames_before_varpos_arg is None:
         argnames_before_varpos_arg = tuple()

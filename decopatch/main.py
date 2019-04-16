@@ -239,7 +239,7 @@ def create_no_args_decorator(decorator_function,
     def new_decorator(*_):
         if len(_) == 0:
             # called with no args BUT parenthesis: @foo_decorator().
-            return with_parenthesis_usage(decorator_function, args=_)
+            return with_parenthesis_usage(decorator_function, *_)
 
         elif len(_) == 1:
             first_arg_value = _[0]
@@ -296,7 +296,7 @@ def create_kwonly_decorator(sig_info,  # type: SignatureInfo
                         modulename=function_for_metadata.__module__)
         def new_decorator(*no_args, **kwargs):
             # this is a parenthesis call, because otherwise a `TypeError` would already have been raised by python.
-            return with_parenthesis_usage(decorator_function, args=no_args, kwargs=kwargs)
+            return with_parenthesis_usage(decorator_function, *no_args, **kwargs)
 
         return new_decorator
     elif sig_info.use_signature_trick:

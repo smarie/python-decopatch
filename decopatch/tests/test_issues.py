@@ -1,6 +1,6 @@
 import pytest
 
-from decopatch import class_decorator, DECORATED
+from decopatch import class_decorator, DECORATED, function_decorator
 
 
 @pytest.mark.parametrize("position", [0, 1], ids="position={}".format)
@@ -40,6 +40,18 @@ def test_named_flat_mode_varpositional(position):
             assert arg1 == "hello"
             assert varpos == (12, )
             return cls
+
+    @my_decorator("hello", 12)
+    class Foo:
+        pass
+
+
+def test_disambiguation_during_binding():
+    @function_decorator
+    def my_decorator(a, *args, **kwargs):
+        def apply(f):
+            return f
+        return apply
 
     @my_decorator("hello", 12)
     class Foo:

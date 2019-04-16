@@ -35,7 +35,7 @@ def call_in_appropriate_mode(impl_function,
 
     elif disambiguation_result is FirstArgDisambiguation.is_normal_arg:
         # (2) WITH-parenthesis usage: @foo_decorator(*args, **kwargs).
-        return with_parenthesis_usage(impl_function, dk=dk)
+        return with_parenthesis_usage(impl_function, *dk.args, **dk.kwargs)
 
     elif disambiguation_result is FirstArgDisambiguation.is_ambiguous:
         # (3) STILL AMBIGUOUS
@@ -71,37 +71,14 @@ def no_parenthesis_usage(decorator_function, decorated):
     return decorator_function()(decorated)
 
 
-def with_parenthesis_usage(decorator_function, dk=None, args=None, kwargs=None):
+def with_parenthesis_usage(decorator_function, *args, **kwargs):
     """
     called with no args BUT parenthesis: @foo_decorator().
     we have to return a nested function to apply the decorator
 
-    Note: this method can be either called with a non-none args and kwargs, OR with a non-none dk (a DecoratorUsageInfo)
-
     :param decorator_function:
-    :param dk: all the call context in a DecoratorUsageInfo object. When this is provided, args and kwargs should be
-        None
     :param args:
     :param kwargs:
     :return:
     """
-    if dk is not None and not dk.sig_info.use_signature_trick:
-        # the signature trick is not exposed, so all arguments are redirected to named arguments
-        # we therefore cannot yet call decorator_function(*args, **kwargs)
-        # See https://github.com/smarie/python-makefun/issues/34: when it is fixed use the fix
-        if args is not None or kwargs is not None:
-            raise ValueError("internal error - please report")
-        args = dk.args
-        kwargs = dk.kwargs
-
-        new_args = tuple(kwargs.pop(k) for k in dk.sig_info.argnames_before_varpos_arg) + args
-        return decorator_function(*new_args, **kwargs)
-
-    else:
-        if dk is None:
-            args = args if args is not None else ()
-            kwargs = kwargs if kwargs is not None else dict()
-        else:
-            args = dk.args
-            kwargs = dk.kwargs
-        return decorator_function(*args, **kwargs)
+    return decorator_function(*args, **kwargs)
