@@ -33,17 +33,18 @@ def test_no_args(capsys, flat_mode):
 
     help(replace_with_hello)
 
-    @replace_with_hello
-    def foo():
-        pass
+    with capsys.disabled():
+        @replace_with_hello
+        def foo():
+            pass
 
-    assert foo == 'hello'
+        assert foo == 'hello'
 
-    @replace_with_hello()
-    def foo():
-        pass
+        @replace_with_hello()
+        def foo():
+            pass
 
-    assert foo == 'hello'
+        assert foo == 'hello'
 
     captured = capsys.readouterr()
     assert captured.err == ""
