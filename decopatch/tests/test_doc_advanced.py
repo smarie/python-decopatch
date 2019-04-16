@@ -431,21 +431,34 @@ def test_varpos_and_decorated_before_in_flat_mode():
     injected args to be injected in flat and double-flat modes.
     """
 
-    with pytest.raises(InvalidSignatureError):
-        @function_decorator
-        def foo(func=DECORATED, *tags):
-            pass
+    @function_decorator
+    def foo(func=DECORATED, *tags):
+        assert tags == ('hello', )
 
-    with pytest.raises(InvalidSignatureError):
-        @function_decorator
-        def foo(func=WRAPPED, *tags):
-            pass
+    @foo('hello')
+    def f():
+        pass
+
+    @function_decorator
+    def foo(func=WRAPPED, *tags):
+        assert tags == ('hello', )
+
+    @foo('hello')
+    def f():
+        pass
 
     if sys.version_info >= (3, 0):
         from decopatch.tests._test_doc_py3 import create_test_wrapped_bad_signature
-        for i in range(4):
+
+        foo = create_test_wrapped_bad_signature(0, 'hello')
+
+        @foo('hello')
+        def f():
+            pass
+
+        for i in range(1, 4):
             with pytest.raises(InvalidSignatureError):
-                create_test_wrapped_bad_signature(i)
+                create_test_wrapped_bad_signature(i, 'hello')
 
 
 def test_kwargs():

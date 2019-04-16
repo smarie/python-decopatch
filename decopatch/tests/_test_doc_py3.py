@@ -51,7 +51,7 @@ def create_test_doc_impl_first_tag_optional_protected(uses_introspection):
     return add_tag
 
 
-def create_test_wrapped_bad_signature(test_nb):
+def create_test_wrapped_bad_signature(test_nb, *ref_tags):
     """
 
     :param test_nb:
@@ -60,19 +60,21 @@ def create_test_wrapped_bad_signature(test_nb):
     if test_nb == 0:
         @function_decorator
         def foo(func=WRAPPED, *tags, f_args=F_ARGS, f_kwargs=F_KWARGS):
-            pass
+            assert tags == ref_tags
     elif test_nb == 1:
         @function_decorator
         def foo(f_args=F_ARGS, *tags, func=WRAPPED, f_kwargs=F_KWARGS):
-            pass
+            assert tags == ref_tags
     elif test_nb == 2:
         @function_decorator
         def foo(f_kwargs=F_KWARGS, *tags, func=WRAPPED, f_args=F_ARGS):
-            pass
+            assert tags == ref_tags
     elif test_nb == 3:
         @function_decorator
         def foo(f_kwargs=F_KWARGS, func=WRAPPED, *tags, f_args=F_ARGS):
-            pass
+            assert tags == ref_tags
+
+    return foo
 
 # --------- from test_doc_disambiguation.py
 

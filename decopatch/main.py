@@ -239,7 +239,7 @@ def create_no_args_decorator(decorator_function,
     def new_decorator(*_):
         if len(_) == 0:
             # called with no args BUT parenthesis: @foo_decorator().
-            return with_parenthesis_usage(decorator_function, *_)
+            return with_parenthesis_usage(decorator_function, args=_)
 
         elif len(_) == 1:
             first_arg_value = _[0]
@@ -296,7 +296,7 @@ def create_kwonly_decorator(sig_info,  # type: SignatureInfo
                         modulename=function_for_metadata.__module__)
         def new_decorator(*no_args, **kwargs):
             # this is a parenthesis call, because otherwise a `TypeError` would already have been raised by python.
-            return with_parenthesis_usage(decorator_function, *no_args, **kwargs)
+            return with_parenthesis_usage(decorator_function, args=no_args, kwargs=kwargs)
 
         return new_decorator
     elif sig_info.use_signature_trick:
@@ -306,7 +306,6 @@ def create_kwonly_decorator(sig_info,  # type: SignatureInfo
         # modify the signature to add a var-positional first
         gen_varpos_param = Parameter(_GENERATED_VARPOS_NAME, kind=Parameter.VAR_POSITIONAL)
         sig_info.exposed_signature = add_signature_parameters(sig_info.exposed_signature, first=[gen_varpos_param])
-        sig_info.first_arg_def = gen_varpos_param
 
     # we can fallback to the same case than varpositional
     return create_general_case_decorator(sig_info, decorator_function, disambiguator,

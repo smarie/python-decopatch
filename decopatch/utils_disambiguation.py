@@ -89,7 +89,7 @@ def disambiguate_call(dk,  # type: DecoratorUsageInfo
     else:
         # we expose a "true" signature, the only arguments that remain in *args are the ones that CANNOT become kw
         nb_posonly_received = len(dk.args)
-        if dk.sig_info.is_first_arg_varpositional or dk.sig_info.is_first_arg_positional_only:
+        if dk.sig_info.contains_varpositional or dk.sig_info.is_first_arg_positional_only:
             if nb_posonly_received == 0:
                 # with parenthesis: @foo_decorator(**kwargs)
                 return _WITH_PARENTHESIS
