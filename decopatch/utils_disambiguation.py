@@ -55,11 +55,7 @@ class DecoratorUsageInfo(object):
                  sig_info,  # type: SignatureInfo
                  args, kwargs):
         self.sig_info = sig_info
-        # take into account var-positional args
-        if sig_info.use_signature_trick:
-            self.args = args
-        else:
-            self.args = tuple(kwargs.pop(k) for k in self.sig_info.argnames_before_varpos_arg) + args
+        self.args = args
         self.kwargs = kwargs
         self._first_arg_value = DecoratorUsageInfo  # this is our way to say 'uninitialized'
         self._bound = None

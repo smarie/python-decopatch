@@ -1,5 +1,7 @@
 # Changelog
 
+### 1.4.4 - Reverted varpositional bugfixes now that they are handled in makefun
+
 ### 1.4.3 - Bugfix in nested mode under python 2
 
 In python 2, when nested mode was used in a context where the signature contains a var-positional argument, a `TypeError` was raised ; this is now fixed. Fixes [#13](https://github.com/smarie/python-decopatch/issues/13).

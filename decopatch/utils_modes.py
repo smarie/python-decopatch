@@ -56,7 +56,7 @@ def make_decorator_spec(impl_function,
     implementors_signature = signature(impl_function)
 
     # determine the mode (nested, flat, double-flat) and check signature
-    mode, injected_name, contains_varpositional, argnames_before_varpos_arg, \
+    mode, injected_name, contains_varpositional, injected_pos, \
     injected_arg, f_args_name, f_kwargs_name = extract_mode_info(implementors_signature, flat_mode_decorated_name)
 
     # create the signature of the decorator function to create, according to mode
@@ -75,7 +75,7 @@ def make_decorator_spec(impl_function,
 
         # generate the corresponding nested decorator
         nested_impl_function = make_nested_impl_for_flat_mode(exposed_signature, impl_function, injected_name,
-                                                              argnames_before_varpos_arg)
+                                                              injected_pos)
 
     elif mode is WRAPPED:
         # *double-flat: the same signature, but we remove the injected args.
@@ -88,22 +88,18 @@ def make_decorator_spec(impl_function,
 
         # generate the corresponding nested decorator
         nested_impl_function = make_nested_impl_for_doubleflat_mode(exposed_signature, impl_function, injected_name,
-                                                                    f_args_name, f_kwargs_name,
-                                                                    argnames_before_varpos_arg)
+                                                                    f_args_name, f_kwargs_name, injected_pos)
 
     else:
         raise ValueError("Unknown mode: %s" % mode)
 
     # create an object to easily access the exposed signature information afterwards
-    if injected_name is not None and len(argnames_before_varpos_arg) > 0:
-        argnames_before_varpos_arg = tuple(n for n in argnames_before_varpos_arg if n != injected_name)
-    sig_info = SignatureInfo(exposed_signature, contains_varpositional, argnames_before_varpos_arg)
+    sig_info = SignatureInfo(exposed_signature, contains_varpositional, injected_pos)
 
     return sig_info, function_for_metadata, nested_impl_function
 
 
-def make_nested_impl_for_flat_mode(decorator_signature, user_provided_applier, injected_name, 
-                                   argnames_before_varpos_arg):
+def make_nested_impl_for_flat_mode(decorator_signature, user_provided_applier, injected_name, injected_pos):
     """
     Creates the nested-mode decorator to be used when the implementation is provided in flat mode.
 
@@ -126,10 +122,12 @@ def make_nested_impl_for_flat_mode(decorator_signature, user_provided_applier, i
             """ This is called when the decorator is applied to an object `decorated` """
 
             # inject `decorated` under the correct name
-            kwargs[injected_name] = decorated
-
             # fix in case of var-positional arguments
-            new_args = tuple(kwargs.pop(k) for k in argnames_before_varpos_arg) + args
+            if injected_pos >= 0:
+                new_args = args[:injected_pos] + (decorated, ) + args[injected_pos:]
+            else:
+                new_args = args
+                kwargs[injected_name] = decorated
 
             return user_provided_applier(*new_args, **kwargs)
 
@@ -139,7 +137,7 @@ def make_nested_impl_for_flat_mode(decorator_signature, user_provided_applier, i
 
 
 def make_nested_impl_for_doubleflat_mode(decorator_signature, user_provided_wrapper, injected_name,
-                                         f_args_name, f_kwargs_name, argnames_before_varpos_arg):
+                                         f_args_name, f_kwargs_name, injected_pos):
     """
     Creates the nested-mode decorator to be used when the implementation is provided in double-flat mode.
 
@@ -163,10 +161,12 @@ def make_nested_impl_for_doubleflat_mode(decorator_signature, user_provided_wrap
             """ This is called when the decorator is applied to an object `decorated` """
 
             # inject `decorated` under the correct name
-            kwargs[injected_name] = decorated
-
             # fix in case of var-positional arguments
-            new_args = tuple(kwargs.pop(k) for k in argnames_before_varpos_arg) + args
+            if injected_pos >= 0:
+                new_args = args[:injected_pos] + (decorated,) + args[injected_pos:]
+            else:
+                new_args = args
+                kwargs[injected_name] = decorated
 
             # create a signature-preserving wrapper using `makefun.wraps`
             @wraps(decorated)
@@ -210,7 +210,7 @@ def extract_mode_info(impl_sig,                      # type: Signature
     """
     mode = None
     injected = None
-    argnames_before_varpos_arg = None
+    injected_pos = None
     position_of_varpos = -1
     f_args = None
     f_kwargs = None
@@ -228,6 +228,7 @@ def extract_mode_info(impl_sig,                      # type: Signature
             if k == flat_mode_decorated_name:
                 # this is the injected parameter
                 injected = p
+                injected_pos = i
             elif p.kind is Parameter.VAR_POSITIONAL:
                 position_of_varpos = i
 
@@ -249,12 +250,14 @@ def extract_mode_info(impl_sig,                      # type: Signature
                 else:
                     mode = DECORATED
                     injected = p
+                    injected_pos = i
             elif p.default is WRAPPED:
                 if mode is not None:
                     raise InvalidSignatureError("only one of `DECORATED` or `WRAPPED` can be used in your signature")
                 else:
                     mode = WRAPPED
                     injected = p
+                    injected_pos = i
             elif p.default is F_ARGS:
                 f_args = p
             elif p.default is F_KWARGS:
@@ -263,16 +266,21 @@ def extract_mode_info(impl_sig,                      # type: Signature
         if mode in {None, DECORATED} and (f_args is not None or f_kwargs is not None):
             raise InvalidSignatureError("`F_ARGS` or `F_KWARGS` should only be used if you use `WRAPPED`")
 
-    if position_of_varpos > 0:
-        # if there is a var-positional we will have to inject arguments before it manually
-        argnames_before_varpos_arg = tuple(k for k in list(impl_sig.parameters.keys())[0:position_of_varpos])
-
-    if argnames_before_varpos_arg is None:
-        argnames_before_varpos_arg = tuple()
+    # argnames_before_varpos_arg = None
+    # if position_of_varpos > 0:
+    #     # if there is a var-positional we will have to inject arguments before it manually
+    #     argnames_before_varpos_arg = tuple(k for k in list(impl_sig.parameters.keys())[0:position_of_varpos])
+    #
+    # if argnames_before_varpos_arg is None:
+    #     argnames_before_varpos_arg = tuple()
 
     contains_varpositional = position_of_varpos >= 0
 
-    return mode, (injected.name if injected is not None else None),contains_varpositional, argnames_before_varpos_arg, \
+    if not contains_varpositional:
+        # do not inject as positional
+        injected_pos = -1
+
+    return mode, (injected.name if injected is not None else None), contains_varpositional, injected_pos, \
            injected, (f_args.name if f_args is not None else None), (f_kwargs.name if f_kwargs is not None else None)
 
 
@@ -285,14 +293,14 @@ class SignatureInfo(object):
     Provides handy properties to separate the code requirements from the implementation (and possibly cache).
     """
     __slots__ = '_exposed_signature', 'first_arg_def', '_use_signature_trick', 'contains_varpositional', \
-                'argnames_before_varpos_arg'
+                'injected_pos'
 
-    def __init__(self, decorator_signature, contains_varpositional, argnames_before_varpos_arg):
+    def __init__(self, decorator_signature, contains_varpositional, injected_pos):
         self._exposed_signature = decorator_signature
         _, self.first_arg_def = get_first_parameter(decorator_signature)
         self._use_signature_trick = False
         self.contains_varpositional = contains_varpositional
-        self.argnames_before_varpos_arg = argnames_before_varpos_arg
+        self.injected_pos = injected_pos
 
     # --
 
