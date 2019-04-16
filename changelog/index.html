@@ -304,8 +304,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#142-bugfix-in-flat-mode" title="1.4.2 - Bugfix in flat mode" class="md-nav__link">
-    1.4.2 - Bugfix in flat mode
+  <a href="#143-bugfix-in-nested-mode-under-python-2" title="1.4.3 - Bugfix in nested mode under python 2" class="md-nav__link">
+    1.4.3 - Bugfix in nested mode under python 2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#142-bugfix-in-flat-mode-under-python-2" title="1.4.2 - Bugfix in flat mode under python 2" class="md-nav__link">
+    1.4.2 - Bugfix in flat mode under python 2
   </a>
   
 </li>
@@ -405,8 +412,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#142-bugfix-in-flat-mode" title="1.4.2 - Bugfix in flat mode" class="md-nav__link">
-    1.4.2 - Bugfix in flat mode
+  <a href="#143-bugfix-in-nested-mode-under-python-2" title="1.4.3 - Bugfix in nested mode under python 2" class="md-nav__link">
+    1.4.3 - Bugfix in nested mode under python 2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#142-bugfix-in-flat-mode-under-python-2" title="1.4.2 - Bugfix in flat mode under python 2" class="md-nav__link">
+    1.4.2 - Bugfix in flat mode under python 2
   </a>
   
 </li>
@@ -494,8 +508,10 @@
                 
                 
                 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
-<h3 id="142-bugfix-in-flat-mode">1.4.2 - Bugfix in flat mode<a class="headerlink" href="#142-bugfix-in-flat-mode" title="Permanent link">&para;</a></h3>
-<p>When flat mode was used in a context where the signature contains a var-positional argument, the arguments were not correctly injected. Fixes <a href="https://github.com/smarie/python-decopatch/issues/12">#12</a>.</p>
+<h3 id="143-bugfix-in-nested-mode-under-python-2">1.4.3 - Bugfix in nested mode under python 2<a class="headerlink" href="#143-bugfix-in-nested-mode-under-python-2" title="Permanent link">&para;</a></h3>
+<p>In python 2, when nested mode was used in a context where the signature contains a var-positional argument, a <code>TypeError</code> was raised ; this is now fixed. Fixes <a href="https://github.com/smarie/python-decopatch/issues/13">#13</a>.</p>
+<h3 id="142-bugfix-in-flat-mode-under-python-2">1.4.2 - Bugfix in flat mode under python 2<a class="headerlink" href="#142-bugfix-in-flat-mode-under-python-2" title="Permanent link">&para;</a></h3>
+<p>In python 2, when flat mode was used in a context where the signature contains a var-positional argument, the arguments were not correctly injected. Fixes <a href="https://github.com/smarie/python-decopatch/issues/12">#12</a>.</p>
 <h3 id="141-minor-default-symbols-improvement">1.4.1 - Minor default symbols improvement<a class="headerlink" href="#141-minor-default-symbols-improvement" title="Permanent link">&para;</a></h3>
 <p>Removed the clunky <code>Enum</code> for symbols. Back to a normal class, with a custom <code>__repr__</code>.</p>
 <h3 id="140-minor-dependency-version-update">1.4.0 - Minor dependency version update<a class="headerlink" href="#140-minor-dependency-version-update" title="Permanent link">&para;</a></h3>
