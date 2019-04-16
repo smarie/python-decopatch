@@ -1,8 +1,12 @@
 # Changelog
 
-### 1.4.2 - Bugfix in flat mode
+### 1.4.3 - Bugfix in nested mode under python 2
 
-When flat mode was used in a context where the signature contains a var-positional argument, the arguments were not correctly injected. Fixes [#12](https://github.com/smarie/python-decopatch/issues/12).
+In python 2, when nested mode was used in a context where the signature contains a var-positional argument, a `TypeError` was raised ; this is now fixed. Fixes [#13](https://github.com/smarie/python-decopatch/issues/13).
+
+### 1.4.2 - Bugfix in flat mode under python 2
+
+In python 2, when flat mode was used in a context where the signature contains a var-positional argument, the arguments were not correctly injected. Fixes [#12](https://github.com/smarie/python-decopatch/issues/12).
 
 ### 1.4.1 - Minor default symbols improvement
 
