@@ -1,5 +1,7 @@
+import sys
 from enum import Enum
-from inspect import isclass, stack
+from inspect import isclass
+from linecache import getline
 from warnings import warn
 
 from decopatch.utils_modes import SignatureInfo
@@ -160,23 +162,19 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
 
         # introspection-based
         if enable_stack_introspection:
-            if isclass(first_arg_received):
-                # as of today the introspection mechanism provided below does not work reliably on classes.
+            depth = 4 if signature_knowledge.use_signature_trick else 5
+            try:
+                res = disambiguate_using_introspection(depth, first_arg_received)
+                if res is not None:
+                    return res
+            except IPythonException as e:
+                warn("Decorator disambiguation using stack introspection is not available in Jupyter/iPython. "
+                     "Please use the decorator in a non-ambiguous way. For example use explicit parenthesis @%s() "
+                     "for no-arg usage, or use 2 non-default arguments, or use explicit keywords. Ambiguous "
+                     "argument received: %s." % (impl_function.__name__, first_arg_received))
+            except Exception:
+                # silently escape all exceptions by default - safer for users
                 pass
-            else:
-                depth = 4 if signature_knowledge.use_signature_trick else 5
-                try:
-                    res = disambiguate_using_introspection(depth)
-                    if res is not None:
-                        return res
-                except IPythonException as e:
-                    warn("Decorator disambiguation using stack introspection is not available in Jupyter/iPython. "
-                         "Please use the decorator in a non-ambiguous way. For example use explicit parenthesis @%s() "
-                         "for no-arg usage, or use 2 non-default arguments, or use explicit keywords. Ambiguous "
-                         "argument received: %s." % (impl_function.__name__, first_arg_received))
-                except Exception:
-                    # silently escape all exceptions by default - safer for users
-                    pass
 
         # we want to eliminate as much as possible the args that cannot be first args
         if callable(first_arg_received) and not isclass(first_arg_received) and not is_function_decorator:
@@ -207,7 +205,7 @@ class IPythonException(Exception):
     pass
 
 
-def disambiguate_using_introspection(depth):
+def disambiguate_using_introspection(depth, first_arg):
     """
     Tries to disambiguate the call situation betwen with-parenthesis and without-parenthesis using call stack
     introspection.
@@ -222,42 +220,81 @@ def disambiguate_using_introspection(depth):
     """
     # Unfortunately inspect.stack and inspect.currentframe are extremely slow
     # see https://gist.github.com/JettJones/c236494013f22723c1822126df944b12
-    # but as of now could not find another way.
     # --
     # curframe = currentframe()
     # calframe = getouterframes(curframe, 4)
     # --or
-    calframe = stack(context=1)
+    # calframe = stack(context=1)
+    # filename = calframe[depth][1]
     # ----
-    filename = calframe[depth][1]
+    # this is fast :)
+    calframe = sys._getframe(depth)
 
-    # frame = sys._getframe(where_to_look)
-    # filename = frame.f_code.co_filename
-    # frame_info = traceback.extract_stack(f=frame, limit=6)[0]
-    # filename =frame_info.filename
+    try:
+        # if target is a function that should work
+        is_decorator_call_ = first_arg.__code__.co_firstlineno == calframe.f_lineno
+    except AttributeError:
+        # if target is a class rely on source code using linecache
+        is_decorator_call_ = is_decorator_call(calframe)
 
-    # print(filename)
-
-    if filename.startswith('<'):
-        # iPython / jupyter
-        # strangely the behaviour of stack() is reversed in this case and the deeper the target the more
-        # context we need.... quite difficult to handle in a generic simple way !
-        raise IPythonException(calframe)
-
-    # --with inspect..
-    code_context = calframe[depth][4]
-    cal_line_str = code_context[0].lstrip()
-    # --with ?
-    # cal_line_str = frame_info.line
-
-    # print(cal_line_str)
-
-    if cal_line_str.startswith('@'):
-        if '(' not in cal_line_str:
-            # crude way
-            return FirstArgDisambiguation.is_decorated_target
-        else:
-            return FirstArgDisambiguation.is_normal_arg
+    if is_decorator_call_:
+        return FirstArgDisambiguation.is_decorated_target
     else:
-        # no @, so most probably a with-arg call
         return FirstArgDisambiguation.is_normal_arg
+
+
+# try:
+#     from opcode import opmap
+#
+#     def is_decorator_call(frame, first_arg):
+#         """
+#         This implementation relies on bytecode inspection.
+#         It seems to change too much across versions to be reliable.
+#
+#         :param frame:
+#         :return:
+#         """
+#         try:
+#             # if target is a function that should work
+#             return first_arg.__code__.co_firstlineno == frame.f_lineno
+#         except AttributeError:
+#             pass
+#
+#         # if the last bytecode operation before this frame is a MAKE_FUNCTION or a LOAD_BUILD_CLASS,
+#         # that means that we are a decorator without arguments >> NO, that's wrong !!!!
+#         # --rather
+#         # if the last LOAD_CONST done is for a <code> object that lies in the same line, then that's without arguments.
+#         code = frame.f_code.co_code
+#         opcode = 0
+#         instruction_idx = frame.f_lasti
+#         # instructions are every 3 positions
+#         last_load_const_idx = instruction_idx - (5 * 3)
+#         opcode = code[last_load_const_idx]
+#
+#         import dis
+#         dis.disassemble(frame.f_code, lasti=instruction_idx)  # lasti=frame.f_lasti
+#
+#         if opcode != opmap['LOAD_CONST']:
+#             return False
+#         else:
+#             # is this loading a code that lies after the frame.f_lineno ?
+#             arg = code[last_load_const_idx + 1] + code[last_load_const_idx + 2] * 256
+#             # argval, argrepr = _get_const_info(arg, constants)
+#             target = frame.f_code.co_consts[arg]
+#
+#         return target.co_firstlineno == frame.f_lineno
+#
+# except ImportError:
+def is_decorator_call(frame):
+    """
+    This implementation relies on source code inspection thanks to linecache.
+    :param frame:
+    :return:
+    """
+    # using inspect.getsource : heavy...
+    # using traceback.format_stack: seems to fallback to linecache anyway.
+    # using linecache https://docs.python.org/3/library/linecache.html
+    cal_line_str = getline(frame.f_code.co_filename, frame.f_lineno).strip()
+    if cal_line_str.startswith('class'):
+        cal_line_str = getline(frame.f_code.co_filename, frame.f_lineno - 1).strip()
+    return cal_line_str.startswith('@') and '(' not in cal_line_str

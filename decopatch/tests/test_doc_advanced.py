@@ -238,7 +238,7 @@ def test_doc_impl_first_class_tag_mandatory(uses_introspection):
 
     assert Foo.my_tag == 'hello'
 
-    err_type = TypeError if uses_introspection else InvalidMandatoryArgError
+    err_type = InvalidMandatoryArgError  # if not uses_introspection else TypeError
     with pytest.raises(err_type):
         # add_tag() missing 1 required positional argument: 'tag'
         @add_tag
@@ -250,19 +250,19 @@ def test_doc_impl_first_class_tag_mandatory(uses_introspection):
             def blah(self):
                 pass
 
-    # if not uses_introspection:
-    with pytest.raises(InvalidMandatoryArgError):
-        # first argument is a class > problem
+    if not uses_introspection:
+        with pytest.raises(InvalidMandatoryArgError):
+            # first argument is a class > problem
+            @add_tag(object)
+            class Foo(object):
+                pass
+    else:
+        # no problem
         @add_tag(object)
         class Foo(object):
             pass
-    # else:
-    #     # no problem
-    #     @add_tag(object)
-    #     class Foo(object):
-    #         pass
-    #
-    #     assert Foo.my_tag == object
+
+        assert Foo.my_tag == object
 
 
 def test_doc_nested_mode_tag_mandatory():

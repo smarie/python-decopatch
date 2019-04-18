@@ -3,11 +3,11 @@ from decopatch.utils_disambiguation import disambiguate_using_introspection, Fir
 
 def test_on_functions():
 
-    def level1():
-        return disambiguate_using_introspection(3)
+    def level1(arg):
+        return disambiguate_using_introspection(3, arg)
 
     def my_decorator(arg):
-        my_decorator.res = level1()
+        my_decorator.res = level1(arg)
         if my_decorator.res is FirstArgDisambiguation.is_decorated_target:
             return "replacement"
         elif my_decorator.res is FirstArgDisambiguation.is_normal_arg:
