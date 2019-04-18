@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.4.2 - Performance improvement
+
+ * Huge performance improvement for the `enable_stack_introspection=True` mode. It also now supports classes correctly.
+
 ### 1.4.4 - Reverted varpositional bugfixes now that they are handled in makefun
 
 ### 1.4.3 - Bugfix in nested mode under python 2
