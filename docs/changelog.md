@@ -1,6 +1,6 @@
 # Changelog
 
-### 1.4.2 - Performance improvement
+### 1.4.5 - Performance improvement
 
  * Huge performance improvement for the `enable_stack_introspection=True` mode. It also now supports classes correctly.
 
