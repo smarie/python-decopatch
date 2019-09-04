@@ -56,3 +56,21 @@ def test_disambiguation_during_binding():
     @my_decorator("hello", 12)
     class Foo:
         pass
+
+
+def test_varpositional():
+    from decopatch import class_decorator, DECORATED
+
+    @class_decorator
+    def replace_with(*args, cls=DECORATED):
+        # lets make sure that DECORATED has been injected
+        assert cls is not DECORATED
+        # and replace the class with the tuple of varpos arguments, just for easy check
+        return args
+
+    @replace_with(1, 2, 3)
+    class Foo(object):
+        pass
+
+    # check that Foo has been replaced with (1, 2, 3)
+    assert len(Foo) == 3

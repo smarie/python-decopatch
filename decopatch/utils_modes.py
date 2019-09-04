@@ -276,8 +276,8 @@ def extract_mode_info(impl_sig,                      # type: Signature
 
     contains_varpositional = position_of_varpos >= 0
 
-    if not contains_varpositional:
-        # do not inject as positional
+    if not contains_varpositional or (injected_pos is not None and position_of_varpos < injected_pos):
+        # do not inject as positional but as keyword argument
         injected_pos = -1
 
     return mode, (injected.name if injected is not None else None), contains_varpositional, injected_pos, \
