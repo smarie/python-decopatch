@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 
 from decopatch import class_decorator, DECORATED, function_decorator
@@ -59,18 +61,15 @@ def test_disambiguation_during_binding():
 
 
 def test_varpositional():
-    from decopatch import class_decorator, DECORATED
+    if sys.version_info < (3, 0):
+        pytest.skip("test skipped in python 2.x because syntax is not compliant")
+    else:
+        from decopatch.tests._test_issues_py3 import create_test_varpositional
+        replace_with = create_test_varpositional()
 
-    @class_decorator
-    def replace_with(*args, cls=DECORATED):
-        # lets make sure that DECORATED has been injected
-        assert cls is not DECORATED
-        # and replace the class with the tuple of varpos arguments, just for easy check
-        return args
+        @replace_with(1, 2, 3)
+        class Foo(object):
+            pass
 
-    @replace_with(1, 2, 3)
-    class Foo(object):
-        pass
-
-    # check that Foo has been replaced with (1, 2, 3)
-    assert len(Foo) == 3
+        # check that Foo has been replaced with (1, 2, 3)
+        assert len(Foo) == 3
