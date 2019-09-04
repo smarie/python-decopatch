@@ -14,7 +14,7 @@ here = path.abspath(path.dirname(__file__))
 INSTALL_REQUIRES = ['makefun>=1.5.0', 'funcsigs;python_version<"3.3"', 'enum34;python_version<"3.4"']
 DEPENDENCY_LINKS = []
 SETUP_REQUIRES = ['pytest-runner', 'setuptools_scm']
-TESTS_REQUIRE = ['pytest', 'pytest-logging', 'pytest-cov', 'pytest_cases']
+TESTS_REQUIRE = ['pytest', 'pytest-logging', 'pytest_cases']
 EXTRAS_REQUIRE = {}
 
 # simple check
