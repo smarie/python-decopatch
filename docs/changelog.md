@@ -1,5 +1,13 @@
 # Changelog
 
+### 1.4.6 - Bug fix
+
+Fixed decorated object injection issue when var-positional arguments are located before it in the signature. Fixed [#14](https://github.com/smarie/python-decopatch/issues/14).
+
+Added `__version__` attribute to comply with PEP396, following [this guide](https://smarie.github.io/python-getversion/#package-versioning-best-practices). Fixes [#15](https://github.com/smarie/python-decopatch/issues/15).
+
+PyPI supports markdown via `long_description_content_type`: pypandoc is not required anymore. Thanks [minrk](https://github.com/smarie/python-makefun/pull/44)! 
+
 ### 1.4.5 - Performance improvement
 
  * Huge performance improvement for the `enable_stack_introspection=True` mode. It also now supports classes correctly.
