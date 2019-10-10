@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -435,9 +435,27 @@
 <p>if this is a too low-level feature it might require a dedicated language symbol instead of a "normal" decorator ; but it seems overkill - it would be better if we can avoid creating a new language element.</p>
 </li>
 <li>
-<p>alternatively or in addition, the python <code>stdlib</code> could provide a method that would return <code>True</code> if and only if a given frame is a no-parenthesis decorator call. This method, for example named <code>inspect.is_decorator_call(frame)</code>, could then be used by the various helper libraries, including <code>decopatch</code>.</p>
+<p>alternatively or in addition, the python <code>stdlib</code> could provide a method that would return <code>True</code> if and only if a given frame is a no-parenthesis decorator call. This method, for example named <code>inspect.is_decorator_call(frame=None)</code>, could then be used by the various helper libraries, including <code>decopatch</code>.</p>
 </li>
 </ul>
+<p><strong>Follow-up</strong></p>
+<p>After proposing the above to the python-ideas mailing list, it seems that people were not as interested as I thought they would be. I therefore proposed a very minimal feature in <a href="https://bugs.python.org/issue36553">the python bug tracker</a> (the <code>inspect.is_decorator_call(frame)</code> option discussed above). At least with this, everyone would be able to solve the issue easily himself, like this:</p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">is_decorator_call</span>
+
+<span class="k">def</span> <span class="nf">set_hello_tag</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="s1">&#39;world&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">is_decorator_call</span><span class="p">():</span>
+        <span class="c1"># called without parenthesis!</span>
+        <span class="c1"># the decorated object is `tag`</span>
+        <span class="k">return</span> <span class="n">set_hello_tag</span><span class="p">()(</span><span class="n">tag</span><span class="p">)</span>   <span class="c1"># note that `is_decorator_call` should not return True for this call</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">decorate</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>  <span class="c1"># set a hello tag on the decorated f</span>
+            <span class="k">return</span> <span class="n">f</span>
+        <span class="k">return</span> <span class="n">decorate</span>
+</pre></div>
+
+
+<p>Note that <code>is_decorator_call</code> should <strong>not</strong> return <code>True</code> in <strong>nested</strong> frames, just for the immediate frame in a decorator application.</p>
                 
                   
                 
@@ -507,7 +525,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.c648116f.js"></script>
+      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
