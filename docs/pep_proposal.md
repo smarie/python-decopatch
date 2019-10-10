@@ -82,4 +82,25 @@ The explicit `@decorator_factory` annotation would make the interpreter/stdlib r
 
  - if this is a too low-level feature it might require a dedicated language symbol instead of a "normal" decorator ; but it seems overkill - it would be better if we can avoid creating a new language element.
  
- - alternatively or in addition, the python `stdlib` could provide a method that would return `True` if and only if a given frame is a no-parenthesis decorator call. This method, for example named `inspect.is_decorator_call(frame)`, could then be used by the various helper libraries, including `decopatch`.
+ - alternatively or in addition, the python `stdlib` could provide a method that would return `True` if and only if a given frame is a no-parenthesis decorator call. This method, for example named `inspect.is_decorator_call(frame=None)`, could then be used by the various helper libraries, including `decopatch`.
+
+**Follow-up**
+
+After proposing the above to the python-ideas mailing list, it seems that people were not as interested as I thought they would be. I therefore proposed a very minimal feature in [the python bug tracker](https://bugs.python.org/issue36553) (the `inspect.is_decorator_call(frame)` option discussed above). At least with this, everyone would be able to solve the issue easily himself, like this:
+
+```python
+from inspect import is_decorator_call
+
+def set_hello_tag(tag='world'):
+    if is_decorator_call():
+        # called without parenthesis!
+        # the decorated object is `tag`
+        return set_hello_tag()(tag)   # note that `is_decorator_call` should not return True for this call
+    else:
+        def decorate(f):
+            setattr(f, 'hello', tag)  # set a hello tag on the decorated f
+            return f
+        return decorate
+```
+
+Note that `is_decorator_call` should **not** return `True` in **nested** frames, just for the immediate frame in a decorator application.
