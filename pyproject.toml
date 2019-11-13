@@ -1,0 +1,12 @@
+[dependencies]
+six = "*"
+setuptools = "*"
+setuptools_scm = "*"
+
+[build-system]
+requires = [
+    "setuptools",
+    "setuptools_scm",
+    "six",
+]
+build-backend = "setuptools.build_meta"
