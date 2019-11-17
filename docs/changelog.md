@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.4.7 - pyproject.toml
+
+[raddessi](https://github.com/raddessi) added a `pyproject.toml` - thanks! Fixed [pytest-cases#65](https://github.com/smarie/python-pytest-cases/issues/65).
+
 ### 1.4.6 - Bug fix
 
 Fixed decorated object injection issue when var-positional arguments are located before it in the signature. Fixed [#14](https://github.com/smarie/python-decopatch/issues/14).
