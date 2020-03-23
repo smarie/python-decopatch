@@ -151,7 +151,7 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
     :return:
     """
 
-    def disambiguate_call(first_arg_received):
+    def _disambiguate_call(first_arg_received):
         """
         The first argument received is the single non-default argument and it is a callable/class.
         We should try to disambiguate now.
@@ -196,7 +196,7 @@ def create_single_arg_callable_or_class_disambiguator(impl_function,
             # still the no-arg. We do not want to penalize users.
             return FirstArgDisambiguation.is_decorated_target
 
-    return disambiguate_call
+    return _disambiguate_call
 
 
 class IPythonException(Exception):
