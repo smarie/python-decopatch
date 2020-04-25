@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.4.8 - better packaging
+
+ - packaging improvements: set the "universal wheel" flag to 1, and cleaned up the `setup.py`. In particular removed dependency to `six` for setup and added `py.typed` file, as well as set the `zip_safe` flag to False. Removed tests folder from package. Fixes [#19](https://github.com/smarie/python-decopatch/issues/19)
+
 ### 1.4.7 - pyproject.toml
 
 [raddessi](https://github.com/raddessi) added a `pyproject.toml` - thanks! Fixed [pytest-cases#65](https://github.com/smarie/python-pytest-cases/issues/65).
