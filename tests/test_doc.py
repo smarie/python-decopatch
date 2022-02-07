@@ -190,7 +190,7 @@ hello, you !
 <executing custom>
 hello, world !
 <executing custom2>
-Help on function say_hello in module decopatch.tests.test_doc:
+Help on function say_hello in module tests.test_doc:
 
 say_hello(person='world')
     This decorator wraps the decorated function so that a nice hello

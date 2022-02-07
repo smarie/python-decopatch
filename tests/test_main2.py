@@ -5,7 +5,7 @@ from enum import Enum
 
 import pytest
 
-from pytest_cases import cases_data, THIS_MODULE, cases_generator, case_name
+from pytest_cases import parametrize, parametrize_with_cases, case, fixture
 from decopatch import decorator, InvalidMandatoryArgError
 from decopatch.tests.test_main2_parametrizers import case_no_parenthesis, case_empty_parenthesis, foo, \
     case_one_arg_positional_callable, case_one_arg_positional_noncallable, case_one_arg_positional_noncallable_default, \

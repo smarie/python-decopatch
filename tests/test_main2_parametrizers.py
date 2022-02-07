@@ -1,7 +1,7 @@
 import pytest
 
-from decopatch import FirstArgDisambiguation, DECORATED
-from pytest_cases import case_name
+from decopatch import FirstArgDisambiguation
+from pytest_cases import case
 
 try:  # python 3.3+
     from inspect import signature, Parameter
