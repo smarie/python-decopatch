@@ -27,76 +27,76 @@ def is_foo_or_goo(arg):
 DEFAULT_DUMMY_VALUE = 12
 
 
-@case_name("@replace_by_foo")
-def case_no_parenthesis(replace_by_foo):
+@case(id="@replace_by_foo")
+def case_no_parenthesis():
     """ Tests the decorator in a no-parenthesis way @my_decorator """
-    return replace_by_foo, foo
+    return lambda replace_by_foo: replace_by_foo, foo
 
 
-@case_name("@replace_by_foo()")
-def case_empty_parenthesis(replace_by_foo):
+@case(id="@replace_by_foo()")
+def case_empty_parenthesis():
     """ Tests the decorator in a with-empty-parenthesis way @my_decorator() """
-    return replace_by_foo(), foo
+    return lambda replace_by_foo: replace_by_foo(), foo
 
 
-@case_name("@replace_by_foo(goo)")
-def case_one_arg_positional_callable(replace_by_foo):
+@case(id="@replace_by_foo(goo)")
+def case_one_arg_positional_callable():
     """ Tests the decorator with one positional argument @my_decorator(goo) """
-    return replace_by_foo(goo), goo
+    return lambda replace_by_foo: replace_by_foo(goo), goo
 
 
-@case_name("@replace_by_foo('hello')")
-def case_one_arg_positional_noncallable(replace_by_foo):
+@case(id="@replace_by_foo('hello')")
+def case_one_arg_positional_noncallable():
     """ Tests the decorator with one positional argument @my_decorator("hello") """
-    return replace_by_foo('hello'), foo
+    return lambda replace_by_foo: replace_by_foo('hello'), foo
 
 
-@case_name("@replace_by_foo(DEFAULT_DUMMY_VALUE)")
-def case_one_arg_positional_noncallable_default(replace_by_foo):
+@case(id="@replace_by_foo(DEFAULT_DUMMY_VALUE)")
+def case_one_arg_positional_noncallable_default():
     """ Tests the decorator with one positional argument @my_decorator(DEFAULT_DUMMY_VALUE) """
-    return replace_by_foo(DEFAULT_DUMMY_VALUE), foo
+    return lambda replace_by_foo: replace_by_foo(DEFAULT_DUMMY_VALUE), foo
 
 
-@case_name("@replace_by_foo(replacement=goo)")
-def case_one_kwarg_callable(replace_by_foo):
+@case(id="@replace_by_foo(replacement=goo)")
+def case_one_kwarg_callable():
     """ Tests the decorator with one kw argument @my_decorator(replacement=goo) """
-    return replace_by_foo(replacement=goo), goo
+    return lambda replace_by_foo: replace_by_foo(replacement=goo), goo
 
 
-@case_name("@replace_by_foo(dummy='hello')")
-def case_one_kwarg_noncallable(replace_by_foo):
+@case(id="@replace_by_foo(dummy='hello')")
+def case_one_kwarg_noncallable():
     """ Tests the decorator with one kw argument @my_decorator(dummy="hello") """
-    return replace_by_foo(dummy='hello'), foo
+    return lambda replace_by_foo: replace_by_foo(dummy='hello'), foo
 
 
-@case_name("@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)")
-def case_one_kwarg_noncallable_default(replace_by_foo):
+@case(id="@replace_by_foo(dummy=DEFAULT_DUMMY_VALUE)")
+def case_one_kwarg_noncallable_default():
     """ Tests the decorator with one kw argument @my_decorator(dummy=DEFAULT_DUMMY_VALUE) """
-    return replace_by_foo(dummy=DEFAULT_DUMMY_VALUE), foo
+    return lambda replace_by_foo: replace_by_foo(dummy=DEFAULT_DUMMY_VALUE), foo
 
 
-@case_name("@replace_by_foo(goo, 'hello')")
-def case_two_args_positional_callable_first(replace_by_foo):
+@case(id="@replace_by_foo(goo, 'hello')")
+def case_two_args_positional_callable_first():
     """ Tests the decorator with one positional argument @my_decorator(goo) """
-    return replace_by_foo(goo, 'hello'), goo
+    return lambda replace_by_foo: replace_by_foo(goo, 'hello'), goo
 
 
-@case_name("@replace_by_foo('hello', goo)")
-def case_two_args_positional_callable_last(replace_by_foo):
+@case(id="@replace_by_foo('hello', goo)")
+def case_two_args_positional_callable_last():
     """ Tests the decorator with one positional argument @my_decorator(goo) """
-    return replace_by_foo('hello', goo), goo
+    return lambda replace_by_foo: replace_by_foo('hello', goo), goo
 
 
-@case_name("@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)")
-def case_two_args_positional_callable_first_dummy_default(replace_by_foo):
+@case(id="@replace_by_foo(goo, DEFAULT_DUMMY_VALUE)")
+def case_two_args_positional_callable_first_dummy_default():
     """ Tests the decorator with one positional argument @my_decorator(goo) """
-    return replace_by_foo(goo, DEFAULT_DUMMY_VALUE), goo
+    return lambda replace_by_foo: replace_by_foo(goo, DEFAULT_DUMMY_VALUE), goo
 
 
-@case_name("@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)")
-def case_two_args_positional_callable_last_dummy_default(replace_by_foo):
+@case(id="@replace_by_foo(DEFAULT_DUMMY_VALUE, goo)")
+def case_two_args_positional_callable_last_dummy_default():
     """ Tests the decorator with one positional argument @my_decorator(goo) """
-    return replace_by_foo(DEFAULT_DUMMY_VALUE, goo), goo
+    return lambda replace_by_foo: replace_by_foo(DEFAULT_DUMMY_VALUE, goo), goo
 
 
 

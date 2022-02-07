@@ -7,13 +7,14 @@ import pytest
 
 from pytest_cases import parametrize, parametrize_with_cases, case, fixture
 from decopatch import decorator, InvalidMandatoryArgError
-from decopatch.tests.test_main2_parametrizers import case_no_parenthesis, case_empty_parenthesis, foo, \
+import test_main2_parametrizers
+from test_main2_parametrizers import case_no_parenthesis, case_empty_parenthesis, foo, \
     case_one_arg_positional_callable, case_one_arg_positional_noncallable, case_one_arg_positional_noncallable_default, \
     case_one_kwarg_callable, case_one_kwarg_noncallable, \
     case_one_kwarg_noncallable_default, is_foo_or_goo, case_two_args_positional_callable_first, \
     case_two_args_positional_callable_last, case_two_args_positional_callable_first_dummy_default, \
     case_two_args_positional_callable_last_dummy_default, goo, DEFAULT_DUMMY_VALUE
-from decopatch.tests import test_main2_parametrizers
+
 
 try:  # python 3.3+
     from inspect import signature
@@ -33,12 +34,25 @@ class codes(Enum):
     success = 0
     skip = 1
 
+
 SUCCESS = codes.success
 SKIP = codes.skip
 
 
-@cases_generator("easy_0_args()_flatmode_kwonly={flat_kw_only}", flat_kw_only=[False, True])
-def case_easy_0_args(parametrizer, flat_kw_only):
+@fixture
+@parametrize_with_cases("p", cases=test_main2_parametrizers)
+def decorator_application_scenario(p):
+    return p
+
+
+@fixture
+def application_case_func(decorator_application_scenario, current_cases):
+    """Returns the case function used behind `decorator_application_scenario`."""
+    return current_cases["decorator_application_scenario"]["p"].func
+
+
+@parametrize(flat_kw_only=[False, True])
+def case_easy_0_args(decorator_application_scenario, flat_kw_only, application_case_func):
     """
     This decorator has no arguments and can therefore be used with and without parenthesis
     """
@@ -79,14 +93,14 @@ def replace_by_foo(*, f=DECORATED):
     default_value = (TypeError, "python does not allow our decorator to be called with more than 1 positional, ")
 
     # breakpoints placeholder
-    # if parametrizer.f is case_one_arg_positional_callable:
+    # if application_case_func is case_one_arg_positional_callable:
     #     print()
 
-    return replace_by_foo, expected.get(parametrizer.f, default_value)
+    return replace_by_foo, expected.get(application_case_func, default_value)
 
 
 @pytest.mark.skipif(sys.version_info < (3, 0), reason="requires python3 or higher")
-def case_hard_varpositional(parametrizer):
+def case_hard_varpositional(decorator_application_scenario, current_cases):
 
     # only do it if we are in the appropriate python version
     evaldict = copy(globals())
@@ -114,16 +128,18 @@ def replace_by_foo(*args):
         case_one_kwarg_noncallable_default: (TypeError, "decorator impl does not accept keyword args"),
     }
 
-    # if parametrizer.f in {case_no_parenthesis, case_one_arg_positional_callable}:
+    application_case_func = current_cases["decorator_application_scenario"]["p"].func
+
+    # if application_case_func in {case_no_parenthesis, case_one_arg_positional_callable}:
     #     print()
 
     default_value = SUCCESS
 
-    return replace_by_foo, expected.get(parametrizer.f, default_value)
+    return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@cases_generator("{protection}_1m_arg(dummy)", protection=['default', 'introspection'])
-def case_hard_1_m_0_opt_noncallable(parametrizer, protection):
+@parametrize(protection=['default', 'introspection'])
+def case_hard_1_m_0_opt_noncallable(decorator_application_scenario, protection, current_cases):
     """
     This decorator has 1 mandatory argument. It has therefore a possible ambiguity when called without parenthesis
     """
@@ -161,17 +177,18 @@ def case_hard_1_m_0_opt_noncallable(parametrizer, protection):
                                                                             "will be replaced by foo. Which is not"
                                                                             "`goo`"),})
 
-    # if use_introspection and parametrizer.f is case_one_arg_positional_callable:
+    application_case_func = current_cases["decorator_application_scenario"]["p"].func
+
+    # if use_introspection and application_case_func is case_one_arg_positional_callable:
     #     print()
 
     default_value = (TypeError, "python does not allow 2 args if f has 1 arg")
 
-    return replace_by_foo, expected.get(parametrizer.f, default_value)
+    return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@cases_generator("{protection}_1m_arg(replacement)_kwonly={kw_only}",
-                 protection=['protected(default)', 'protected(explicit)'], kw_only=[False, True])
-def case_hard_1_m_0_opt_callable(parametrizer, protection, kw_only):
+@parametrize(protection=['protected(default)', 'protected(explicit)'], kw_only=[False, True])
+def case_hard_1_m_0_opt_callable(decorator_application_scenario, protection, kw_only, current_cases):
     """This decorator has 1 mandatory argument. It has therefore a possible ambiguity when called without parenthesis"""
 
     protected_explicit = (protection == 'protected(explicit)')
@@ -234,11 +251,13 @@ def case_hard_1_m_0_opt_callable(parametrizer, protection, kw_only):
 
     default_value = (TypeError, "python does not allow 2 args if f has 1 arg")
 
-    return replace_by_foo, expected.get(parametrizer.f, default_value)
+    application_case_func = current_cases["decorator_application_scenario"]["p"].func
+
+    return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@case_name("easy_2m_args(replacement, dummy)")
-def case_easy_2_m_0_opt_callable_first(parametrizer):
+@case(id="easy_2m_args(replacement, dummy)")
+def case_easy_2_m_0_opt_callable_first(decorator_application_scenario, current_cases):
     @decorator
     def replace_by_foo(replacement, dummy):
         def _apply(f):
@@ -255,11 +274,13 @@ def case_easy_2_m_0_opt_callable_first(parametrizer):
 
     default_value = (TypeError, "python does not allow < 2 args if f has 2 arg")
 
-    return replace_by_foo, expected.get(parametrizer.f, default_value)
+    application_case_func = current_cases["decorator_application_scenario"]["p"].func
+
+    return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@case_name("easy_2m_args(dummy, replacement)")
-def case_easy_2_m_0_opt_callable_last(parametrizer):
+@case(id="easy_2m_args(dummy, replacement)")
+def case_easy_2_m_0_opt_callable_last(decorator_application_scenario, application_case_func):
     @decorator
     def replace_by_foo(dummy, replacement):
         def _apply(f):
@@ -276,11 +297,11 @@ def case_easy_2_m_0_opt_callable_last(parametrizer):
 
     default_value = (TypeError, "python does not allow < 2 args if f has 2 arg")
 
-    return replace_by_foo, expected.get(parametrizer.f, default_value)
+    return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@case_name("easy_2m_args(dummy, dummy2)")
-def case_easy_2_m_0_opt_no_callable(parametrizer):
+@case(id="easy_2m_args(dummy, dummy2)")
+def case_easy_2_m_0_opt_no_callable(decorator_application_scenario, application_case_func):
     @decorator
     def replace_by_foo(dummy, dummy2):
         def _apply(f):
@@ -297,12 +318,11 @@ def case_easy_2_m_0_opt_no_callable(parametrizer):
 
     default_value = (TypeError, "python does not allow < 2 args if f has 2 arg")
 
-    return replace_by_foo, expected.get(parametrizer.f, default_value)
+    return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@cases_generator("{protection}_2opt(dummy=DEFAULT_DUMMY_VALUE, replacement=None)",
-                 protection=['default', 'introspection'])
-def case_hard_0_m_2_opt_callable_last(parametrizer, protection):
+@parametrize(protection=['default', 'introspection'])
+def case_hard_0_m_2_opt_callable_last(decorator_application_scenario, protection, application_case_func):
 
     use_introspection = (protection == 'introspection')
 
@@ -320,17 +340,16 @@ def case_hard_0_m_2_opt_callable_last(parametrizer, protection):
                                                                       "not match"),
     }
 
-    # if protected and parametrizer.f is case_no_parenthesis:
+    # if protected and application_case_func is case_no_parenthesis:
     #     print()
 
     default_value = SUCCESS
 
-    return replace_by_foo, expected.get(parametrizer.f, default_value)
+    return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@cases_generator("{protection}_2opt_callable_first(replacement=None, dummy=DEFAULT_DUMMY_VALUE)",
-                 protection=['unprotected (default)', 'introspection', 'custom_disambiguator'])
-def case_hard_0_m_2_opt_callable_first(parametrizer, protection):
+@parametrize(protection=['unprotected (default)', 'introspection', 'custom_disambiguator'])
+def case_hard_0_m_2_opt_callable_first(decorator_application_scenario, protection, application_case_func):
 
     use_introspection = (protection == 'introspection')
     use_custom = (protection == 'custom_disambiguator')
@@ -380,28 +399,26 @@ def case_hard_0_m_2_opt_callable_first(parametrizer, protection):
     default_value = SUCCESS
 
     # this is how you can put breakpoints
-    if use_introspection and parametrizer.f is case_one_arg_positional_callable:
+    if use_introspection and application_case_func is case_one_arg_positional_callable:
         print()
 
-    return replace_by_foo, expected.get(parametrizer.f, default_value)
+    return replace_by_foo, expected.get(application_case_func, default_value)
 
 
 # -------------------------
 
 
-@cases_data(module=test_main2_parametrizers, case_data_argname='parametrizer')
-@cases_data(module=THIS_MODULE)
-def test_all(case_data, parametrizer):
+@parametrize_with_cases("replace_by_foo, expected_err", cases=".")
+def test_all(replace_by_foo, expected_err, decorator_application_scenario, application_case_func):
 
     # get the decorator factory, and the associated expected outcome
-    replace_by_foo, expected_err = case_data.get(parametrizer)
 
     print("Generated decorator : %s%s" % (replace_by_foo.__name__, signature(replace_by_foo)))
-    print("Calling it as %s" % parametrizer.f.__name__)
+    print("Calling it as %s" % application_case_func.__name__)
 
     if expected_err is SUCCESS:
         print("Expected SUCCESS\n")
-        execute_nominal_test(replace_by_foo, parametrizer)
+        execute_nominal_test(replace_by_foo, decorator_application_scenario)
     else:
         # unpack the expected error and detect SKIP scenario
         expected_err_type, expected_failure_msg = expected_err
@@ -411,18 +428,19 @@ def test_all(case_data, parametrizer):
         # execute and assert that error of correct type is raised
         print("Expected ERROR: '%s' because %s\n" % (expected_err_type.__name__, expected_failure_msg))
         with pytest.raises(expected_err_type):
-            execute_nominal_test(replace_by_foo, parametrizer)
+            execute_nominal_test(replace_by_foo, decorator_application_scenario)
 
 
-def execute_nominal_test(replace_by_foo, parametrizer):
+def execute_nominal_test(replace_by_foo, decorator_application_scenario):
     """
     The actual test code: we create a decorator, check it, and apply it.
 
     :param replace_by_foo:
-    :param parametrizer:
+    :param decorator_application_scenario:
     :return:
     """
-    created_decorator, expected_replacement = parametrizer.get(replace_by_foo)
+    created_decorator = decorator_application_scenario[0](replace_by_foo)
+    expected_replacement = decorator_application_scenario[1]
 
     if not callable(created_decorator) or created_decorator in {foo, goo, DEFAULT_DUMMY_VALUE}:
         # this is not even a decorator, that's directly an object
