@@ -64,7 +64,7 @@ def test_varpositional():
     if sys.version_info < (3, 0):
         pytest.skip("test skipped in python 2.x because syntax is not compliant")
     else:
-        from _test_issues_py3 import create_test_varpositional
+        from ._test_issues_py3 import create_test_varpositional
         replace_with = create_test_varpositional()
 
         @replace_with(1, 2, 3)

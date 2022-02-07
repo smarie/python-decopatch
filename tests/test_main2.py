@@ -7,8 +7,8 @@ import pytest
 
 from pytest_cases import parametrize, parametrize_with_cases, case, fixture
 from decopatch import decorator, InvalidMandatoryArgError
-import test_main2_parametrizers
-from test_main2_parametrizers import case_no_parenthesis, case_empty_parenthesis, foo, \
+
+from .test_main2_parametrizers import case_no_parenthesis, case_empty_parenthesis, foo, \
     case_one_arg_positional_callable, case_one_arg_positional_noncallable, case_one_arg_positional_noncallable_default, \
     case_one_kwarg_callable, case_one_kwarg_noncallable, \
     case_one_kwarg_noncallable_default, is_foo_or_goo, case_two_args_positional_callable_first, \
@@ -40,7 +40,7 @@ SKIP = codes.skip
 
 
 @fixture
-@parametrize_with_cases("p", cases=test_main2_parametrizers)
+@parametrize_with_cases("p", cases=".test_main2_parametrizers")
 def decorator_application_scenario(p):
     return p
 

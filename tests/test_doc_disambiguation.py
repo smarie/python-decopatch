@@ -72,7 +72,7 @@ def test_mandatory_kwargs(flat_mode):
     if sys.version_info < (3, 0):
         pytest.skip("test skipped in python 2.x because kw-only is not syntactically correct")
     else:
-        from _test_doc_py3 import create_test_doc_disambiguation_kwonly_mandatory
+        from ._test_doc_py3 import create_test_doc_disambiguation_kwonly_mandatory
         replace_with = create_test_doc_disambiguation_kwonly_mandatory(flat_mode)
 
     help(replace_with)
@@ -96,7 +96,7 @@ def test_optional_kwargs(flat_mode):
     if sys.version_info < (3, 0):
         pytest.skip("test skipped in python 2.x because kw-only is not syntactically correct")
     else:
-        from _test_doc_py3 import create_test_doc_disambiguation_kwonly_optional
+        from ._test_doc_py3 import create_test_doc_disambiguation_kwonly_optional
         replace_with = create_test_doc_disambiguation_kwonly_optional(flat_mode)
 
     help(replace_with)
