@@ -299,7 +299,7 @@ a=AAA, b=100
 new_arg1 True branch; new_arg2 is None
 a=AAA, b=100
 added_function
-Help on function foo in module decopatch.tests.test_so:
+Help on function foo in module tests.test_so:
 
 foo(a, b, new_arg1=False, new_arg2=None)
     This is my foo function
@@ -378,7 +378,7 @@ def test_so_5(capsys, mode):
 
     assert captured.out == """hello world
 1 2
-Help on function test in module decopatch.tests.test_so:
+Help on function test in module tests.test_so:
 
 test(x, y)
 
@@ -412,7 +412,7 @@ def test_so_6(capsys):
     with capsys.disabled():
         print(captured.out)
 
-    assert captured.out == """Help on function my_func in module decopatch.tests.test_so:
+    assert captured.out == """Help on function my_func in module tests.test_so:
 
 my_func(x)
     my function

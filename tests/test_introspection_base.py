@@ -3,7 +3,7 @@ import sys
 import pytest
 from decopatch import FirstArgDisambiguation
 
-from decopatch.utils_disambiguation import disambiguate_using_introspection
+from decopatch.utils_disambiguation import disambiguate_using_introspection, SUPPORTS_INTROSPECTION
 
 
 def generate_decorator():
@@ -29,6 +29,7 @@ EMPTY_PARENTHESIS = 1
 ARGS_IN_PARENTHESIS = 2
 
 
+@pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")
 @pytest.mark.parametrize('is_class', [False, True], ids="isclass={}".format)
 @pytest.mark.parametrize('call_mode', [NO_PARENTHESIS, EMPTY_PARENTHESIS, ARGS_IN_PARENTHESIS],
                          ids="call_mode={}".format)

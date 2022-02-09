@@ -6,6 +6,7 @@ from makefun import wraps
 
 from decopatch import function_decorator, DECORATED, InvalidMandatoryArgError, class_decorator, InvalidSignatureError, \
     WRAPPED
+from decopatch.utils_disambiguation import SUPPORTS_INTROSPECTION
 
 try:  # python 3.3+
     from inspect import signature
@@ -16,7 +17,10 @@ except ImportError:
 
 
 @pytest.mark.parametrize('nested_mode', [True, False], ids="nested_mode={}".format)
-@pytest.mark.parametrize('uses_introspection', [True, False], ids="uses_introspection={}".format)
+@pytest.mark.parametrize('uses_introspection', [
+    pytest.param(True, marks=pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")),
+    False
+], ids="uses_introspection={}".format)
 def test_doc_impl_first_tag_mandatory(uses_introspection, nested_mode):
     """ The first implementation-first example in the doc """
 
@@ -199,7 +203,7 @@ def test_doc_impl_first_say_hello(capsys):
     assert captured.out == """hello, world !
 hello, world !
 hello, you !
-Help on function say_hello in module decopatch.tests.test_doc_advanced:
+Help on function say_hello in module tests.test_doc_advanced:
 
 say_hello(person='world')
     This decorator modifies the decorated function so that a nice hello
@@ -215,7 +219,10 @@ Signature: (person='world')
     assert captured.err == ""
 
 
-@pytest.mark.parametrize('uses_introspection', [True, False], ids="uses_introspection={}".format)
+@pytest.mark.parametrize('uses_introspection', [
+    pytest.param(True, marks=pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")),
+    False
+], ids="uses_introspection={}".format)
 def test_doc_impl_first_class_tag_mandatory(uses_introspection):
     """ The first implementation-first example in the doc """
 
@@ -293,7 +300,7 @@ def test_doc_impl_first_tag_mandatory_protected(with_star, uses_introspection):
         if sys.version_info < (3, 0):
             pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
         else:
-            from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_mandatory_protected_with_star
+            from ._test_doc_py3 import create_test_doc_impl_first_tag_mandatory_protected_with_star
             add_tag = create_test_doc_impl_first_tag_mandatory_protected_with_star(uses_introspection)
     else:
         raise NotImplementedError()
@@ -325,7 +332,7 @@ def test_doc_impl_first_tag_optional_nonprotected(with_star):
         if sys.version_info < (3, 0):
             pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
         else:
-            from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_optional_nonprotected_star
+            from ._test_doc_py3 import create_test_doc_impl_first_tag_optional_nonprotected_star
             add_tag = create_test_doc_impl_first_tag_optional_nonprotected_star()
     else:
         @function_decorator
@@ -355,7 +362,10 @@ def test_doc_impl_first_tag_optional_nonprotected(with_star):
 
 
 @pytest.mark.parametrize('with_star', [False, True], ids="kwonly={}".format)
-@pytest.mark.parametrize('uses_introspection', [True, False], ids="introspection={}".format)
+@pytest.mark.parametrize('uses_introspection', [
+    pytest.param(True, marks=pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")),
+    False
+], ids="introspection={}".format)
 def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
     """ The second implementation-first example in the doc """
 
@@ -363,7 +373,7 @@ def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
         if sys.version_info < (3, 0):
             pytest.skip("test skipped in python 2.x because kw only is not syntactically correct")
         else:
-            from decopatch.tests._test_doc_py3 import create_test_doc_impl_first_tag_optional_protected
+            from ._test_doc_py3 import create_test_doc_impl_first_tag_optional_protected
             add_tag = create_test_doc_impl_first_tag_optional_protected(uses_introspection)
     else:
         # protect it explicitly if introspection is disabled
@@ -448,7 +458,7 @@ def test_varpos_and_decorated_before_in_flat_mode():
         pass
 
     if sys.version_info >= (3, 0):
-        from decopatch.tests._test_doc_py3 import create_test_wrapped_bad_signature
+        from ._test_doc_py3 import create_test_wrapped_bad_signature
 
         foo = create_test_wrapped_bad_signature(0, 'hello')
 
