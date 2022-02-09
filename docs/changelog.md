@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.4.9 In progress - Compatiblity fixes.
+
+ - Enabling the "stack introspection" beta feature with `enable_stack_introspection=True` now raises an explicit `NotImplementedError` on python 3.8+. Fixed [#26](https://github.com/smarie/python-decopatch/issues/26).
+ 
+ - Migrated to the new project layout with nox, github-actions and separation of `src` and `tests`. Fixed test suite with `pytest-cases>=3`. Fixed [#24](https://github.com/smarie/python-decopatch/issues/24) and [#20](https://github.com/smarie/python-decopatch/issues/20).
+
 ### 1.4.8 - better packaging
 
  - packaging improvements: set the "universal wheel" flag to 1, and cleaned up the `setup.py`. In particular removed dependency to `six` for setup and added `py.typed` file, as well as set the `zip_safe` flag to False. Removed tests folder from package. Fixes [#19](https://github.com/smarie/python-decopatch/issues/19)
