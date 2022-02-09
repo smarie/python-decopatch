@@ -1,6 +1,6 @@
 # Changelog
 
-### 1.4.9 In progress - Compatiblity fixes.
+### 1.4.9 - New layout and CI + Compatibility fixes.
 
  - Enabling the "stack introspection" beta feature with `enable_stack_introspection=True` now raises an explicit `NotImplementedError` on python 3.8+. Fixed [#26](https://github.com/smarie/python-decopatch/issues/26).
  
