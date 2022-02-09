@@ -6,6 +6,7 @@ from makefun import wraps
 
 from decopatch import function_decorator, DECORATED, InvalidMandatoryArgError, class_decorator, InvalidSignatureError, \
     WRAPPED
+from decopatch.utils_disambiguation import SUPPORTS_INTROSPECTION
 
 try:  # python 3.3+
     from inspect import signature
@@ -16,7 +17,10 @@ except ImportError:
 
 
 @pytest.mark.parametrize('nested_mode', [True, False], ids="nested_mode={}".format)
-@pytest.mark.parametrize('uses_introspection', [True, False], ids="uses_introspection={}".format)
+@pytest.mark.parametrize('uses_introspection', [
+    pytest.param(True, marks=pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")),
+    False
+], ids="uses_introspection={}".format)
 def test_doc_impl_first_tag_mandatory(uses_introspection, nested_mode):
     """ The first implementation-first example in the doc """
 
@@ -215,7 +219,10 @@ Signature: (person='world')
     assert captured.err == ""
 
 
-@pytest.mark.parametrize('uses_introspection', [True, False], ids="uses_introspection={}".format)
+@pytest.mark.parametrize('uses_introspection', [
+    pytest.param(True, marks=pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")),
+    False
+], ids="uses_introspection={}".format)
 def test_doc_impl_first_class_tag_mandatory(uses_introspection):
     """ The first implementation-first example in the doc """
 
@@ -355,7 +362,10 @@ def test_doc_impl_first_tag_optional_nonprotected(with_star):
 
 
 @pytest.mark.parametrize('with_star', [False, True], ids="kwonly={}".format)
-@pytest.mark.parametrize('uses_introspection', [True, False], ids="introspection={}".format)
+@pytest.mark.parametrize('uses_introspection', [
+    pytest.param(True, marks=pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")),
+    False
+], ids="introspection={}".format)
 def test_doc_impl_first_tag_optional_protected(with_star, uses_introspection):
     """ The second implementation-first example in the doc """
 

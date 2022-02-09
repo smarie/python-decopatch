@@ -205,6 +205,9 @@ class IPythonException(Exception):
     pass
 
 
+SUPPORTS_INTROSPECTION = sys.version_info < (3, 8)
+
+
 def disambiguate_using_introspection(depth, first_arg):
     """
     Tries to disambiguate the call situation betwen with-parenthesis and without-parenthesis using call stack
@@ -218,6 +221,11 @@ def disambiguate_using_introspection(depth, first_arg):
     :param depth:
     :return:
     """
+    if not SUPPORTS_INTROSPECTION:
+        # This does not seem to work reliably.
+        raise NotImplementedError("The beta stack introspection feature does not support python 3.8+. Please set"
+                                  " `enable_stack_introspection=False`.")
+
     # Unfortunately inspect.stack and inspect.currentframe are extremely slow
     # see https://gist.github.com/JettJones/c236494013f22723c1822126df944b12
     # --

@@ -1,6 +1,10 @@
-from decopatch.utils_disambiguation import disambiguate_using_introspection, FirstArgDisambiguation
+import pytest
+
+from decopatch.utils_disambiguation import disambiguate_using_introspection, FirstArgDisambiguation, \
+    SUPPORTS_INTROSPECTION
 
 
+@pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")
 def test_on_functions():
 
     def level1(arg):

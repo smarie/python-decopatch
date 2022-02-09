@@ -7,6 +7,7 @@ import pytest
 
 from pytest_cases import parametrize, parametrize_with_cases, case, fixture
 from decopatch import decorator, InvalidMandatoryArgError
+from decopatch.utils_disambiguation import SUPPORTS_INTROSPECTION
 
 from .test_main2_parametrizers import case_no_parenthesis, case_empty_parenthesis, foo, \
     case_one_arg_positional_callable, case_one_arg_positional_noncallable, case_one_arg_positional_noncallable_default, \
@@ -138,7 +139,10 @@ def replace_by_foo(*args):
     return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@parametrize(protection=['default', 'introspection'])
+@parametrize(protection=[
+    'default',
+    pytest.param('introspection', marks=pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")),
+])
 def case_hard_1_m_0_opt_noncallable(decorator_application_scenario, protection, current_cases):
     """
     This decorator has 1 mandatory argument. It has therefore a possible ambiguity when called without parenthesis
@@ -321,7 +325,10 @@ def case_easy_2_m_0_opt_no_callable(decorator_application_scenario, application_
     return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@parametrize(protection=['default', 'introspection'])
+@parametrize(protection=[
+    'default',
+    pytest.param('introspection', marks=pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")),
+])
 def case_hard_0_m_2_opt_callable_last(decorator_application_scenario, protection, application_case_func):
 
     use_introspection = (protection == 'introspection')
