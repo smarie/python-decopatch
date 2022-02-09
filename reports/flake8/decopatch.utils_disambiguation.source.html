@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>decopatch/utils_disambiguation.py - flake8 annotated source</title>
+      <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="styles.css">
+   </head>
+   <body>
+      <div id="masthead" class="sev-1"></div>
+      <div id="page">
+         <h1>
+            <a href="decopatch.utils_disambiguation.report.html">
+               <img src="back.svg" alt="&#x2B05;">
+               decopatch/utils_disambiguation.py source
+            </a>
+         </h1>
+
+         <div id="doc">
+            <div id="l1"
+               class="code sev- "><tt><i>1</i> <span class="kn">import</span> <span class="nn">sys</span></tt>
+            </div>
+            <div id="l2"
+               class="code sev- "><tt><i>2</i> <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span></tt>
+            </div>
+            <div id="l3"
+               class="code sev- "><tt><i>3</i> <span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">isclass</span></tt>
+            </div>
+            <div id="l4"
+               class="code sev- "><tt><i>4</i> <span class="kn">from</span> <span class="nn">linecache</span> <span class="kn">import</span> <span class="n">getline</span></tt>
+            </div>
+            <div id="l5"
+               class="code sev- "><tt><i>5</i> <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span></tt>
+            </div>
+            <div id="l6"
+               class="code sev- "><tt><i>6</i> &nbsp;</tt>
+            </div>
+            <div id="l7"
+               class="code sev- "><tt><i>7</i> <span class="kn">from</span> <span class="nn">decopatch.utils_modes</span> <span class="kn">import</span> <span class="n">SignatureInfo</span></tt>
+            </div>
+            <div id="l8"
+               class="code sev- "><tt><i>8</i> &nbsp;</tt>
+            </div>
+            <div id="l9"
+               class="code sev- "><tt><i>9</i> &nbsp;</tt>
+            </div>
+            <div id="l10"
+               class="code sev- "><tt><i>10</i> <span class="k">class</span> <span class="nc">FirstArgDisambiguation</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span></tt>
+            </div>
+            <div id="l11"
+               class="code sev- "><tt><i>11</i>     <span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l12"
+               class="code sev- "><tt><i>12</i> <span class="sd">    This enum is used for the output of user-provided first argument disambiguators.</span></tt>
+            </div>
+            <div id="l13"
+               class="code sev- "><tt><i>13</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l14"
+               class="code sev- "><tt><i>14</i>     <span class="n">is_normal_arg</span> <span class="o">=</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l15"
+               class="code sev- "><tt><i>15</i>     <span class="n">is_decorated_target</span> <span class="o">=</span> <span class="mi">1</span></tt>
+            </div>
+            <div id="l16"
+               class="code sev- "><tt><i>16</i>     <span class="n">is_ambiguous</span> <span class="o">=</span> <span class="mi">2</span></tt>
+            </div>
+            <div id="l17"
+               class="code sev- "><tt><i>17</i> &nbsp;</tt>
+            </div>
+            <div id="l18"
+               class="code sev- "><tt><i>18</i> &nbsp;</tt>
+            </div>
+            <div id="l19"
+               class="code sev- "><tt><i>19</i> <span class="n">_WITH_PARENTHESIS</span> <span class="o">=</span> <span class="n">FirstArgDisambiguation</span><span class="o">.</span><span class="n">is_normal_arg</span></tt>
+            </div>
+            <div id="l20"
+               class="code sev- "><tt><i>20</i> <span class="sd">&quot;&quot;&quot;Alias for the case where the arg is a normal arg&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l21"
+               class="code sev- "><tt><i>21</i> &nbsp;</tt>
+            </div>
+            <div id="l22"
+               class="code sev- "><tt><i>22</i> <span class="n">_NO_PARENTHESIS</span> <span class="o">=</span> <span class="n">FirstArgDisambiguation</span><span class="o">.</span><span class="n">is_decorated_target</span></tt>
+            </div>
+            <div id="l23"
+               class="code sev- "><tt><i>23</i> <span class="sd">&quot;&quot;&quot;Alias for the case where the arg is a decorated target&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l24"
+               class="code sev- "><tt><i>24</i> &nbsp;</tt>
+            </div>
+            <div id="l25"
+               class="code sev- "><tt><i>25</i> &nbsp;</tt>
+            </div>
+            <div id="l26"
+               class="code sev- "><tt><i>26</i> <span class="k">def</span> <span class="nf">with_parenthesis</span><span class="p">(</span><span class="n">ambiguous_first_arg</span><span class="p">):</span></tt>
+            </div>
+            <div id="l27"
+               class="code sev- "><tt><i>27</i>     <span class="sd">&quot;&quot;&quot;hardcoded disambiguator to say that in case of doubt, it is probably a with-parenthesis call&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l28"
+               class="code sev- "><tt><i>28</i>     <span class="k">return</span> <span class="n">_WITH_PARENTHESIS</span></tt>
+            </div>
+            <div id="l29"
+               class="code sev- "><tt><i>29</i> &nbsp;</tt>
+            </div>
+            <div id="l30"
+               class="code sev- "><tt><i>30</i> &nbsp;</tt>
+            </div>
+            <div id="l31"
+               class="code sev- "><tt><i>31</i> <span class="k">def</span> <span class="nf">no_parenthesis</span><span class="p">(</span><span class="n">ambiguous_first_arg</span><span class="p">):</span></tt>
+            </div>
+            <div id="l32"
+               class="code sev- "><tt><i>32</i>     <span class="sd">&quot;&quot;&quot;hardcoded disambiguator to say that in case of doubt, it is probably a no-parenthesis&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l33"
+               class="code sev- "><tt><i>33</i>     <span class="k">return</span> <span class="n">_NO_PARENTHESIS</span></tt>
+            </div>
+            <div id="l34"
+               class="code sev- "><tt><i>34</i> &nbsp;</tt>
+            </div>
+            <div id="l35"
+               class="code sev- "><tt><i>35</i> &nbsp;</tt>
+            </div>
+            <div id="l36"
+               class="code sev- "><tt><i>36</i> <span class="k">def</span> <span class="nf">can_arg_be_a_decorator_target</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span></tt>
+            </div>
+            <div id="l37"
+               class="code sev- "><tt><i>37</i>     <span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l38"
+               class="code sev- "><tt><i>38</i> <span class="sd">    Returns True if the argument received has a type that can be decorated.</span></tt>
+            </div>
+            <div id="l39"
+               class="code sev- "><tt><i>39</i> &nbsp;</tt>
+            </div>
+            <div id="l40"
+               class="code sev- "><tt><i>40</i> <span class="sd">    If this method returns False, we are sure that this is a *with*-parenthesis call</span></tt>
+            </div>
+            <div id="l41"
+               class="code sev- "><tt><i>41</i> <span class="sd">    because python does not allow you to decorate anything else than a function or a class</span></tt>
+            </div>
+            <div id="l42"
+               class="code sev- "><tt><i>42</i> &nbsp;</tt>
+            </div>
+            <div id="l43"
+               class="code sev- "><tt><i>43</i> <span class="sd">    :param arg:</span></tt>
+            </div>
+            <div id="l44"
+               class="code sev- "><tt><i>44</i> <span class="sd">    :return:</span></tt>
+            </div>
+            <div id="l45"
+               class="code sev- "><tt><i>45</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l46"
+               class="code sev- "><tt><i>46</i>     <span class="k">return</span> <span class="n">callable</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="ow">or</span> <span class="n">isclass</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span></tt>
+            </div>
+            <div id="l47"
+               class="code sev- "><tt><i>47</i> &nbsp;</tt>
+            </div>
+            <div id="l48"
+               class="code sev- "><tt><i>48</i> &nbsp;</tt>
+            </div>
+            <div id="l49"
+               class="code sev- "><tt><i>49</i> <span class="k">class</span> <span class="nc">DecoratorUsageInfo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></tt>
+            </div>
+            <div id="l50"
+               class="code sev- "><tt><i>50</i>     <span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l51"
+               class="code sev- "><tt><i>51</i> <span class="sd">    Represent the knowledge that we have when the decorator is being used.</span></tt>
+            </div>
+            <div id="l52"
+               class="code sev- "><tt><i>52</i> <span class="sd">    Note: arguments binding is computed in a lazy mode (only if needed)</span></tt>
+            </div>
+            <div id="l53"
+               class="code sev- "><tt><i>53</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l54"
+               class="code sev- "><tt><i>54</i>     <span class="vm">__slots__</span> <span class="o">=</span> <span class="s1">&#39;sig_info&#39;</span><span class="p">,</span> <span class="s1">&#39;_first_arg_value&#39;</span><span class="p">,</span> <span class="s1">&#39;_bound&#39;</span><span class="p">,</span> <span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="s1">&#39;kwargs&#39;</span></tt>
+            </div>
+            <div id="l55"
+               class="code sev- "><tt><i>55</i> &nbsp;</tt>
+            </div>
+            <div id="l56"
+               class="code sev- "><tt><i>56</i>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span></tt>
+            </div>
+            <div id="l57"
+               class="code sev- "><tt><i>57</i>                  <span class="n">sig_info</span><span class="p">,</span>  <span class="c1"># type: SignatureInfo</span></tt>
+            </div>
+            <div id="l58"
+               class="code sev- "><tt><i>58</i>                  <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">):</span></tt>
+            </div>
+            <div id="l59"
+               class="code sev- "><tt><i>59</i>         <span class="bp">self</span><span class="o">.</span><span class="n">sig_info</span> <span class="o">=</span> <span class="n">sig_info</span></tt>
+            </div>
+            <div id="l60"
+               class="code sev- "><tt><i>60</i>         <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span></tt>
+            </div>
+            <div id="l61"
+               class="code sev- "><tt><i>61</i>         <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span></tt>
+            </div>
+            <div id="l62"
+               class="code sev- "><tt><i>62</i>         <span class="bp">self</span><span class="o">.</span><span class="n">_first_arg_value</span> <span class="o">=</span> <span class="n">DecoratorUsageInfo</span>  <span class="c1"># this is our way to say &#39;uninitialized&#39;</span></tt>
+            </div>
+            <div id="l63"
+               class="code sev- "><tt><i>63</i>         <span class="bp">self</span><span class="o">.</span><span class="n">_bound</span> <span class="o">=</span> <span class="kc">None</span></tt>
+            </div>
+            <div id="l64"
+               class="code sev- "><tt><i>64</i> &nbsp;</tt>
+            </div>
+            <div id="l65"
+               class="code sev- "><tt><i>65</i>     <span class="nd">@property</span></tt>
+            </div>
+            <div id="l66"
+               class="code sev- "><tt><i>66</i>     <span class="k">def</span> <span class="nf">first_arg_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
+            </div>
+            <div id="l67"
+               class="code sev- "><tt><i>67</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_arg_value</span> <span class="ow">is</span> <span class="n">DecoratorUsageInfo</span><span class="p">:</span>  <span class="c1"># not yet initialized</span></tt>
+            </div>
+            <div id="l68"
+               class="code sev- "><tt><i>68</i>             <span class="bp">self</span><span class="o">.</span><span class="n">_first_arg_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bound</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">sig_info</span><span class="o">.</span><span class="n">first_arg_name</span><span class="p">]</span></tt>
+            </div>
+            <div id="l69"
+               class="code sev- "><tt><i>69</i>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_first_arg_value</span></tt>
+            </div>
+            <div id="l70"
+               class="code sev- "><tt><i>70</i> &nbsp;</tt>
+            </div>
+            <div id="l71"
+               class="code sev- "><tt><i>71</i>     <span class="nd">@property</span></tt>
+            </div>
+            <div id="l72"
+               class="code sev- "><tt><i>72</i>     <span class="k">def</span> <span class="nf">bound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
+            </div>
+            <div id="l73"
+               class="code sev- "><tt><i>73</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bound</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l74"
+               class="code sev- "><tt><i>74</i>             <span class="bp">self</span><span class="o">.</span><span class="n">_bound</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sig_info</span><span class="o">.</span><span class="n">exposed_signature</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></tt>
+            </div>
+            <div id="l75"
+               class="code sev- "><tt><i>75</i>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bound</span></tt>
+            </div>
+            <div id="l76"
+               class="code sev- "><tt><i>76</i> &nbsp;</tt>
+            </div>
+            <div id="l77"
+               class="code sev- "><tt><i>77</i> &nbsp;</tt>
+            </div>
+            <div id="l78"
+               class="code sev- "><tt><i>78</i> <span class="k">def</span> <span class="nf">disambiguate_call</span><span class="p">(</span><span class="n">dk</span><span class="p">,</span>  <span class="c1"># type: DecoratorUsageInfo</span></tt>
+            </div>
+            <div id="l79"
+               class="code sev- "><tt><i>79</i>                       <span class="n">disambiguator</span><span class="p">):</span></tt>
+            </div>
+            <div id="l80"
+               class="code sev- "><tt><i>80</i>     <span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l81"
+               class="code sev- "><tt><i>81</i> &nbsp;</tt>
+            </div>
+            <div id="l82"
+               class="code sev- "><tt><i>82</i> <span class="sd">    :return:</span></tt>
+            </div>
+            <div id="l83"
+               class="code sev- "><tt><i>83</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l84"
+               class="code sev- "><tt><i>84</i>     <span class="c1"># (1) use the number of args to eliminate a few cases</span></tt>
+            </div>
+            <div id="l85"
+               class="code sev- "><tt><i>85</i>     <span class="k">if</span> <span class="n">dk</span><span class="o">.</span><span class="n">sig_info</span><span class="o">.</span><span class="n">use_signature_trick</span><span class="p">:</span></tt>
+            </div>
+            <div id="l86"
+               class="code sev- "><tt><i>86</i>         <span class="c1"># we expose a *args, **kwargs signature so we see exactly what the user has provided.</span></tt>
+            </div>
+            <div id="l87"
+               class="code sev- "><tt><i>87</i>         <span class="n">nb_pos_received</span><span class="p">,</span> <span class="n">nb_kw_received</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dk</span><span class="o">.</span><span class="n">args</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">dk</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></tt>
+            </div>
+            <div id="l88"
+               class="code sev- "><tt><i>88</i>         <span class="k">if</span> <span class="n">nb_kw_received</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">nb_pos_received</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">nb_pos_received</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span></tt>
+            </div>
+            <div id="l89"
+               class="code sev- "><tt><i>89</i>             <span class="k">return</span> <span class="n">_WITH_PARENTHESIS</span></tt>
+            </div>
+            <div id="l90"
+               class="code sev- "><tt><i>90</i>         <span class="n">dk</span><span class="o">.</span><span class="n">_first_arg_value</span> <span class="o">=</span> <span class="n">dk</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></tt>
+            </div>
+            <div id="l91"
+               class="code sev- "><tt><i>91</i>     <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l92"
+               class="code sev- "><tt><i>92</i>         <span class="c1"># we expose a &quot;true&quot; signature, the only arguments that remain in *args are the ones that CANNOT become kw</span></tt>
+            </div>
+            <div id="l93"
+               class="code sev- "><tt><i>93</i>         <span class="n">nb_posonly_received</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dk</span><span class="o">.</span><span class="n">args</span><span class="p">)</span></tt>
+            </div>
+            <div id="l94"
+               class="code sev- "><tt><i>94</i>         <span class="k">if</span> <span class="n">dk</span><span class="o">.</span><span class="n">sig_info</span><span class="o">.</span><span class="n">contains_varpositional</span> <span class="ow">or</span> <span class="n">dk</span><span class="o">.</span><span class="n">sig_info</span><span class="o">.</span><span class="n">is_first_arg_positional_only</span><span class="p">:</span></tt>
+            </div>
+            <div id="l95"
+               class="code sev- "><tt><i>95</i>             <span class="k">if</span> <span class="n">nb_posonly_received</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span></tt>
+            </div>
+            <div id="l96"
+               class="code sev- "><tt><i>96</i>                 <span class="c1"># with parenthesis: @foo_decorator(**kwargs)</span></tt>
+            </div>
+            <div id="l97"
+               class="code sev- "><tt><i>97</i>                 <span class="k">return</span> <span class="n">_WITH_PARENTHESIS</span></tt>
+            </div>
+            <div id="l98"
+               class="code sev- "><tt><i>98</i>             <span class="k">elif</span> <span class="n">nb_posonly_received</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span></tt>
+            </div>
+            <div id="l99"
+               class="code sev- "><tt><i>99</i>                 <span class="c1"># with parenthesis: @foo_decorator(a, b, **kwargs)</span></tt>
+            </div>
+            <div id="l100"
+               class="code sev- "><tt><i>100</i>                 <span class="k">return</span> <span class="n">_WITH_PARENTHESIS</span></tt>
+            </div>
+            <div id="l101"
+               class="code sev- "><tt><i>101</i>             <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l102"
+               class="code sev- "><tt><i>102</i>                 <span class="c1"># AMBIGUOUS:</span></tt>
+            </div>
+            <div id="l103"
+               class="code sev- "><tt><i>103</i>                 <span class="c1"># no parenthesis: @foo_decorator -OR- with 1 positional argument: @foo_decorator(a, **kwargs).</span></tt>
+            </div>
+            <div id="l104"
+               class="code sev- "><tt><i>104</i>                 <span class="c1"># reminder: we can not count the kwargs because they always contain all the arguments</span></tt>
+            </div>
+            <div id="l105"
+               class="code sev- "><tt><i>105</i>                 <span class="n">dk</span><span class="o">.</span><span class="n">_first_arg_value</span> <span class="o">=</span> <span class="n">dk</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></tt>
+            </div>
+            <div id="l106"
+               class="code sev- "><tt><i>106</i> &nbsp;</tt>
+            </div>
+            <div id="l107"
+               class="code sev- "><tt><i>107</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l108"
+               class="code sev- "><tt><i>108</i>             <span class="c1"># first arg can be keyword. So it will be in kwargs (even if it was provided as positional).</span></tt>
+            </div>
+            <div id="l109"
+               class="code sev- "><tt><i>109</i>             <span class="k">if</span> <span class="n">nb_posonly_received</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span></tt>
+            </div>
+            <div id="l110"
+               class="code sev- "><tt><i>110</i>                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Internal error - this should not happen, please file an issue on the github page&quot;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l111"
+               class="code sev- "><tt><i>111</i> &nbsp;</tt>
+            </div>
+            <div id="l112"
+               class="code sev- "><tt><i>112</i>     <span class="c1"># (2) Now work on the values themselves</span></tt>
+            </div>
+            <div id="l113"
+               class="code sev- "><tt><i>113</i>     <span class="k">if</span> <span class="ow">not</span> <span class="n">can_arg_be_a_decorator_target</span><span class="p">(</span><span class="n">dk</span><span class="o">.</span><span class="n">first_arg_value</span><span class="p">):</span></tt>
+            </div>
+            <div id="l114"
+               class="code sev- "><tt><i>114</i>         <span class="c1"># the first argument can NOT be decorated: we are sure that this was a WITH-parenthesis call</span></tt>
+            </div>
+            <div id="l115"
+               class="code sev- "><tt><i>115</i>         <span class="k">return</span> <span class="n">_WITH_PARENTHESIS</span></tt>
+            </div>
+            <div id="l116"
+               class="code sev- "><tt><i>116</i>     <span class="k">elif</span> <span class="ow">not</span> <span class="n">dk</span><span class="o">.</span><span class="n">sig_info</span><span class="o">.</span><span class="n">use_signature_trick</span><span class="p">:</span></tt>
+            </div>
+            <div id="l117"
+               class="code sev- "><tt><i>117</i>         <span class="c1"># we were not able to use the length of kwargs, but at least we can compare them to defaults.</span></tt>
+            </div>
+            <div id="l118"
+               class="code sev- "><tt><i>118</i>         <span class="k">if</span> <span class="n">dk</span><span class="o">.</span><span class="n">first_arg_value</span> <span class="ow">is</span> <span class="n">dk</span><span class="o">.</span><span class="n">sig_info</span><span class="o">.</span><span class="n">first_arg_def</span><span class="o">.</span><span class="n">default</span><span class="p">:</span></tt>
+            </div>
+            <div id="l119"
+               class="code sev- "><tt><i>119</i>             <span class="c1"># the first argument has NOT been set, we are sure that&#39;s WITH-parenthesis call</span></tt>
+            </div>
+            <div id="l120"
+               class="code sev- "><tt><i>120</i>             <span class="k">return</span> <span class="n">_WITH_PARENTHESIS</span></tt>
+            </div>
+            <div id="l121"
+               class="code sev- "><tt><i>121</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l122"
+               class="code sev- "><tt><i>122</i>             <span class="c1"># check if there is another argument that is different from its default value</span></tt>
+            </div>
+            <div id="l123"
+               class="code sev- "><tt><i>123</i>             <span class="c1"># skip first entry</span></tt>
+            </div>
+            <div id="l124"
+               class="code sev- "><tt><i>124</i>             <span class="n">params</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">dk</span><span class="o">.</span><span class="n">sig_info</span><span class="o">.</span><span class="n">exposed_signature</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></tt>
+            </div>
+            <div id="l125"
+               class="code sev- "><tt><i>125</i>             <span class="nb">next</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></tt>
+            </div>
+            <div id="l126"
+               class="code sev- "><tt><i>126</i>             <span class="k">for</span> <span class="n">p_name</span><span class="p">,</span> <span class="n">p_def</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span></tt>
+            </div>
+            <div id="l127"
+               class="code sev- "><tt><i>127</i>                 <span class="k">try</span><span class="p">:</span></tt>
+            </div>
+            <div id="l128"
+               class="code sev- "><tt><i>128</i>                     <span class="k">if</span> <span class="n">dk</span><span class="o">.</span><span class="n">bound</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="n">p_name</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">p_def</span><span class="o">.</span><span class="n">default</span><span class="p">:</span></tt>
+            </div>
+            <div id="l129"
+               class="code sev- "><tt><i>129</i>                         <span class="k">return</span> <span class="n">_WITH_PARENTHESIS</span></tt>
+            </div>
+            <div id="l130"
+               class="code sev- "><tt><i>130</i>                 <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span></tt>
+            </div>
+            <div id="l131"
+               class="code sev- "><tt><i>131</i>                     <span class="k">pass</span>  <span class="c1"># this can happen when the argument is **kwargs and not filled: it does not even appear.</span></tt>
+            </div>
+            <div id="l132"
+               class="code sev- "><tt><i>132</i> &nbsp;</tt>
+            </div>
+            <div id="l133"
+               class="code sev- "><tt><i>133</i>     <span class="c1"># (3) still-ambiguous case, the first parameter is the single non-default one and is a callable or class</span></tt>
+            </div>
+            <div id="l134"
+               class="code sev- "><tt><i>134</i>     <span class="c1"># at this point a no-parenthesis call is still possible.</span></tt>
+            </div>
+            <div id="l135"
+               class="code sev- "><tt><i>135</i>     <span class="c1"># call disambiguator (it combines our rules with the ones optionally provided by the user)</span></tt>
+            </div>
+            <div id="l136"
+               class="code sev- "><tt><i>136</i>     <span class="k">return</span> <span class="n">disambiguator</span><span class="p">(</span><span class="n">dk</span><span class="o">.</span><span class="n">first_arg_value</span><span class="p">)</span></tt>
+            </div>
+            <div id="l137"
+               class="code sev- "><tt><i>137</i> &nbsp;</tt>
+            </div>
+            <div id="l138"
+               class="code sev- "><tt><i>138</i> &nbsp;</tt>
+            </div>
+            <div id="l139"
+               class="code sev- "><tt><i>139</i> <span class="k">def</span> <span class="nf">create_single_arg_callable_or_class_disambiguator</span><span class="p">(</span><span class="n">impl_function</span><span class="p">,</span></tt>
+            </div>
+            <div id="l140"
+               class="code sev- "><tt><i>140</i>                                                       <span class="n">is_function_decorator</span><span class="p">,</span></tt>
+            </div>
+            <div id="l141"
+               class="code sev- "><tt><i>141</i>                                                       <span class="n">is_class_decorator</span><span class="p">,</span></tt>
+            </div>
+            <div id="l142"
+               class="code sev- "><tt><i>142</i>                                                       <span class="n">custom_disambiguator</span><span class="p">,</span></tt>
+            </div>
+            <div id="l143"
+               class="code sev- "><tt><i>143</i>                                                       <span class="n">enable_stack_introspection</span><span class="p">,</span></tt>
+            </div>
+            <div id="l144"
+               class="code sev- "><tt><i>144</i>                                                       <span class="n">signature_knowledge</span><span class="p">,</span>  <span class="c1"># type: SignatureInfo</span></tt>
+            </div>
+            <div id="l145"
+               class="code sev- "><tt><i>145</i>                                                       <span class="p">):</span></tt>
+            </div>
+            <div id="l146"
+               class="code sev- "><tt><i>146</i>     <span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l147"
+               class="code sev- "><tt><i>147</i> <span class="sd">    Returns the function that should be used as disambiguator in &quot;last resort&quot; (when the first argument is the single</span></tt>
+            </div>
+            <div id="l148"
+               class="code sev- "><tt><i>148</i> <span class="sd">    non-default argument and it is a callable/class).</span></tt>
+            </div>
+            <div id="l149"
+               class="code sev- "><tt><i>149</i> &nbsp;</tt>
+            </div>
+            <div id="l150"
+               class="code sev- "><tt><i>150</i> <span class="sd">    :param first_arg_received:</span></tt>
+            </div>
+            <div id="l151"
+               class="code sev- "><tt><i>151</i> <span class="sd">    :return:</span></tt>
+            </div>
+            <div id="l152"
+               class="code sev- "><tt><i>152</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l153"
+               class="code sev- "><tt><i>153</i> &nbsp;</tt>
+            </div>
+            <div id="l154"
+               class="code sev- "><tt><i>154</i>     <span class="k">def</span> <span class="nf">_disambiguate_call</span><span class="p">(</span><span class="n">first_arg_received</span><span class="p">):</span></tt>
+            </div>
+            <div id="l155"
+               class="code sev- "><tt><i>155</i>         <span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l156"
+               class="code sev- "><tt><i>156</i> <span class="sd">        The first argument received is the single non-default argument and it is a callable/class.</span></tt>
+            </div>
+            <div id="l157"
+               class="code sev- "><tt><i>157</i> <span class="sd">        We should try to disambiguate now.</span></tt>
+            </div>
+            <div id="l158"
+               class="code sev- "><tt><i>158</i> &nbsp;</tt>
+            </div>
+            <div id="l159"
+               class="code sev- "><tt><i>159</i> <span class="sd">        :param first_arg_received:</span></tt>
+            </div>
+            <div id="l160"
+               class="code sev- "><tt><i>160</i> <span class="sd">        :return:</span></tt>
+            </div>
+            <div id="l161"
+               class="code sev- "><tt><i>161</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l162"
+               class="code sev- "><tt><i>162</i> &nbsp;</tt>
+            </div>
+            <div id="l163"
+               class="code sev- "><tt><i>163</i>         <span class="c1"># introspection-based</span></tt>
+            </div>
+            <div id="l164"
+               class="code sev- "><tt><i>164</i>         <span class="k">if</span> <span class="n">enable_stack_introspection</span><span class="p">:</span></tt>
+            </div>
+            <div id="l165"
+               class="code sev- "><tt><i>165</i>             <span class="n">depth</span> <span class="o">=</span> <span class="mi">4</span> <span class="k">if</span> <span class="n">signature_knowledge</span><span class="o">.</span><span class="n">use_signature_trick</span> <span class="k">else</span> <span class="mi">5</span></tt>
+            </div>
+            <div id="l166"
+               class="code sev- "><tt><i>166</i>             <span class="k">try</span><span class="p">:</span></tt>
+            </div>
+            <div id="l167"
+               class="code sev- "><tt><i>167</i>                 <span class="n">res</span> <span class="o">=</span> <span class="n">disambiguate_using_introspection</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">first_arg_received</span><span class="p">)</span></tt>
+            </div>
+            <div id="l168"
+               class="code sev- "><tt><i>168</i>                 <span class="k">if</span> <span class="n">res</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l169"
+               class="code sev- "><tt><i>169</i>                     <span class="k">return</span> <span class="n">res</span></tt>
+            </div>
+            <div id="l170"
+               class="code sev-1  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-1">
+                        F841
+                     </span>
+                     Local variable 'e' is assigned to but never used</li>
+               
+               </ul><tt><i>170</i>             <span class="k">except</span> <span class="n">IPythonException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span></tt>
+            </div>
+            <div id="l171"
+               class="code sev- "><tt><i>171</i>                 <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Decorator disambiguation using stack introspection is not available in Jupyter/iPython. &quot;</span></tt>
+            </div>
+            <div id="l172"
+               class="code sev- "><tt><i>172</i>                      <span class="s2">&quot;Please use the decorator in a non-ambiguous way. For example use explicit parenthesis @</span><span class="si">%s</span><span class="s2">() &quot;</span></tt>
+            </div>
+            <div id="l173"
+               class="code sev- "><tt><i>173</i>                      <span class="s2">&quot;for no-arg usage, or use 2 non-default arguments, or use explicit keywords. Ambiguous &quot;</span></tt>
+            </div>
+            <div id="l174"
+               class="code sev- "><tt><i>174</i>                      <span class="s2">&quot;argument received: </span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">impl_function</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">first_arg_received</span><span class="p">))</span></tt>
+            </div>
+            <div id="l175"
+               class="code sev-3  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-3">
+                        S110
+                     </span>
+                     Try, Except, Pass detected.</li>
+               
+               </ul><tt><i>175</i>             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span></tt>
+            </div>
+            <div id="l176"
+               class="code sev- "><tt><i>176</i>                 <span class="c1"># silently escape all exceptions by default - safer for users</span></tt>
+            </div>
+            <div id="l177"
+               class="code sev- "><tt><i>177</i>                 <span class="k">pass</span></tt>
+            </div>
+            <div id="l178"
+               class="code sev- "><tt><i>178</i> &nbsp;</tt>
+            </div>
+            <div id="l179"
+               class="code sev- "><tt><i>179</i>         <span class="c1"># we want to eliminate as much as possible the args that cannot be first args</span></tt>
+            </div>
+            <div id="l180"
+               class="code sev- "><tt><i>180</i>         <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">first_arg_received</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">isclass</span><span class="p">(</span><span class="n">first_arg_received</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_function_decorator</span><span class="p">:</span></tt>
+            </div>
+            <div id="l181"
+               class="code sev- "><tt><i>181</i>             <span class="c1"># that function cannot be a decorator target so it has to be the first argument</span></tt>
+            </div>
+            <div id="l182"
+               class="code sev- "><tt><i>182</i>             <span class="k">return</span> <span class="n">FirstArgDisambiguation</span><span class="o">.</span><span class="n">is_normal_arg</span></tt>
+            </div>
+            <div id="l183"
+               class="code sev- "><tt><i>183</i> &nbsp;</tt>
+            </div>
+            <div id="l184"
+               class="code sev- "><tt><i>184</i>         <span class="k">elif</span> <span class="n">isclass</span><span class="p">(</span><span class="n">first_arg_received</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_class_decorator</span><span class="p">:</span></tt>
+            </div>
+            <div id="l185"
+               class="code sev- "><tt><i>185</i>             <span class="c1"># that class cannot be a decorator target so it has to be the first argument</span></tt>
+            </div>
+            <div id="l186"
+               class="code sev- "><tt><i>186</i>             <span class="k">return</span> <span class="n">FirstArgDisambiguation</span><span class="o">.</span><span class="n">is_normal_arg</span></tt>
+            </div>
+            <div id="l187"
+               class="code sev- "><tt><i>187</i> &nbsp;</tt>
+            </div>
+            <div id="l188"
+               class="code sev- "><tt><i>188</i>         <span class="k">elif</span> <span class="n">custom_disambiguator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l189"
+               class="code sev- "><tt><i>189</i>             <span class="c1"># an explicit disambiguator is provided, use it</span></tt>
+            </div>
+            <div id="l190"
+               class="code sev- "><tt><i>190</i>             <span class="k">return</span> <span class="n">custom_disambiguator</span><span class="p">(</span><span class="n">first_arg_received</span><span class="p">)</span></tt>
+            </div>
+            <div id="l191"
+               class="code sev- "><tt><i>191</i> &nbsp;</tt>
+            </div>
+            <div id="l192"
+               class="code sev- "><tt><i>192</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l193"
+               class="code sev- "><tt><i>193</i>             <span class="c1"># Always say &quot;decorated target&quot; because</span></tt>
+            </div>
+            <div id="l194"
+               class="code sev- "><tt><i>194</i>             <span class="c1"># - if 1+ mandatory arg, we can safely do this, it will raise a `TypeError` automatically</span></tt>
+            </div>
+            <div id="l195"
+               class="code sev- "><tt><i>195</i>             <span class="c1"># - if 0 mandatory args, the most probable scenario for receiving a single callable or class argument is</span></tt>
+            </div>
+            <div id="l196"
+               class="code sev- "><tt><i>196</i>             <span class="c1"># still the no-arg. We do not want to penalize users.</span></tt>
+            </div>
+            <div id="l197"
+               class="code sev- "><tt><i>197</i>             <span class="k">return</span> <span class="n">FirstArgDisambiguation</span><span class="o">.</span><span class="n">is_decorated_target</span></tt>
+            </div>
+            <div id="l198"
+               class="code sev- "><tt><i>198</i> &nbsp;</tt>
+            </div>
+            <div id="l199"
+               class="code sev- "><tt><i>199</i>     <span class="k">return</span> <span class="n">_disambiguate_call</span></tt>
+            </div>
+            <div id="l200"
+               class="code sev- "><tt><i>200</i> &nbsp;</tt>
+            </div>
+            <div id="l201"
+               class="code sev- "><tt><i>201</i> &nbsp;</tt>
+            </div>
+            <div id="l202"
+               class="code sev- "><tt><i>202</i> <span class="k">class</span> <span class="nc">IPythonException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span></tt>
+            </div>
+            <div id="l203"
+               class="code sev- "><tt><i>203</i>     <span class="sd">&quot;&quot;&quot;Exception raised by `disambiguate_using_introspection` when the file where the decorator was used seems to be</span></tt>
+            </div>
+            <div id="l204"
+               class="code sev- "><tt><i>204</i> <span class="sd">    an ipython one&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l205"
+               class="code sev- "><tt><i>205</i>     <span class="k">pass</span></tt>
+            </div>
+            <div id="l206"
+               class="code sev- "><tt><i>206</i> &nbsp;</tt>
+            </div>
+            <div id="l207"
+               class="code sev- "><tt><i>207</i> &nbsp;</tt>
+            </div>
+            <div id="l208"
+               class="code sev- "><tt><i>208</i> <span class="n">SUPPORTS_INTROSPECTION</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span></tt>
+            </div>
+            <div id="l209"
+               class="code sev- "><tt><i>209</i> &nbsp;</tt>
+            </div>
+            <div id="l210"
+               class="code sev- "><tt><i>210</i> &nbsp;</tt>
+            </div>
+            <div id="l211"
+               class="code sev- "><tt><i>211</i> <span class="k">def</span> <span class="nf">disambiguate_using_introspection</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">first_arg</span><span class="p">):</span></tt>
+            </div>
+            <div id="l212"
+               class="code sev- "><tt><i>212</i>     <span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l213"
+               class="code sev- "><tt><i>213</i> <span class="sd">    Tries to disambiguate the call situation betwen with-parenthesis and without-parenthesis using call stack</span></tt>
+            </div>
+            <div id="l214"
+               class="code sev- "><tt><i>214</i> <span class="sd">    introspection.</span></tt>
+            </div>
+            <div id="l215"
+               class="code sev- "><tt><i>215</i> &nbsp;</tt>
+            </div>
+            <div id="l216"
+               class="code sev- "><tt><i>216</i> <span class="sd">    Uses inpect.stack() to get the source code where the decorator is being used. If the line starts with a &#39;@&#39; and does</span></tt>
+            </div>
+            <div id="l217"
+               class="code sev- "><tt><i>217</i> <span class="sd">    not contain any &#39;(&#39;, this is a no-parenthesis call. Otherwise it is a with-parenthesis call.</span></tt>
+            </div>
+            <div id="l218"
+               class="code sev- "><tt><i>218</i> <span class="sd">    TODO it could be worth investigating how to improve this logic.. but remember that the decorator can also be renamed</span></tt>
+            </div>
+            <div id="l219"
+               class="code sev- "><tt><i>219</i> <span class="sd">      so we can not check a full string expression</span></tt>
+            </div>
+            <div id="l220"
+               class="code sev- "><tt><i>220</i> &nbsp;</tt>
+            </div>
+            <div id="l221"
+               class="code sev- "><tt><i>221</i> <span class="sd">    :param depth:</span></tt>
+            </div>
+            <div id="l222"
+               class="code sev- "><tt><i>222</i> <span class="sd">    :return:</span></tt>
+            </div>
+            <div id="l223"
+               class="code sev- "><tt><i>223</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l224"
+               class="code sev- "><tt><i>224</i>     <span class="k">if</span> <span class="ow">not</span> <span class="n">SUPPORTS_INTROSPECTION</span><span class="p">:</span></tt>
+            </div>
+            <div id="l225"
+               class="code sev- "><tt><i>225</i>         <span class="c1"># This does not seem to work reliably.</span></tt>
+            </div>
+            <div id="l226"
+               class="code sev- "><tt><i>226</i>         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;The beta stack introspection feature does not support python 3.8+. Please set&quot;</span></tt>
+            </div>
+            <div id="l227"
+               class="code sev- "><tt><i>227</i>                                   <span class="s2">&quot; `enable_stack_introspection=False`.&quot;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l228"
+               class="code sev- "><tt><i>228</i> &nbsp;</tt>
+            </div>
+            <div id="l229"
+               class="code sev- "><tt><i>229</i>     <span class="c1"># Unfortunately inspect.stack and inspect.currentframe are extremely slow</span></tt>
+            </div>
+            <div id="l230"
+               class="code sev- "><tt><i>230</i>     <span class="c1"># see https://gist.github.com/JettJones/c236494013f22723c1822126df944b12</span></tt>
+            </div>
+            <div id="l231"
+               class="code sev- "><tt><i>231</i>     <span class="c1"># --</span></tt>
+            </div>
+            <div id="l232"
+               class="code sev- "><tt><i>232</i>     <span class="c1"># curframe = currentframe()</span></tt>
+            </div>
+            <div id="l233"
+               class="code sev- "><tt><i>233</i>     <span class="c1"># calframe = getouterframes(curframe, 4)</span></tt>
+            </div>
+            <div id="l234"
+               class="code sev- "><tt><i>234</i>     <span class="c1"># --or</span></tt>
+            </div>
+            <div id="l235"
+               class="code sev- "><tt><i>235</i>     <span class="c1"># calframe = stack(context=1)</span></tt>
+            </div>
+            <div id="l236"
+               class="code sev- "><tt><i>236</i>     <span class="c1"># filename = calframe[depth][1]</span></tt>
+            </div>
+            <div id="l237"
+               class="code sev- "><tt><i>237</i>     <span class="c1"># ----</span></tt>
+            </div>
+            <div id="l238"
+               class="code sev- "><tt><i>238</i>     <span class="c1"># this is fast :)</span></tt>
+            </div>
+            <div id="l239"
+               class="code sev- "><tt><i>239</i>     <span class="n">calframe</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span></tt>
+            </div>
+            <div id="l240"
+               class="code sev- "><tt><i>240</i> &nbsp;</tt>
+            </div>
+            <div id="l241"
+               class="code sev- "><tt><i>241</i>     <span class="k">try</span><span class="p">:</span></tt>
+            </div>
+            <div id="l242"
+               class="code sev- "><tt><i>242</i>         <span class="c1"># if target is a function that should work</span></tt>
+            </div>
+            <div id="l243"
+               class="code sev- "><tt><i>243</i>         <span class="n">is_decorator_call_</span> <span class="o">=</span> <span class="n">first_arg</span><span class="o">.</span><span class="vm">__code__</span><span class="o">.</span><span class="n">co_firstlineno</span> <span class="o">==</span> <span class="n">calframe</span><span class="o">.</span><span class="n">f_lineno</span></tt>
+            </div>
+            <div id="l244"
+               class="code sev- "><tt><i>244</i>     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span></tt>
+            </div>
+            <div id="l245"
+               class="code sev- "><tt><i>245</i>         <span class="c1"># if target is a class rely on source code using linecache</span></tt>
+            </div>
+            <div id="l246"
+               class="code sev- "><tt><i>246</i>         <span class="n">is_decorator_call_</span> <span class="o">=</span> <span class="n">is_decorator_call</span><span class="p">(</span><span class="n">calframe</span><span class="p">)</span></tt>
+            </div>
+            <div id="l247"
+               class="code sev- "><tt><i>247</i> &nbsp;</tt>
+            </div>
+            <div id="l248"
+               class="code sev- "><tt><i>248</i>     <span class="k">if</span> <span class="n">is_decorator_call_</span><span class="p">:</span></tt>
+            </div>
+            <div id="l249"
+               class="code sev- "><tt><i>249</i>         <span class="k">return</span> <span class="n">FirstArgDisambiguation</span><span class="o">.</span><span class="n">is_decorated_target</span></tt>
+            </div>
+            <div id="l250"
+               class="code sev- "><tt><i>250</i>     <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l251"
+               class="code sev- "><tt><i>251</i>         <span class="k">return</span> <span class="n">FirstArgDisambiguation</span><span class="o">.</span><span class="n">is_normal_arg</span></tt>
+            </div>
+            <div id="l252"
+               class="code sev- "><tt><i>252</i> &nbsp;</tt>
+            </div>
+            <div id="l253"
+               class="code sev- "><tt><i>253</i> &nbsp;</tt>
+            </div>
+            <div id="l254"
+               class="code sev- "><tt><i>254</i> <span class="c1"># try:</span></tt>
+            </div>
+            <div id="l255"
+               class="code sev- "><tt><i>255</i> <span class="c1">#     from opcode import opmap</span></tt>
+            </div>
+            <div id="l256"
+               class="code sev- "><tt><i>256</i> <span class="c1">#</span></tt>
+            </div>
+            <div id="l257"
+               class="code sev- "><tt><i>257</i> <span class="c1">#     def is_decorator_call(frame, first_arg):</span></tt>
+            </div>
+            <div id="l258"
+               class="code sev- "><tt><i>258</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l259"
+               class="code sev- "><tt><i>259</i> <span class="c1">#         This implementation relies on bytecode inspection.</span></tt>
+            </div>
+            <div id="l260"
+               class="code sev- "><tt><i>260</i> <span class="c1">#         It seems to change too much across versions to be reliable.</span></tt>
+            </div>
+            <div id="l261"
+               class="code sev- "><tt><i>261</i> <span class="c1">#</span></tt>
+            </div>
+            <div id="l262"
+               class="code sev- "><tt><i>262</i> <span class="c1">#         :param frame:</span></tt>
+            </div>
+            <div id="l263"
+               class="code sev- "><tt><i>263</i> <span class="c1">#         :return:</span></tt>
+            </div>
+            <div id="l264"
+               class="code sev- "><tt><i>264</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l265"
+               class="code sev- "><tt><i>265</i> <span class="c1">#         try:</span></tt>
+            </div>
+            <div id="l266"
+               class="code sev- "><tt><i>266</i> <span class="c1">#             # if target is a function that should work</span></tt>
+            </div>
+            <div id="l267"
+               class="code sev- "><tt><i>267</i> <span class="c1">#             return first_arg.__code__.co_firstlineno == frame.f_lineno</span></tt>
+            </div>
+            <div id="l268"
+               class="code sev- "><tt><i>268</i> <span class="c1">#         except AttributeError:</span></tt>
+            </div>
+            <div id="l269"
+               class="code sev- "><tt><i>269</i> <span class="c1">#             pass</span></tt>
+            </div>
+            <div id="l270"
+               class="code sev- "><tt><i>270</i> <span class="c1">#</span></tt>
+            </div>
+            <div id="l271"
+               class="code sev- "><tt><i>271</i> <span class="c1">#         # if the last bytecode operation before this frame is a MAKE_FUNCTION or a LOAD_BUILD_CLASS,</span></tt>
+            </div>
+            <div id="l272"
+               class="code sev- "><tt><i>272</i> <span class="c1">#         # that means that we are a decorator without arguments &gt;&gt; NO, that&#39;s wrong !!!!</span></tt>
+            </div>
+            <div id="l273"
+               class="code sev- "><tt><i>273</i> <span class="c1">#         # --rather</span></tt>
+            </div>
+            <div id="l274"
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-2">
+                        E501
+                     </span>
+                     Line too long (121 > 120 characters)</li>
+               
+               </ul><tt><i>274</i> <span class="c1">#         # if the last LOAD_CONST done is for a &lt;code&gt; object that lies in the same line, then that&#39;s without arguments.</span></tt>
+            </div>
+            <div id="l275"
+               class="code sev- "><tt><i>275</i> <span class="c1">#         code = frame.f_code.co_code</span></tt>
+            </div>
+            <div id="l276"
+               class="code sev- "><tt><i>276</i> <span class="c1">#         opcode = 0</span></tt>
+            </div>
+            <div id="l277"
+               class="code sev- "><tt><i>277</i> <span class="c1">#         instruction_idx = frame.f_lasti</span></tt>
+            </div>
+            <div id="l278"
+               class="code sev- "><tt><i>278</i> <span class="c1">#         # instructions are every 3 positions</span></tt>
+            </div>
+            <div id="l279"
+               class="code sev- "><tt><i>279</i> <span class="c1">#         last_load_const_idx = instruction_idx - (5 * 3)</span></tt>
+            </div>
+            <div id="l280"
+               class="code sev- "><tt><i>280</i> <span class="c1">#         opcode = code[last_load_const_idx]</span></tt>
+            </div>
+            <div id="l281"
+               class="code sev- "><tt><i>281</i> <span class="c1">#</span></tt>
+            </div>
+            <div id="l282"
+               class="code sev- "><tt><i>282</i> <span class="c1">#         import dis</span></tt>
+            </div>
+            <div id="l283"
+               class="code sev- "><tt><i>283</i> <span class="c1">#         dis.disassemble(frame.f_code, lasti=instruction_idx)  # lasti=frame.f_lasti</span></tt>
+            </div>
+            <div id="l284"
+               class="code sev- "><tt><i>284</i> <span class="c1">#</span></tt>
+            </div>
+            <div id="l285"
+               class="code sev- "><tt><i>285</i> <span class="c1">#         if opcode != opmap[&#39;LOAD_CONST&#39;]:</span></tt>
+            </div>
+            <div id="l286"
+               class="code sev- "><tt><i>286</i> <span class="c1">#             return False</span></tt>
+            </div>
+            <div id="l287"
+               class="code sev- "><tt><i>287</i> <span class="c1">#         else:</span></tt>
+            </div>
+            <div id="l288"
+               class="code sev- "><tt><i>288</i> <span class="c1">#             # is this loading a code that lies after the frame.f_lineno ?</span></tt>
+            </div>
+            <div id="l289"
+               class="code sev- "><tt><i>289</i> <span class="c1">#             arg = code[last_load_const_idx + 1] + code[last_load_const_idx + 2] * 256</span></tt>
+            </div>
+            <div id="l290"
+               class="code sev- "><tt><i>290</i> <span class="c1">#             # argval, argrepr = _get_const_info(arg, constants)</span></tt>
+            </div>
+            <div id="l291"
+               class="code sev- "><tt><i>291</i> <span class="c1">#             target = frame.f_code.co_consts[arg]</span></tt>
+            </div>
+            <div id="l292"
+               class="code sev- "><tt><i>292</i> <span class="c1">#</span></tt>
+            </div>
+            <div id="l293"
+               class="code sev- "><tt><i>293</i> <span class="c1">#         return target.co_firstlineno == frame.f_lineno</span></tt>
+            </div>
+            <div id="l294"
+               class="code sev- "><tt><i>294</i> <span class="c1">#</span></tt>
+            </div>
+            <div id="l295"
+               class="code sev- "><tt><i>295</i> <span class="c1"># except ImportError:</span></tt>
+            </div>
+            <div id="l296"
+               class="code sev- "><tt><i>296</i> <span class="k">def</span> <span class="nf">is_decorator_call</span><span class="p">(</span><span class="n">frame</span><span class="p">):</span></tt>
+            </div>
+            <div id="l297"
+               class="code sev- "><tt><i>297</i>     <span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l298"
+               class="code sev- "><tt><i>298</i> <span class="sd">    This implementation relies on source code inspection thanks to linecache.</span></tt>
+            </div>
+            <div id="l299"
+               class="code sev- "><tt><i>299</i> <span class="sd">    :param frame:</span></tt>
+            </div>
+            <div id="l300"
+               class="code sev- "><tt><i>300</i> <span class="sd">    :return:</span></tt>
+            </div>
+            <div id="l301"
+               class="code sev- "><tt><i>301</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l302"
+               class="code sev- "><tt><i>302</i>     <span class="c1"># using inspect.getsource : heavy...</span></tt>
+            </div>
+            <div id="l303"
+               class="code sev- "><tt><i>303</i>     <span class="c1"># using traceback.format_stack: seems to fallback to linecache anyway.</span></tt>
+            </div>
+            <div id="l304"
+               class="code sev- "><tt><i>304</i>     <span class="c1"># using linecache https://docs.python.org/3/library/linecache.html</span></tt>
+            </div>
+            <div id="l305"
+               class="code sev- "><tt><i>305</i>     <span class="n">cal_line_str</span> <span class="o">=</span> <span class="n">getline</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_lineno</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></tt>
+            </div>
+            <div id="l306"
+               class="code sev- "><tt><i>306</i>     <span class="k">if</span> <span class="n">cal_line_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">):</span></tt>
+            </div>
+            <div id="l307"
+               class="code sev- "><tt><i>307</i>         <span class="n">cal_line_str</span> <span class="o">=</span> <span class="n">getline</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_lineno</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></tt>
+            </div>
+            <div id="l308"
+               class="code sev- "><tt><i>308</i>     <span class="k">return</span> <span class="n">cal_line_str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">&#39;(&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cal_line_str</span></tt>
+            </div>
+            
+         </div>
+      </div>
+   </body>
+</html>

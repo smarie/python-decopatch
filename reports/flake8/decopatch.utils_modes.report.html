@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>flake8 violations: decopatch/utils_modes.py</title>
+      <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="styles.css">
+<script>
+function bindHandler(link) {
+   var code = link.getAttribute('data-code');
+   var key = location.pathname + '#' + code;
+
+   var ul = link.parentNode.querySelector('.details');
+   if (sessionStorage[key] != 'open') {
+      ul.style.display = 'none';
+   }
+   link.addEventListener('click', function (event) {
+      if (!ul.style.display || ul.style.display == 'none') {
+         ul.style.display = 'block';
+         sessionStorage[key] = 'open';
+      } else {
+         ul.style.display = 'none';
+         sessionStorage[key] = 'closed';
+      }
+   });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+   var links = document.querySelectorAll('#index > li > a');
+   for (var i = 0; i < links.length; i++) {
+      bindHandler(links[i]);
+   }
+});
+</script>
+   </head>
+   <body>
+      <div id="masthead" class="sev-1"></div>
+      <div id="page">
+         <p id="srclink">
+            <a title="View full annotated source"
+               href="decopatch.utils_modes.source.html">
+               <img src="file.svg" alt="&#x2261;">
+            </a></p>
+         <h1>
+            <a href="index.html">
+               <img src="back.svg" alt="&#x2B05;">
+               decopatch/utils_modes.py
+            </a>
+         </h1>
+
+         <ul id="index">
+         
+         <li>
+            <a data-code="F821">
+               <span class="count sev-1">
+                  2
+               </span>
+               <strong>F821:</strong> undefined name 'Signature'
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="decopatch.utils_modes.source.html#l200">
+                  <tt><i>200</i> <span class="k">def</span> <span class="nf">extract_mode_info</span><span class="p">(</span><span class="n">impl_sig</span><span class="p">,</span>                      <span class="c1"># type: Signature</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="decopatch.utils_modes.source.html#l370">
+                  <tt><i>370</i> <span class="k">def</span> <span class="nf">get_first_parameter</span><span class="p">(</span><span class="n">ds</span>  <span class="c1"># type: Signature</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E122">
+               <span class="count sev-2">
+                  1
+               </span>
+               <strong>E122:</strong> continuation line missing indentation or outdented
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="decopatch.utils_modes.source.html#l60">
+                  <tt><i>60</i>     <span class="n">injected_arg</span><span class="p">,</span> <span class="n">f_args_name</span><span class="p">,</span> <span class="n">f_kwargs_name</span> <span class="o">=</span> <span class="n">extract_mode_info</span><span class="p">(</span><span class="n">implementors_signature</span><span class="p">,</span> <span class="n">flat_mode_decorated_name</span><span class="p">)</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E127">
+               <span class="count sev-2">
+                  1
+               </span>
+               <strong>E127:</strong> continuation line over-indented for visual indent
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="decopatch.utils_modes.source.html#l284">
+                  <tt><i>284</i>            <span class="n">injected</span><span class="p">,</span> <span class="p">(</span><span class="n">f_args</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">f_args</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span><span class="n">f_kwargs</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">f_kwargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="B007">
+               <span class="count sev-3">
+                  1
+               </span>
+               <strong>B007:</strong> Loop control variable 'p_name' not used within the loop body. If this is intended, start the name with an underscore.
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="decopatch.utils_modes.source.html#l242">
+                  <tt><i>242</i>         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">p_name</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">impl_sig</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         </ul>
+      </div>
+   </body>
+</html>
