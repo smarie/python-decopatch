@@ -355,7 +355,11 @@ def case_hard_0_m_2_opt_callable_last(decorator_application_scenario, protection
     return replace_by_foo, expected.get(application_case_func, default_value)
 
 
-@parametrize(protection=['unprotected (default)', 'introspection', 'custom_disambiguator'])
+@parametrize(protection=[
+    'unprotected (default)',
+    pytest.param('introspection', marks=pytest.mark.skipif(not SUPPORTS_INTROSPECTION, reason="not available on python 3.8+")),
+    'custom_disambiguator'
+])
 def case_hard_0_m_2_opt_callable_first(decorator_application_scenario, protection, application_case_func):
 
     use_introspection = (protection == 'introspection')
