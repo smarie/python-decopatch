@@ -1,21 +1,63 @@
-from makefun import with_signature, add_signature_parameters
+from makefun import add_signature_parameters, with_signature
+
+from decopatch.utils_calls import (call_in_appropriate_mode,
+                                   no_parenthesis_usage,
+                                   with_parenthesis_usage)
+from decopatch.utils_disambiguation import (
+    DecoratorUsageInfo, FirstArgDisambiguation, can_arg_be_a_decorator_target,
+    create_single_arg_callable_or_class_disambiguator, disambiguate_call)
 from decopatch.utils_modes import SignatureInfo, make_decorator_spec
-from decopatch.utils_disambiguation import create_single_arg_callable_or_class_disambiguator, disambiguate_call, \
-    DecoratorUsageInfo, can_arg_be_a_decorator_target
-from decopatch.utils_calls import with_parenthesis_usage, no_parenthesis_usage, call_in_appropriate_mode
 
 try:  # python 3.3+
-    from inspect import signature, Parameter
+    from inspect import Parameter, signature
 except ImportError:
-    from funcsigs import signature, Parameter
+    from funcsigs import Parameter, signature
 
 try:  # python 3.5+
-    from typing import Callable, Any, Optional
+    from typing import Any, Callable, Optional
+except ImportError:
+    pass
+
+try:  # Python 3.9
+    from typing import Any, Callable, Protocol, TypeVar, Union, overload
+    try:  # Python 3.10
+        from typing import ParamSpec
+    except ImportError:
+        from typing_extensions import ParamSpec
+
+    P = ParamSpec("P")
+    F = TypeVar("F", bound=Callable)
+
+    class _Decorator(Protocol[P]):
+
+        @overload
+        def __call__(self, func: F) -> F:
+            ...
+
+        @overload
+        def __call__(self, *args: P.args, **kwargs: P.kwargs) -> Callable[[F], F]:
+            ...
+
+    @overload
+    def function_decorator(
+        enable_stack_introspection: Callable[P, Any],
+        custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
+        flat_mode_decorated_name: Optional[str] = ...,
+    ) -> _Decorator[P]:
+        ...
+
+    @overload
+    def function_decorator(
+        enable_stack_introspection: bool = ...,
+        custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
+        flat_mode_decorated_name: Optional[str] = ...,
+    ) -> Callable[[Callable[P, Any]], _Decorator[P]]:
+        ...
 except ImportError:
     pass
 
 
-def function_decorator(enable_stack_introspection=False,  # type: bool
+def function_decorator(enable_stack_introspection=False,  # type: Union[Callable, bool]
                        custom_disambiguator=None,         # type: Callable[[Any], FirstArgDisambiguation]
                        flat_mode_decorated_name=None,     # type: Optional[str]
                        ):
