@@ -1,3 +1,6 @@
+from inspect import Parameter
+from typing import Any, Callable, Optional
+
 from makefun import add_signature_parameters, with_signature
 
 from decopatch.utils_calls import (call_in_appropriate_mode,
@@ -8,18 +11,8 @@ from decopatch.utils_disambiguation import (
     create_single_arg_callable_or_class_disambiguator, disambiguate_call)
 from decopatch.utils_modes import SignatureInfo, make_decorator_spec
 
-try:  # python 3.3+
-    from inspect import Parameter, signature
-except ImportError:
-    from funcsigs import Parameter, signature
-
-try:  # python 3.5+
-    from typing import Any, Callable, Optional
-except ImportError:
-    pass
-
 try:  # Python 3.9
-    from typing import Any, Callable, Protocol, TypeVar, Union, overload
+    from typing import Protocol, TypeVar, Union, overload
     try:  # Python 3.10
         from typing import ParamSpec
     except ImportError:
