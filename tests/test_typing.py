@@ -1,8 +1,11 @@
 # This is test file for typing,
 # No automatic testing is used at the moment. Just use your type checker and see if it works.
 # Pytest here is used to make sure that runtime behavir matches with type checker expecter errors.
-from decopatch import DECORATED, function_decorator
+from typing import Any, Callable
+
 import pytest
+
+from decopatch import DECORATED, function_decorator
 
 
 def test_invalid_parameter():
@@ -15,7 +18,7 @@ def test_invalid_parameter():
 
 def test_normal_decorator():
     @function_decorator
-    def decorator(scope: str = "test", fn=DECORATED):
+    def decorator(scope="test", fn=DECORATED):  # type: (str, Any) -> Callable[..., Any]
         assert isinstance(scope, str)
         return fn
 
@@ -43,7 +46,7 @@ def test_normal_decorator():
 def test_function_decorator_with_params():
     # Ok, should reveal correct type for `enable_stack_introspection`
     @function_decorator(enable_stack_introspection=True)
-    def decorator_with_params(scope: str = "test", fn=DECORATED):
+    def decorator_with_params(scope = "test", fn=DECORATED):  # type: (str, Any) -> Callable[..., Any]
         return fn
 
     # Ok, should reveal correct type for `scope`
