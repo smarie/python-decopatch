@@ -7,7 +7,7 @@ from decopatch import DECORATED, function_decorator
 def decorator(scope: str = "test", f=DECORATED):
     pass
 
-# Ok, should reveal coorect type for `enable_stack_introspection`
+# Ok, should reveal correct type for `enable_stack_introspection`
 @function_decorator(enable_stack_introspection=True)
 def decorator_with_params(scope: str = "test", f=DECORATED):
     pass
@@ -34,7 +34,7 @@ def decorated_with_valid_options():
     pass
 
 
-# Ok, should reveal coorect type for `scope`
+# Ok, should reveal correct type for `scope`
 @decorator_with_params(scope="success")
 def decorated_with_valid_options_v2():
     pass
