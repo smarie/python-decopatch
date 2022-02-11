@@ -28,7 +28,7 @@ def decorated_flat():
 def decorated_with_invalid_options():
     pass
 
-# Ok, should reveal coorect type for `scope`
+# Ok, should reveal correct type for `scope`
 @decorator(scope="success")
 def decorated_with_valid_options():
     pass
