@@ -22,13 +22,19 @@ try:  # Python 3.9
     F = TypeVar("F", bound=Callable)
 
     class _Decorator(Protocol[P]):
+        """
+        This is callable Protocol, to distinguish between cases where
+        created decorator is called as `@decorator` or `@decorator()`
+        """
 
         @overload
         def __call__(self, func: F) -> F:
+            # decorator is called without parenthesis: @decorator
             ...
 
         @overload
         def __call__(self, *args: P.args, **kwargs: P.kwargs) -> Callable[[F], F]:
+            # decorator is called with options or parenthesis: @decorator(some_option=...)
             ...
 
     @overload
@@ -37,6 +43,7 @@ try:  # Python 3.9
         custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
         flat_mode_decorated_name: Optional[str] = ...,
     ) -> _Decorator[P]:
+        # @function_decorator is called without options or parenthesis
         ...
 
     @overload
@@ -45,6 +52,7 @@ try:  # Python 3.9
         custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
         flat_mode_decorated_name: Optional[str] = ...,
     ) -> Callable[[Callable[P, Any]], _Decorator[P]]:
+        # @function_decorator() is called with options or parenthesis.
         ...
 except ImportError:
     pass
