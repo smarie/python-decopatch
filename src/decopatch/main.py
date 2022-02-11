@@ -1,71 +1,21 @@
-from makefun import add_signature_parameters, with_signature
-
-from decopatch.utils_calls import (call_in_appropriate_mode,
-                                   no_parenthesis_usage,
-                                   with_parenthesis_usage)
-from decopatch.utils_disambiguation import (
-    DecoratorUsageInfo, FirstArgDisambiguation, can_arg_be_a_decorator_target,
-    create_single_arg_callable_or_class_disambiguator, disambiguate_call)
+from makefun import with_signature, add_signature_parameters
 from decopatch.utils_modes import SignatureInfo, make_decorator_spec
+from decopatch.utils_disambiguation import create_single_arg_callable_or_class_disambiguator, disambiguate_call, \
+    DecoratorUsageInfo, can_arg_be_a_decorator_target
+from decopatch.utils_calls import with_parenthesis_usage, no_parenthesis_usage, call_in_appropriate_mode
 
-try:
-    from inspect import Parameter
+try:  # python 3.3+
+    from inspect import signature, Parameter
 except ImportError:
-    from funcsigs import Parameter
+    from funcsigs import signature, Parameter
 
-try:  # Python 3.5+
-    from typing import Any, Callable, Optional
-except ImportError:
-    pass
-
-try:  # Python 3.9
-    from typing import Protocol, TypeVar, Union, overload
-    try:  # Python 3.10
-        from typing import ParamSpec
-    except ImportError:
-        from typing_extensions import ParamSpec
-
-    P = ParamSpec("P")
-    F = TypeVar("F", bound=Callable)
-
-    class _Decorator(Protocol[P]):
-        """
-        This is callable Protocol, to distinguish between cases where
-        created decorator is called as `@decorator` or `@decorator()`
-        """
-
-        @overload
-        def __call__(self, func: F) -> F:
-            # decorator is called without parenthesis: @decorator
-            ...
-
-        @overload
-        def __call__(self, *args: P.args, **kwargs: P.kwargs) -> Callable[[F], F]:
-            # decorator is called with options or parenthesis: @decorator(some_option=...)
-            ...
-
-    @overload
-    def function_decorator(
-        enable_stack_introspection: Callable[P, Any],
-        custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
-        flat_mode_decorated_name: Optional[str] = ...,
-    ) -> _Decorator[P]:
-        # @function_decorator is called without options or parenthesis
-        ...
-
-    @overload
-    def function_decorator(
-        enable_stack_introspection: bool = ...,
-        custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
-        flat_mode_decorated_name: Optional[str] = ...,
-    ) -> Callable[[Callable[P, Any]], _Decorator[P]]:
-        # @function_decorator() is called with options or parenthesis.
-        ...
+try:  # python 3.5+
+    from typing import Callable, Any, Optional
 except ImportError:
     pass
 
 
-def function_decorator(enable_stack_introspection=False,  # type: Union[Callable, bool]
+def function_decorator(enable_stack_introspection=False,  # type: bool
                        custom_disambiguator=None,         # type: Callable[[Any], FirstArgDisambiguation]
                        flat_mode_decorated_name=None,     # type: Optional[str]
                        ):
