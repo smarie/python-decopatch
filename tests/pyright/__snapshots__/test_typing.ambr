@@ -1,0 +1,40 @@
+# name: test_typing
+  <class 'list'> [
+    <class 'dict'> {
+      'message': '
+        No overloads for "function_decorator" match the provided arguments
+          Argument types: (Literal[True])
+      ',
+      'range': <class 'dict'> {
+        'end': <class 'dict'> {
+          'character': 47,
+          'line': 10,
+        },
+        'start': <class 'dict'> {
+          'character': 9,
+          'line': 10,
+        },
+      },
+      'rule': 'reportGeneralTypeIssues',
+      'severity': 'error',
+    },
+    <class 'dict'> {
+      'message': '
+        Argument of type "Literal[2]" cannot be assigned to parameter "scope" of type "str" in function "__call__"
+          "Literal[2]" is incompatible with "str"
+      ',
+      'range': <class 'dict'> {
+        'end': <class 'dict'> {
+          'character': 26,
+          'line': 30,
+        },
+        'start': <class 'dict'> {
+          'character': 25,
+          'line': 30,
+        },
+      },
+      'rule': 'reportGeneralTypeIssues',
+      'severity': 'error',
+    },
+  ]
+---

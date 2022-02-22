@@ -1,6 +1,3 @@
-# This is test file for typing,
-# No automatic testing is used at the moment. Just use your type checker and see if it works.
-# Pytest here is used to make sure that runtime behavir matches with type checker expecter errors.
 from typing import Any, Callable
 
 import pytest

@@ -48,6 +48,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Install pyright
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install pyright
+        run: npm install -g pyright@1.1.223
+
       # Conda install
       - name: Install conda v3.7
         uses: conda-incubator/setup-miniconda@v2
