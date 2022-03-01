@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.4.10 - Type hints step 1
+
+ - `@function_decorator` now has proper type hints. This is a first step towards fixing [#22](https://github.com/smarie/python-decopatch/issues/22). PR [#23](https://github.com/smarie/python-decopatch/pull/23) by [last-partizan](https://github.com/last-partizan).
+
 ### 1.4.9 - New layout and CI + Compatibility fixes.
 
  - Enabling the "stack introspection" beta feature with `enable_stack_introspection=True` now raises an explicit `NotImplementedError` on python 3.8+. Fixed [#26](https://github.com/smarie/python-decopatch/issues/26).
