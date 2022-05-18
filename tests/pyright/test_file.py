@@ -1,3 +1,7 @@
+"""
+Tests in this file do almost nothing at runtime, but serve as a source for
+testing with pyright from test_typing.py
+"""
 from typing import Any, Callable
 
 import pytest
@@ -7,16 +11,16 @@ from decopatch import DECORATED, function_decorator
 
 def test_invalid_parameter():
     with pytest.raises(TypeError):
-        # Error, invalid argument
+        # Error, invalid argument.
+        # This triggers error in type checking and in runtime.
         @function_decorator(invalid_param=True)
-        def decorator_wint_invalid_param(fn=DECORATED):
+        def decorator_with_invalid_param(fn=DECORATED):
             return fn
 
 
 def test_normal_decorator():
     @function_decorator
     def decorator(scope="test", fn=DECORATED):  # type: (str, Any) -> Callable[..., Any]
-        assert isinstance(scope, str)
         return fn
 
     # Ok
@@ -24,20 +28,15 @@ def test_normal_decorator():
     def decorated_flat():
         pass
 
-    assert decorated_flat
-
-    with pytest.raises(AssertionError):
-        # Error, Literal[2] is incompatible with str
-        @decorator(scope=2)
-        def decorated_with_invalid_options():
-            pass
-
     # Ok, should reveal correct type for `scope`
     @decorator(scope="success")
     def decorated_with_valid_options():
         pass
 
-    assert decorated_with_valid_options
+    # Error, Literal[2] is incompatible with str
+    @decorator(scope=2)
+    def decorated_with_invalid_options():
+        pass
 
 
 def test_function_decorator_with_params():
@@ -51,4 +50,6 @@ def test_function_decorator_with_params():
     def decorated_with_valid_options():
         pass
 
-    assert decorated_with_valid_options
+    @decorator_with_params(scope=2)
+    def decorated_with_invalid_options():
+        pass

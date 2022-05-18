@@ -53,9 +53,6 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Install pyright
-        run: npm install -g pyright@1.1.223
-
       # Conda install
       - name: Install conda v3.7
         uses: conda-incubator/setup-miniconda@v2

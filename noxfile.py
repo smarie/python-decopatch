@@ -3,6 +3,7 @@ from json import dumps
 import logging
 
 import nox  # noqa
+from nox.command import CommandFailed
 from pathlib import Path  # noqa
 import sys
 
@@ -27,7 +28,6 @@ ENVS = {
     # IMPORTANT: this should be last so that the folder docs/reports is not deleted afterwards
     PY37: {"coverage": True, "pkg_specs": {"pip": ">19"}},  # , "pytest-html": "1.9.0"
 }
-
 
 # set the default activated sessions, minimal for CI
 nox.options.sessions = ["tests", "flake8"]  # , "docs", "gh_pages"
@@ -98,7 +98,10 @@ def tests(session: PowerSession, coverage, pkg_specs):
     conda_prefix = Path(session.bin)
     if conda_prefix.name == "bin":
         conda_prefix = conda_prefix.parent
-    session.run2("conda list", env={"CONDA_PREFIX": str(conda_prefix), "CONDA_DEFAULT_ENV": session.get_session_id()})
+    try:
+        session.run2("conda list", env={"CONDA_PREFIX": str(conda_prefix), "CONDA_DEFAULT_ENV": session.get_session_id()})
+    except CommandFailed:
+        pass
 
     # Fail if the assumed python version is not the actual one
     session.run2("python ci_tools/check_python_version.py %s" % session.python)
@@ -106,6 +109,13 @@ def tests(session: PowerSession, coverage, pkg_specs):
     # check that it can be imported even from a different folder
     # Important: do not surround the command into double quotes as in the shell !
     # session.run('python', '-c', 'import os; os.chdir(\'./docs/\'); import %s' % pkg_name)
+
+    # Type checking is supported from python 3.7
+    if float(session.python) >= 3.7:
+        try:
+            session.run2("npm install -g pyright@1.1.247")
+        except CommandFailed:
+            print("Failed to install pyright, typing tests would be skipped")
 
     # finally run all tests
     if not coverage:
