@@ -110,13 +110,6 @@ def tests(session: PowerSession, coverage, pkg_specs):
     # Important: do not surround the command into double quotes as in the shell !
     # session.run('python', '-c', 'import os; os.chdir(\'./docs/\'); import %s' % pkg_name)
 
-    # Type checking is supported from python 3.7
-    if float(session.python) >= 3.7:
-        try:
-            session.run2("npm install -g pyright@1.1.247")
-        except CommandFailed:
-            print("Failed to install pyright, typing tests would be skipped")
-
     # finally run all tests
     if not coverage:
         # install self so that it is recognized by pytest
