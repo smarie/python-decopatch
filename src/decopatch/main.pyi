@@ -1,12 +1,14 @@
 from typing import Any, Callable, Optional, Protocol, TypeVar, overload
 
+try:
+    # We're importing typing_extensions version first, becouse it will
+    # detect best available implementation depending on python version.
+    from typing_extensions import ParamSpec
+except ImportError:
+    from typing import ParamSpec
+
 from decopatch.utils_disambiguation import FirstArgDisambiguation
 from decopatch.utils_modes import SignatureInfo
-
-try:
-    from typing import ParamSpec
-except ImportError:
-    from typing_extensions import ParamSpec
 
 P = ParamSpec("P")
 F = TypeVar("F", bound=Callable[..., Any])
