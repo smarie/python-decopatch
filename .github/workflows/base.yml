@@ -77,8 +77,27 @@ jobs:
           name: reports_dir
           path: ./docs/reports
 
+  run_stubtest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -l {0}  # so that conda works
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install conda v3.7
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          python-version: '3.10'
+          activate-environment: noxenv
+
+      - name: Install noxfile requirements
+        run: pip install -r noxfile-requirements.txt
+
+      - run: nox -s stubtest
+
   publish_release:
-    needs: run_all_tests
+    needs: [run_stubtest, run_all_tests]
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:

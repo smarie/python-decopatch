@@ -144,6 +144,16 @@ def tests(session: PowerSession, coverage, pkg_specs):
         session.run2("genbadge coverage -i %s -o %s" % (Folders.coverage_xml, Folders.coverage_badge))
 
 
+@power_session(python=PY310, logsdir=Folders.runlogs)
+def stubtest(session: PowerSession):
+    """Verify type stubs correctness."""
+
+    session.install_reqs(setup=True, install=True, tests=True)
+    session.run2("pip install -e . --no-deps")
+
+    session.run2("stubtest decopatch.main")
+
+
 @power_session(python=PY38, logsdir=Folders.runlogs)
 def flake8(session: PowerSession):
     """Launch flake8 qualimetry."""

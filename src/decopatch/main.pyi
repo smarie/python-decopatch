@@ -10,10 +10,11 @@ except ImportError:
 from decopatch.utils_disambiguation import FirstArgDisambiguation
 from decopatch.utils_modes import SignatureInfo
 
-P = ParamSpec("P")
-F = TypeVar("F", bound=Callable[..., Any])
+_P = ParamSpec("_P")
+_F = TypeVar("_F", bound=Callable[..., Any])
+_CustomDisambugatorT = Optional[Callable[[Any], FirstArgDisambiguation]]
 
-class _Decorator(Protocol[P]):
+class _Decorator(Protocol[_P]):
     """
     This is callable Protocol, to distinguish between cases where
     created decorator is called as `@decorator` or `@decorator()`
@@ -21,45 +22,45 @@ class _Decorator(Protocol[P]):
 
     # decorator is called without parenthesis: @decorator
     @overload
-    def __call__(self, func: F) -> F: ...
+    def __call__(self, func: _F) -> _F: ...
     # decorator is called with options or parenthesis: @decorator(some_option=...)
     @overload
-    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> Callable[[F], F]: ...
+    def __call__(self, *args: _P.args, **kwargs: _P.kwargs) -> Callable[[_F], _F]: ...
 
 # @function_decorator is called without options or parenthesis
 @overload
 def function_decorator(
-    enable_stack_introspection: Callable[P, Any],
-    custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
+    enable_stack_introspection: Callable[_P, Any],
+    custom_disambiguator: _CustomDisambugatorT = ...,
     flat_mode_decorated_name: Optional[str] = ...,
-) -> _Decorator[P]: ...
+) -> _Decorator[_P]: ...
 
 # @function_decorator() is called with options or parenthesis.
 @overload
 def function_decorator(
     enable_stack_introspection: bool = ...,
-    custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
+    custom_disambiguator: _CustomDisambugatorT = ...,
     flat_mode_decorated_name: Optional[str] = ...,
-) -> Callable[[Callable[P, Any]], _Decorator[P]]: ...
+) -> Callable[[Callable[_P, Any]], _Decorator[_P]]: ...
 def class_decorator(
     enable_stack_introspection: bool = ...,
-    custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
+    custom_disambiguator: _CustomDisambugatorT = ...,
     flat_mode_decorated_name: Optional[str] = ...,
 ): ...
 def decorator(
     is_function_decorator: bool = ...,
     is_class_decorator: bool = ...,
     enable_stack_introspection: bool = ...,
-    custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
+    custom_disambiguator: _CustomDisambugatorT = ...,
     use_signature_trick: bool = ...,
-    flat_mode_decorated_name: str = ...,
+    flat_mode_decorated_name: Optional[str] = ...,
 ): ...
 def create_decorator(
     impl_function,
     is_function_decorator: bool = ...,
     is_class_decorator: bool = ...,
     enable_stack_introspection: bool = ...,
-    custom_disambiguator: Callable[[Any], FirstArgDisambiguation] = ...,
+    custom_disambiguator: _CustomDisambugatorT = ...,
     use_signature_trick: bool = ...,
     flat_mode_decorated_name: Optional[str] = ...,
 ): ...
