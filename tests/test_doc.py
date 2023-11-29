@@ -1,5 +1,5 @@
 from __future__ import print_function
-
+import re
 
 import pytest
 from makefun import wraps
@@ -182,7 +182,8 @@ def test_doc_say_hello(capsys, mode):
     with capsys.disabled():
         print(captured.out)
 
-    assert captured.out == """hello, world !
+    out = re.sub(r'[ \t]+\n', '\n', captured.out)
+    assert out == """hello, world !
 <executing foo>
 hello, world !
 <executing bar>
@@ -195,7 +196,7 @@ Help on function say_hello in module tests.test_doc:
 say_hello(person='world')
     This decorator wraps the decorated function so that a nice hello
     message is printed before each call.
-    
+
     :param person: the person name in the print message. Default = "world"
 
 Signature: (person='world')

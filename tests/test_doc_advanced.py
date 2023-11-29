@@ -1,4 +1,5 @@
 from __future__ import print_function
+import re
 import sys
 
 import pytest
@@ -200,7 +201,8 @@ def test_doc_impl_first_say_hello(capsys):
     with capsys.disabled():
         print(captured.out)
 
-    assert captured.out == """hello, world !
+    out = re.sub(r'[ \t]+\n', '\n', captured.out)
+    assert out == """hello, world !
 hello, world !
 hello, you !
 Help on function say_hello in module tests.test_doc_advanced:
@@ -208,7 +210,7 @@ Help on function say_hello in module tests.test_doc_advanced:
 say_hello(person='world')
     This decorator modifies the decorated function so that a nice hello
     message is printed before the call.
-    
+
     :param person: the person name in the print message. Default = "world"
     :param f: represents the decorated item. Automatically injected.
     :return: a modified version of `f` that will print a hello message before executing
